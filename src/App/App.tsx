@@ -51,6 +51,7 @@ import PageNotFound from "pages/PageNotFound/PageNotFound";
 import ReferralTerms from "pages/ReferralTerms/ReferralTerms";
 import TermsAndConditions from "pages/TermsAndConditions/TermsAndConditions";
 
+import { parseEventLogs, WatchContractEventReturnType } from "viem";
 import { i18n } from "@lingui/core";
 import { Trans } from "@lingui/macro";
 import { I18nProvider } from "@lingui/react";
@@ -91,7 +92,6 @@ import { SyntheticsPage } from "pages/SyntheticsPage/SyntheticsPage";
 import { SyntheticsStats } from "pages/SyntheticsStats/SyntheticsStats";
 import { useDisconnect } from "wagmi";
 import DashboardV2 from "pages/Dashboard/DashboardV2";
-import { Provider } from "@ethersproject/providers";
 
 // @ts-ignore
 if (window?.ethereum?.autoRefreshOnNetworkChange) {
@@ -181,60 +181,61 @@ function FullApp() {
 
   const { wsClient } = useWebsocketClient();
 
-  const vaultAddress = getContract(chainId, "Vault");
-  const positionRouterAddress = getContract(chainId, "PositionRouter");
+  useEffect(
+    function subscribe() {
+      if (hasV1LostFocus || !wsClient) {
+        return;
+      }
 
-  useEffect(() => {
-    const wsVaultAbi = chainId === ARBITRUM ? VaultV2.abi : VaultV2b.abi;
-    if (hasV1LostFocus || !wsClient) {
-      return;
-    }
+      const unsubscribes: WatchContractEventReturnType[] = [];
+      const wsVaultAbi = chainId === ARBITRUM ? VaultV2.abi : VaultV2b.abi;
+      const vaultAddress = getContract(chainId, "Vault");
+      const positionRouterAddress = getContract(chainId, "PositionRouter");
 
-    // const wsVault = new ethers.Contract(vaultAddress, wsVaultAbi, wsClient as Provider);
-    // const wsPositionRouter = new ethers.Contract(positionRouterAddress, PositionRouter.abi, wsClient as Provider);
+      [
+        { abi: wsVaultAbi, eventName: "UpdatePosition", address: vaultAddress },
+        { abi: wsVaultAbi, eventName: "ClosePosition", address: vaultAddress },
+        { abi: wsVaultAbi, eventName: "IncreasePosition", address: vaultAddress },
+        { abi: wsVaultAbi, eventName: "DecreasePosition", address: vaultAddress },
+        { abi: PositionRouter.abi, eventName: "CancelIncreasePosition", address: positionRouterAddress },
+        { abi: PositionRouter.abi, eventName: "CancelDecreasePosition", address: positionRouterAddress },
+      ].forEach(({ abi, eventName, address }) => {
+        console.log("subscribe to", eventName);
+        const unsubscribe = wsClient.watchContractEvent({
+          abi,
+          address,
+          onLogs: function handleLogs(logs) {
+            const events = parseEventLogs({
+              abi,
+              eventName,
+              logs,
+            });
 
-    wsClient.watchContractEvent({
-      eventName: "UpdatePosition",
-      ...wsVaultAbi,
-      onLogs: (logs) => {
-        console.log("UpdatePosition", logs);
-      },
-      abi: wsVaultAbi,
-    });
+            events.forEach((eventData) => {
+              if (!exchangeRef || !exchangeRef.current) {
+                return;
+              }
 
-    // const callExchangeRef = (method, ...args) => {
-    //   if (!exchangeRef || !exchangeRef.current) {
-    //     return;
-    //   }
+              // FIXME why args is not in type?
+              exchangeRef.current[eventName]((eventData as any).args, { transactionHash: eventData.transactionHash });
+            });
+          },
+          eventName,
+          args: {
+            // TODO how to sub to certain events?
+            // eventNameHash: "0xa7427759bfd3b941f14e687e129519da3c9b0046c5b9aaa290bb1dede63753b3",
+          },
+        });
 
-    //   exchangeRef.current[method](...args);
-    // };
+        unsubscribes.push(unsubscribe);
+      });
 
-    // handle the subscriptions here instead of within the Exchange component to avoid unsubscribing and re-subscribing
-    // each time the Exchange components re-renders, which happens on every data update
-    // const onUpdatePosition = (...args) => callExchangeRef("onUpdatePosition", ...args);
-    // const onClosePosition = (...args) => callExchangeRef("onClosePosition", ...args);
-    // const onIncreasePosition = (...args) => callExchangeRef("onIncreasePosition", ...args);
-    // const onDecreasePosition = (...args) => callExchangeRef("onDecreasePosition", ...args);
-    // const onCancelIncreasePosition = (...args) => callExchangeRef("onCancelIncreasePosition", ...args);
-    // const onCancelDecreasePosition = (...args) => callExchangeRef("onCancelDecreasePosition", ...args);
-
-    // wsVault.on("UpdatePosition", onUpdatePosition);
-    // wsVault.on("ClosePosition", onClosePosition);
-    // wsVault.on("IncreasePosition", onIncreasePosition);
-    // wsVault.on("DecreasePosition", onDecreasePosition);
-    // wsPositionRouter.on("CancelIncreasePosition", onCancelIncreasePosition);
-    // wsPositionRouter.on("CancelDecreasePosition", onCancelDecreasePosition);
-
-    // return function cleanup() {
-    //   wsVault.off("UpdatePosition", onUpdatePosition);
-    //   wsVault.off("ClosePosition", onClosePosition);
-    //   wsVault.off("IncreasePosition", onIncreasePosition);
-    //   wsVault.off("DecreasePosition", onDecreasePosition);
-    //   wsPositionRouter.off("CancelIncreasePosition", onCancelIncreasePosition);
-    //   wsPositionRouter.off("CancelDecreasePosition", onCancelDecreasePosition);
-    // };
-  }, [chainId, vaultAddress, positionRouterAddress, wsClient, hasV1LostFocus]);
+      return () => {
+        unsubscribes.forEach((unsubscribe) => unsubscribe());
+      };
+    },
+    [chainId, hasV1LostFocus, wsClient]
+  );
 
   return (
     <>

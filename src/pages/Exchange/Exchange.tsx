@@ -1,6 +1,6 @@
 import { Plural, Trans, t } from "@lingui/macro";
 import cx from "classnames";
-import { ethers } from "ethers";
+import { BigNumber, ethers } from "ethers";
 import { forwardRef, useCallback, useEffect, useImperativeHandle, useMemo, useState } from "react";
 import useSWR from "swr";
 
@@ -622,17 +622,25 @@ export const Exchange = forwardRef(
     );
 
     useImperativeHandle(ref, () => ({
-      onUpdatePosition(key, size, collateral, averagePrice, entryFundingRate, reserveAmount, realisedPnl) {
+      UpdatePosition({
+        averagePrice,
+        collateral,
+        entryFundingRate,
+        key,
+        realisedPnl,
+        reserveAmount,
+        size,
+      }: UpdatePositionData) {
         for (let i = 0; i < positions.length; i++) {
           const position = positions[i];
           if (position.contractKey === key) {
             updatedPositions[position.key] = {
-              size,
-              collateral,
-              averagePrice,
-              entryFundingRate,
-              reserveAmount,
-              realisedPnl,
+              size: BigNumber.from(size),
+              collateral: BigNumber.from(collateral),
+              averagePrice: BigNumber.from(averagePrice),
+              entryFundingRate: BigNumber.from(entryFundingRate),
+              reserveAmount: BigNumber.from(reserveAmount),
+              realisedPnl: BigNumber.from(realisedPnl),
               updatedAt: Date.now(),
             };
             setUpdatedPositions({ ...updatedPositions });
@@ -640,17 +648,17 @@ export const Exchange = forwardRef(
           }
         }
       },
-      onClosePosition(key, size, collateral, averagePrice, entryFundingRate, reserveAmount, realisedPnl) {
+      ClosePosition({ averagePrice, entryFundingRate, key, realisedPnl, reserveAmount }: ClosePositionData) {
         for (let i = 0; i < positions.length; i++) {
           const position = positions[i];
           if (position.contractKey === key) {
             updatedPositions[position.key] = {
               size: bigNumberify(0),
               collateral: bigNumberify(0),
-              averagePrice,
-              entryFundingRate,
-              reserveAmount,
-              realisedPnl,
+              averagePrice: BigNumber.from(averagePrice),
+              entryFundingRate: BigNumber.from(entryFundingRate),
+              reserveAmount: BigNumber.from(reserveAmount),
+              realisedPnl: BigNumber.from(realisedPnl),
               updatedAt: Date.now(),
             };
             setUpdatedPositions({ ...updatedPositions });
@@ -659,7 +667,7 @@ export const Exchange = forwardRef(
         }
       },
 
-      onIncreasePosition(key, account, collateralToken, indexToken, collateralDelta, sizeDelta, isLong, price, fee, e) {
+      IncreasePosition({ account, indexToken, collateralDelta, sizeDelta, isLong, e }) {
         if (account !== currentAccount) {
           return;
         }
@@ -689,7 +697,7 @@ export const Exchange = forwardRef(
         pushSuccessNotification(chainId, message, e);
       },
 
-      onDecreasePosition(key, account, collateralToken, indexToken, collateralDelta, sizeDelta, isLong, price, fee, e) {
+      DecreasePosition({ account, indexToken, collateralDelta, sizeDelta, isLong, e }) {
         if (account !== currentAccount) {
           return;
         }
@@ -720,20 +728,7 @@ export const Exchange = forwardRef(
         pushSuccessNotification(chainId, message, e);
       },
 
-      onCancelIncreasePosition(
-        account,
-        path,
-        indexToken,
-        amountIn,
-        minOut,
-        sizeDelta,
-        isLong,
-        acceptablePrice,
-        executionFee,
-        blockGap,
-        timeGap,
-        e
-      ) {
+      CancelIncreasePosition({ account, path, indexToken, isLong, e }) {
         if (account !== currentAccount) {
           return;
         }
@@ -751,21 +746,7 @@ export const Exchange = forwardRef(
         setPendingPositions({ ...pendingPositions });
       },
 
-      onCancelDecreasePosition(
-        account,
-        path,
-        indexToken,
-        collateralDelta,
-        sizeDelta,
-        isLong,
-        receiver,
-        acceptablePrice,
-        minOut,
-        executionFee,
-        blockGap,
-        timeGap,
-        e
-      ) {
+      CancelDecreasePosition({ account, path, indexToken, isLong, e }) {
         if (account !== currentAccount) {
           return;
         }
@@ -1087,3 +1068,21 @@ export const Exchange = forwardRef(
     );
   }
 );
+
+type UpdatePositionData = {
+  key: `0x${string}`;
+  size: bigint;
+  collateral: bigint;
+  averagePrice: bigint;
+  entryFundingRate: bigint;
+  reserveAmount: bigint;
+  realisedPnl: bigint;
+};
+
+type ClosePositionData = {
+  key: `0x${string}`;
+  averagePrice: bigint;
+  entryFundingRate: bigint;
+  reserveAmount: bigint;
+  realisedPnl: bigint;
+};

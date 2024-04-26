@@ -47,13 +47,11 @@ export const contractFetcher =
         additionalArgs,
       });
 
-      fallbackContractCall
-        .then((result) => resolve(result))
-        .catch((e) => {
-          // eslint-disable-next-line no-console
-          console.error("fallback fetcher error", id, contractInfo.contractName, method, e);
-          reject(e);
-        });
+      fallbackContractCall.then(resolve).catch((e) => {
+        // eslint-disable-next-line no-console
+        console.error("fallback fetcher error", id, contractInfo.contractName, method, e);
+        reject(e);
+      });
     };
 
     return new Promise(async (resolve, reject) => {
@@ -89,5 +87,6 @@ function getContractCall({ provider, contractInfo, arg0, arg1, method, params, a
     return;
   }
 
+  // FIXME
   return provider[method](arg1, ...params);
 }

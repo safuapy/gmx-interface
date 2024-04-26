@@ -16,6 +16,8 @@ export const BN_NEGATIVE_ONE = BigNumber.from(-1);
  * @deprecated Use BigNumber.from instead
  */
 export function bigNumberify(n?: BigNumberish) {
+  if (n === 0) return BN_ZERO;
+
   try {
     return BigNumber.from(n);
   } catch (e) {

@@ -17,7 +17,7 @@ import {
 import { getPositionKey } from "domain/synthetics/positions";
 import { useTokensDataRequest } from "domain/synthetics/tokens";
 import { getSwapPathOutputAddresses } from "domain/synthetics/trade";
-import { BigNumber, ethers } from "ethers";
+import { BigNumber } from "ethers";
 import { useChainId } from "lib/chains";
 import { pushErrorNotification, pushSuccessNotification } from "lib/contracts";
 import { helperToast } from "lib/helperToast";
@@ -48,21 +48,7 @@ import { parseEventLogData } from "./utils";
 import useWallet from "lib/wallets/useWallet";
 import { FeesSettlementStatusNotification } from "components/Synthetics/StatusNotification/FeesSettlementStatusNotification";
 import { usePendingTxns } from "lib/usePendingTxns";
-
-export const DEPOSIT_CREATED_HASH = ethers.utils.id("DepositCreated");
-export const DEPOSIT_EXECUTED_HASH = ethers.utils.id("DepositExecuted");
-export const DEPOSIT_CANCELLED_HASH = ethers.utils.id("DepositCancelled");
-
-export const WITHDRAWAL_CREATED_HASH = ethers.utils.id("WithdrawalCreated");
-export const WITHDRAWAL_EXECUTED_HASH = ethers.utils.id("WithdrawalExecuted");
-export const WITHDRAWAL_CANCELLED_HASH = ethers.utils.id("WithdrawalCancelled");
-
-export const ORDER_CREATED_HASH = ethers.utils.id("OrderCreated");
-export const ORDER_EXECUTED_HASH = ethers.utils.id("OrderExecuted");
-export const ORDER_CANCELLED_HASH = ethers.utils.id("OrderCancelled");
-
-export const POSITION_INCREASE_HASH = ethers.utils.id("PositionIncrease");
-export const POSITION_DECREASE_HASH = ethers.utils.id("PositionDecrease");
+import { WatchContractEventReturnType } from "viem";
 
 export const SyntheticsEventsContext = createContext({});
 
@@ -73,7 +59,7 @@ export function useSyntheticsEvents(): SyntheticsEventsContextType {
 export function SyntheticsEventsProvider({ children }: { children: ReactNode }) {
   const { chainId } = useChainId();
   const { account: currentAccount } = useWallet();
-  const { wsClient: wsProvider } = useWebsocketClient();
+  const { wsClient } = useWebsocketClient();
 
   const hasLostFocus = useHasLostFocus({
     timeout: WS_LOST_FOCUS_TIMEOUT,
@@ -415,128 +401,46 @@ export function SyntheticsEventsProvider({ children }: { children: ReactNode }) 
 
   useEffect(
     function subscribe() {
-      const x = true;
-      if (x) return;
-      if (hasLostFocus || !wsProvider || !currentAccount) {
+      if (hasLostFocus || !wsClient || !currentAccount) {
         return;
       }
 
-      const addressHash = ethers.utils.defaultAbiCoder.encode(["address"], [currentAccount]);
+      const unsubscribes: WatchContractEventReturnType[] = [];
 
-      const eventEmitter = new ethers.Contract(
-        getContract(chainId, "EventEmitter"),
-        EventEmitter.abi,
-        wsProvider as any
-      );
-      const EVENT_LOG_TOPIC = eventEmitter.interface.getEventTopic("EventLog");
-      const EVENT_LOG1_TOPIC = eventEmitter.interface.getEventTopic("EventLog1");
-      const EVENT_LOG2_TOPIC = eventEmitter.interface.getEventTopic("EventLog2");
-
-      function handleEventLog(sender, eventName, eventNameHash, eventData, txnOpts) {
-        // console.log("handleEventLog", eventName);
-        eventLogHandlers.current[eventName]?.(parseEventLogData(eventData), txnOpts);
-      }
-
-      function handleEventLog1(sender, eventName, eventNameHash, topic1, eventData, txnOpts) {
-        // console.log("handleEventLog1", eventName);
-        eventLogHandlers.current[eventName]?.(parseEventLogData(eventData), txnOpts);
-      }
-
-      function handleEventLog2(msgSender, eventName, eventNameHash, topic1, topic2, eventData, txnOpts) {
-        // console.log("handleEventLog2", eventName);
-        eventLogHandlers.current[eventName]?.(parseEventLogData(eventData), txnOpts);
-      }
-
-      function handleCommonLog(e) {
-        const txnOpts: EventTxnParams = {
-          transactionHash: e.transactionHash,
-          blockNumber: e.blockNumber,
-        };
-
-        try {
-          const parsed = eventEmitter.interface.parseLog(e);
-
-          if (parsed.name === "EventLog") {
-            handleEventLog(parsed.args[0], parsed.args[1], parsed.args[2], parsed.args[3], txnOpts);
-          } else if (parsed.name === "EventLog1") {
-            handleEventLog1(parsed.args[0], parsed.args[1], parsed.args[2], parsed.args[3], parsed.args[4], txnOpts);
-          } else if (parsed.name === "EventLog2") {
-            handleEventLog2(
-              parsed.args[0],
-              parsed.args[1],
-              parsed.args[2],
-              parsed.args[3],
-              parsed.args[4],
-              parsed.args[5],
-              txnOpts
-            );
-          }
-        } catch (e) {
-          // eslint-disable-next-line no-console
-          console.error("error parsing event", e);
-        }
-      }
-
-      const filters = [
-        // DEPOSITS AND WITHDRAWALS
-        {
+      ["EventLog", "EventLog1", "EventLog2"].forEach((contractEventName) => {
+        const unsubscribe = wsClient.watchContractEvent({
+          abi: EventEmitter.abi,
           address: getContract(chainId, "EventEmitter"),
-          topics: [EVENT_LOG2_TOPIC, [DEPOSIT_CREATED_HASH, WITHDRAWAL_CREATED_HASH], null, addressHash],
-        },
-        // NEW CONTRACTS
-        {
-          address: getContract(chainId, "EventEmitter"),
-          topics: [EVENT_LOG2_TOPIC, [DEPOSIT_CREATED_HASH, WITHDRAWAL_CREATED_HASH], null, addressHash],
-        },
-        {
-          address: getContract(chainId, "EventEmitter"),
-          topics: [
-            EVENT_LOG_TOPIC,
-            [DEPOSIT_CANCELLED_HASH, DEPOSIT_EXECUTED_HASH, WITHDRAWAL_CANCELLED_HASH, WITHDRAWAL_EXECUTED_HASH],
-          ],
-        },
-        // NEW CONTRACTS
-        {
-          address: getContract(chainId, "EventEmitter"),
-          topics: [
-            EVENT_LOG2_TOPIC,
-            [DEPOSIT_CANCELLED_HASH, DEPOSIT_EXECUTED_HASH, WITHDRAWAL_CANCELLED_HASH, WITHDRAWAL_EXECUTED_HASH],
-            null,
-            addressHash,
-          ],
-        },
-        // ORDERS
-        {
-          address: getContract(chainId, "EventEmitter"),
-          topics: [EVENT_LOG2_TOPIC, ORDER_CREATED_HASH, null, addressHash],
-        },
-        {
-          address: getContract(chainId, "EventEmitter"),
-          topics: [EVENT_LOG1_TOPIC, [ORDER_CANCELLED_HASH, ORDER_EXECUTED_HASH]],
-        },
-        // NEW CONTRACTS
-        {
-          address: getContract(chainId, "EventEmitter"),
-          topics: [EVENT_LOG2_TOPIC, [ORDER_CANCELLED_HASH, ORDER_EXECUTED_HASH], null, addressHash],
-        },
-        // POSITIONS
-        {
-          address: getContract(chainId, "EventEmitter"),
-          topics: [EVENT_LOG1_TOPIC, [POSITION_INCREASE_HASH, POSITION_DECREASE_HASH], addressHash],
-        },
-      ];
+          onLogs: function handleLogs(logs) {
+            logs.forEach((log) => {
+              const txnOpts: EventTxnParams = {
+                transactionHash: String(log.transactionHash),
+                blockNumber: Number(log.blockNumber),
+              };
+              const eventData = (log as any).args.eventData;
+              const eventName = (log as any).args.eventName;
+              const handler = eventLogHandlers.current[eventName];
 
-      // filters.forEach((filter) => {
-      //   wsProvider.on(filter, handleCommonLog);
-      // });
+              if (handler) {
+                handler(parseEventLogData(eventData), txnOpts);
+              }
+            });
+          },
+          eventName: contractEventName,
+          args: {
+            // TODO how to sub to certain events?
+            // eventNameHash: "0xa7427759bfd3b941f14e687e129519da3c9b0046c5b9aaa290bb1dede63753b3",
+          },
+        });
 
-      // return () => {
-      //   filters.forEach((filter) => {
-      //     wsProvider.off(filter, handleCommonLog);
-      //   });
-      // };
+        unsubscribes.push(unsubscribe);
+      });
+
+      return () => {
+        unsubscribes.forEach((unsubscribe) => unsubscribe());
+      };
     },
-    [chainId, currentAccount, hasLostFocus, wsProvider]
+    [chainId, currentAccount, hasLostFocus, wsClient]
   );
 
   const contextState: SyntheticsEventsContextType = useMemo(() => {

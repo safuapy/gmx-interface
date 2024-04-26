@@ -1,4 +1,3 @@
-import { JsonRpcProvider, WebSocketProvider } from "@ethersproject/providers";
 import { isDevelopment } from "config/env";
 import { WS_LOST_FOCUS_TIMEOUT } from "config/ui";
 import { useChainId } from "lib/chains";
