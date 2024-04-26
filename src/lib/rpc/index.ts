@@ -1,16 +1,35 @@
-import { JsonRpcProvider, WebSocketProvider } from "@ethersproject/providers";
+import { JsonRpcProvider } from "@ethersproject/providers";
 import {
   ARBITRUM,
   ARBITRUM_GOERLI,
   AVALANCHE,
   AVALANCHE_FUJI,
   FALLBACK_PROVIDERS,
+  SUPPORTED_CHAIN_ID,
   getAlchemyWsUrl,
   getFallbackRpcUrl,
   getRpcUrl,
 } from "config/chains";
 import { Signer, ethers } from "ethers";
+import { mustNeverExist } from "lib/types";
 import { useEffect, useState } from "react";
+import {
+  HttpTransport,
+  PublicClient,
+  WebSocketTransport,
+  createPublicClient,
+  defineChain,
+  http,
+  webSocket,
+} from "viem";
+import { arbitrum, avalanche, avalancheFuji, goerli } from "viem/chains";
+
+const viemChainByChainId: Record<SUPPORTED_CHAIN_ID, ReturnType<typeof defineChain>> = {
+  [ARBITRUM]: arbitrum,
+  [ARBITRUM_GOERLI]: goerli,
+  [AVALANCHE]: avalanche,
+  [AVALANCHE_FUJI]: avalancheFuji,
+};
 
 export function getProvider(signer: undefined, chainId: number): ethers.providers.StaticJsonRpcProvider;
 export function getProvider(signer: Signer, chainId: number): Signer;
@@ -31,40 +50,58 @@ export function getProvider(signer: Signer | undefined, chainId: number) {
   );
 }
 
-export function getWsProvider(chainId: number): WebSocketProvider | JsonRpcProvider | undefined {
+type ViemWsPublicClient = PublicClient<WebSocketTransport, typeof viemChainByChainId[SUPPORTED_CHAIN_ID]>;
+type ViemHttpClient = PublicClient<HttpTransport, typeof viemChainByChainId[SUPPORTED_CHAIN_ID]>;
+export type ViemPublicClient = ViemWsPublicClient | ViemHttpClient;
+
+export function getWsClient(chainId: SUPPORTED_CHAIN_ID): ViemPublicClient {
+  const chain = viemChainByChainId[chainId];
   if (chainId === ARBITRUM) {
-    return new ethers.providers.WebSocketProvider(getAlchemyWsUrl());
+    return createPublicClient({ transport: webSocket(getAlchemyWsUrl()), chain });
   }
 
   if (chainId === AVALANCHE) {
-    return new ethers.providers.WebSocketProvider("wss://api.avax.network/ext/bc/C/ws");
+    return createPublicClient({
+      transport: webSocket("wss://api.avax.network/ext/bc/C/ws"),
+      chain,
+    });
   }
 
   if (chainId === ARBITRUM_GOERLI) {
-    return new ethers.providers.WebSocketProvider("wss://arb-goerli.g.alchemy.com/v2/cZfd99JyN42V9Clbs_gOvA3GSBZH1-1j");
+    return createPublicClient({
+      transport: webSocket("wss://arb-goerli.g.alchemy.com/v2/cZfd99JyN42V9Clbs_gOvA3GSBZH1-1j"),
+      chain,
+    });
   }
 
   if (chainId === AVALANCHE_FUJI) {
-    const provider = new ethers.providers.JsonRpcProvider(getRpcUrl(AVALANCHE_FUJI));
-    provider.pollingInterval = 2000;
-    return provider;
+    return createPublicClient({
+      transport: http(getRpcUrl(AVALANCHE_FUJI)),
+      pollingInterval: 2000,
+      chain,
+    });
   }
+
+  throw mustNeverExist(chainId);
 }
 
-export function getFallbackProvider(chainId: number) {
+export function getFallbackProvider(chainId: SUPPORTED_CHAIN_ID) {
   if (!FALLBACK_PROVIDERS[chainId]) {
     return;
   }
 
-  const provider = getFallbackRpcUrl(chainId);
+  const url = getFallbackRpcUrl(chainId);
 
-  return new ethers.providers.StaticJsonRpcProvider(
-    provider,
-    // @ts-ignore incorrect Network param types
-    { chainId }
-  );
+  return createPublicClient({
+    transport: http(url),
+    chain: viemChainByChainId[chainId],
+  });
 }
 
+/**
+ *
+ * @deprecated please don't use this function
+ */
 export function useJsonRpcProvider(chainId: number) {
   const [provider, setProvider] = useState<JsonRpcProvider>();
 
@@ -87,26 +124,27 @@ export function useJsonRpcProvider(chainId: number) {
   return { provider };
 }
 
-export function isWebsocketProvider(provider: any): provider is WebSocketProvider {
-  return Boolean(provider?._websocket);
+export function isWebsocketClient(client: ViemPublicClient | undefined): client is ViemWsPublicClient {
+  if (!client) return false;
+  return client.transport.type === "webSocket";
 }
 
-export enum WSReadyState {
-  CONNECTING = 0,
-  OPEN = 1,
-  CLOSING = 2,
-  CLOSED = 3,
+export async function isSocketInClosedState(client: ViemPublicClient) {
+  if (!isWebsocketClient(client)) return false;
+
+  const rpcClient = await client.transport.getRpcClient();
+  return (
+    rpcClient.socket.readyState === rpcClient.socket.CLOSED || rpcClient.socket.readyState === rpcClient.socket.CLOSING
+  );
 }
 
-export function isProviderInClosedState(wsProvider: WebSocketProvider) {
-  return [WSReadyState.CLOSED, WSReadyState.CLOSING].includes(wsProvider._websocket.readyState);
-}
+export async function closeWsConnection(client: ViemPublicClient) {
+  if (!isWebsocketClient(client)) return false;
 
-export function closeWsConnection(wsProvider: WebSocketProvider) {
-  if (isProviderInClosedState(wsProvider)) {
+  if (await isSocketInClosedState(client)) {
     return;
   }
 
-  wsProvider.removeAllListeners();
-  wsProvider._websocket.close();
+  const rpcClient = await client.transport.getRpcClient();
+  rpcClient.socket.close();
 }

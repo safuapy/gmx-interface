@@ -6,7 +6,7 @@ import { getContract } from "config/contracts";
 import { isDevelopment } from "config/env";
 import { getToken, getWrappedToken } from "config/tokens";
 import { WS_LOST_FOCUS_TIMEOUT } from "config/ui";
-import { useWebsocketProvider } from "context/WebsocketContext/WebsocketContextProvider";
+import { useWebsocketClient } from "context/WebsocketContext/WebsocketContextProvider";
 import { useMarketsInfoRequest } from "domain/synthetics/markets";
 import {
   isDecreaseOrderType,
@@ -73,7 +73,7 @@ export function useSyntheticsEvents(): SyntheticsEventsContextType {
 export function SyntheticsEventsProvider({ children }: { children: ReactNode }) {
   const { chainId } = useChainId();
   const { account: currentAccount } = useWallet();
-  const { wsProvider } = useWebsocketProvider();
+  const { wsClient: wsProvider } = useWebsocketClient();
 
   const hasLostFocus = useHasLostFocus({
     timeout: WS_LOST_FOCUS_TIMEOUT,
@@ -415,13 +415,19 @@ export function SyntheticsEventsProvider({ children }: { children: ReactNode }) 
 
   useEffect(
     function subscribe() {
+      const x = true;
+      if (x) return;
       if (hasLostFocus || !wsProvider || !currentAccount) {
         return;
       }
 
       const addressHash = ethers.utils.defaultAbiCoder.encode(["address"], [currentAccount]);
 
-      const eventEmitter = new ethers.Contract(getContract(chainId, "EventEmitter"), EventEmitter.abi, wsProvider);
+      const eventEmitter = new ethers.Contract(
+        getContract(chainId, "EventEmitter"),
+        EventEmitter.abi,
+        wsProvider as any
+      );
       const EVENT_LOG_TOPIC = eventEmitter.interface.getEventTopic("EventLog");
       const EVENT_LOG1_TOPIC = eventEmitter.interface.getEventTopic("EventLog1");
       const EVENT_LOG2_TOPIC = eventEmitter.interface.getEventTopic("EventLog2");
@@ -520,15 +526,15 @@ export function SyntheticsEventsProvider({ children }: { children: ReactNode }) 
         },
       ];
 
-      filters.forEach((filter) => {
-        wsProvider.on(filter, handleCommonLog);
-      });
+      // filters.forEach((filter) => {
+      //   wsProvider.on(filter, handleCommonLog);
+      // });
 
-      return () => {
-        filters.forEach((filter) => {
-          wsProvider.off(filter, handleCommonLog);
-        });
-      };
+      // return () => {
+      //   filters.forEach((filter) => {
+      //     wsProvider.off(filter, handleCommonLog);
+      //   });
+      // };
     },
     [chainId, currentAccount, hasLostFocus, wsProvider]
   );

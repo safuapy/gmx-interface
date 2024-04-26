@@ -2,7 +2,7 @@ import { JsonRpcProvider, WebSocketProvider } from "@ethersproject/providers";
 import { isDevelopment } from "config/env";
 import { WS_LOST_FOCUS_TIMEOUT } from "config/ui";
 import { useChainId } from "lib/chains";
-import { closeWsConnection, getWsProvider, isProviderInClosedState, isWebsocketProvider } from "lib/rpc";
+import { ViemPublicClient, closeWsConnection, getWsClient, isSocketInClosedState, isWebsocketClient } from "lib/rpc";
 import { useHasLostFocus } from "lib/useHasPageLostFocus";
 import useWallet from "lib/wallets/useWallet";
 import { ReactNode, createContext, useContext, useEffect, useMemo, useRef, useState } from "react";
@@ -11,19 +11,19 @@ const WS_HEALTH_CHECK_INTERVAL = 1000 * 30;
 const WS_RECONNECT_INTERVAL = 1000 * 5;
 
 export type WebsocketContextType = {
-  wsProvider?: WebSocketProvider | JsonRpcProvider;
+  wsClient?: ViemPublicClient;
 };
 
 export const WsContext = createContext({} as WebsocketContextType);
 
-export function useWebsocketProvider() {
+export function useWebsocketClient() {
   return useContext(WsContext) as WebsocketContextType;
 }
 
 export function WebsocketContextProvider({ children }: { children: ReactNode }) {
   const { active } = useWallet();
   const { chainId } = useChainId();
-  const [wsProvider, setWsProvider] = useState<WebSocketProvider | JsonRpcProvider>();
+  const [publicClient, setPublicClient] = useState<ViemPublicClient>();
   const hasLostFocus = useHasLostFocus({ timeout: WS_LOST_FOCUS_TIMEOUT, checkIsTabFocused: true, debugId: "Tab" });
   const initializedTime = useRef<number>();
   const healthCheckTimerId = useRef<any>();
@@ -34,8 +34,8 @@ export function WebsocketContextProvider({ children }: { children: ReactNode }) 
         return;
       }
 
-      const newProvider = getWsProvider(chainId);
-      setWsProvider(newProvider);
+      const newProvider = getWsClient(chainId);
+      setPublicClient(newProvider);
 
       if (newProvider) {
         initializedTime.current = Date.now();
@@ -47,12 +47,15 @@ export function WebsocketContextProvider({ children }: { children: ReactNode }) 
         initializedTime.current = undefined;
         clearTimeout(healthCheckTimerId.current);
 
-        if (isWebsocketProvider(newProvider)) {
-          closeWsConnection(newProvider);
+        async function close() {
+          if (isWebsocketClient(newProvider)) {
+            await closeWsConnection(newProvider);
+            // eslint-disable-next-line no-console
+            console.log(`ws provider for chain ${chainId} disconnected at ${Date.now()}`);
+          }
         }
 
-        // eslint-disable-next-line no-console
-        console.log(`ws provider for chain ${chainId} disconnected at ${Date.now()}`);
+        close();
       };
     },
     [active, chainId, hasLostFocus]
@@ -60,12 +63,12 @@ export function WebsocketContextProvider({ children }: { children: ReactNode }) 
 
   useEffect(
     function healthCheckEff() {
-      if (!active || hasLostFocus || !isWebsocketProvider(wsProvider)) {
+      if (!active || hasLostFocus || !isWebsocketClient(publicClient)) {
         return;
       }
 
-      function nextHealthCheck() {
-        if (!isWebsocketProvider(wsProvider)) {
+      async function nextHealthCheck() {
+        if (!isWebsocketClient(publicClient)) {
           return;
         }
 
@@ -74,18 +77,19 @@ export function WebsocketContextProvider({ children }: { children: ReactNode }) 
           initializedTime.current && Date.now() - initializedTime.current > WS_RECONNECT_INTERVAL;
 
         if (isDevelopment() && isReconnectingIntervalPassed) {
+          const client = await publicClient.transport.getRpcClient();
           // eslint-disable-next-line no-console
           console.log(
-            `ws provider health check, state: ${wsProvider._websocket.readyState}, subs: ${
-              Object.keys(wsProvider._subs).length
+            `ws provider health check, state: ${client.socket.readyState}, subs: ${
+              [...client.subscriptions.keys()].length
             }`
           );
         }
 
-        if (isProviderInClosedState(wsProvider) && isReconnectingIntervalPassed) {
-          closeWsConnection(wsProvider);
-          const nextProvider = getWsProvider(chainId);
-          setWsProvider(nextProvider);
+        if ((await isSocketInClosedState(publicClient)) && isReconnectingIntervalPassed) {
+          closeWsConnection(publicClient);
+          const nextProvider = getWsClient(chainId);
+          setPublicClient(nextProvider);
           initializedTime.current = Date.now();
           // eslint-disable-next-line no-console
           console.log("ws provider health check failed, reconnecting", initializedTime.current);
@@ -100,14 +104,14 @@ export function WebsocketContextProvider({ children }: { children: ReactNode }) 
         clearTimeout(healthCheckTimerId.current);
       };
     },
-    [active, chainId, hasLostFocus, wsProvider]
+    [active, chainId, hasLostFocus, publicClient]
   );
 
   const state: WebsocketContextType = useMemo(() => {
     return {
-      wsProvider,
+      wsClient: publicClient,
     };
-  }, [wsProvider]);
+  }, [publicClient]);
 
   return <WsContext.Provider value={state}>{children}</WsContext.Provider>;
 }

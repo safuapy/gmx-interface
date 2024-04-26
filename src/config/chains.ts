@@ -18,6 +18,9 @@ export const ARBITRUM_GOERLI = 421613;
 export const FEES_HIGH_BPS = 50;
 export const DEFAULT_ALLOWED_SLIPPAGE_BPS = 30;
 
+export type SUPPORTED_MAINNET_CHAIN_ID = typeof ARBITRUM | typeof AVALANCHE;
+export type SUPPORTED_CHAIN_ID = SUPPORTED_MAINNET_CHAIN_ID | typeof AVALANCHE_FUJI | typeof ARBITRUM_GOERLI;
+
 // TODO take it from web3
 export const DEFAULT_CHAIN_ID = ARBITRUM;
 export const CHAIN_ID = DEFAULT_CHAIN_ID;
@@ -214,7 +217,7 @@ export const RPC_PROVIDERS = {
   ],
 };
 
-export const FALLBACK_PROVIDERS = {
+export const FALLBACK_PROVIDERS: Record<SUPPORTED_CHAIN_ID, string[]> = {
   [ARBITRUM]: ENV_ARBITRUM_RPC_URLS ? JSON.parse(ENV_ARBITRUM_RPC_URLS) : [getAlchemyHttpUrl()],
   [AVALANCHE]: ENV_AVALANCHE_RPC_URLS
     ? JSON.parse(ENV_AVALANCHE_RPC_URLS)

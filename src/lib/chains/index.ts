@@ -1,8 +1,8 @@
-import { DEFAULT_CHAIN_ID, SUPPORTED_CHAIN_IDS } from "config/chains";
+import { DEFAULT_CHAIN_ID, SUPPORTED_CHAIN_ID, SUPPORTED_CHAIN_IDS } from "config/chains";
 import { SELECTED_NETWORK_LOCAL_STORAGE_KEY } from "config/localStorage";
 import useWallet from "lib/wallets/useWallet";
 
-export function useChainId() {
+export function useChainId(): { chainId: SUPPORTED_CHAIN_ID } {
   let { chainId } = useWallet();
 
   if (!chainId) {
@@ -16,9 +16,10 @@ export function useChainId() {
     }
   }
 
-  if (!chainId || !SUPPORTED_CHAIN_IDS.includes(chainId)) {
-    chainId = DEFAULT_CHAIN_ID;
-  }
+  return { chainId: isSupportedChainId(chainId) ? chainId : DEFAULT_CHAIN_ID };
+}
 
-  return { chainId };
+function isSupportedChainId(chainId: number | undefined): chainId is SUPPORTED_CHAIN_ID {
+  if (!chainId) return false;
+  return SUPPORTED_CHAIN_IDS.includes(chainId);
 }
