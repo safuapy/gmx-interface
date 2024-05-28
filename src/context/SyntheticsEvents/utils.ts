@@ -25,7 +25,7 @@ export function parseEventLogData(eventData): EventLogData {
   return ret as EventLogData;
 }
 
-export function getPendingOrderKey(data: PendingOrderData) {
+export function getPendingOrderKey(data: Omit<PendingOrderData, "txnType">) {
   return [
     data.account,
     data.marketAddress,
@@ -47,7 +47,7 @@ export function getPendingDepositKey(data: PendingDepositData) {
       data.initialLongTokenAddress,
       data.longTokenSwapPath.join("-"),
       data.shouldUnwrapNativeToken,
-      data.initialLongTokenAmount.add(data.initialShortTokenAmount).toString(),
+      (data.initialLongTokenAmount + data.initialShortTokenAmount).toString(),
     ].join(":");
   }
 

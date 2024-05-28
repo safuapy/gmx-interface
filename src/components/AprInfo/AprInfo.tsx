@@ -4,7 +4,6 @@ import StatsTooltipRow from "components/StatsTooltip/StatsTooltipRow";
 import Tooltip from "components/Tooltip/Tooltip";
 import { useLiquidityProvidersIncentives } from "domain/synthetics/common/useIncentiveStats";
 import { useTokensDataRequest } from "domain/synthetics/tokens";
-import { BigNumber } from "ethers";
 import { useChainId } from "lib/chains";
 import { formatAmount } from "lib/numbers";
 import { useCallback, useMemo } from "react";
@@ -15,14 +14,14 @@ export function AprInfo({
   isIncentiveActive,
   showTooltip = true,
 }: {
-  apr: BigNumber | undefined;
-  incentiveApr: BigNumber | undefined;
+  apr: bigint | undefined;
+  incentiveApr: bigint | undefined;
   isIncentiveActive?: boolean;
   showTooltip?: boolean;
 }) {
   const { chainId } = useChainId();
-  const totalApr = apr?.add(incentiveApr ?? 0) ?? BigNumber.from(0);
-  const aprNode = <>{apr ? `${formatAmount(totalApr, 28, 2)}%` : "..."}</>;
+  const totalApr = (apr ?? 0n) + (incentiveApr ?? 0n);
+  const aprNode = <>{apr !== undefined ? `${formatAmount(totalApr, 28, 2)}%` : "..."}</>;
   const airdropTokenAddress = useLiquidityProvidersIncentives(chainId)?.token;
   // TODO use context instead
   const { tokensData } = useTokensDataRequest(chainId);
@@ -52,7 +51,7 @@ export function AprInfo({
     );
   }, [airdropTokenSymbol, apr, incentiveApr, isIncentiveActive]);
 
-  return showTooltip && incentiveApr && incentiveApr.gt(0) ? (
+  return showTooltip && incentiveApr !== undefined && incentiveApr > 0 ? (
     <Tooltip maxAllowedWidth={280} handle={aprNode} position="bottom-end" renderContent={renderTooltipContent} />
   ) : (
     aprNode
