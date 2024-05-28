@@ -167,7 +167,7 @@ msgstr ""
 msgid "GMX transfers not yet enabled"
 msgstr ""
 
-#: src/components/Synthetics/UserIncentiveDistributionList/UserIncentiveDistributionList.tsx
+#: src/domain/synthetics/common/incentivesAirdropMessages.ts
 #: src/pages/LeaderboardPage/components/LeaderboardNavigation.tsx
 msgid "EIP-4844, 13-20 Mar"
 msgstr ""
@@ -1737,6 +1737,10 @@ msgstr ""
 msgid "Enter and exit positions with minimal spread and low price impact. Get the optimal price without incurring additional costs."
 msgstr ""
 
+#: src/domain/synthetics/common/incentivesAirdropMessages.ts
+msgid "STIP.b trading incentives"
+msgstr ""
+
 #: src/components/Synthetics/PositionItem/PositionItem.tsx
 msgid "Since your position's Collateral is {0} with a value larger than the Position Size, the Collateral value will cover any negative PnL."
 msgstr ""
@@ -2191,6 +2195,10 @@ msgstr ""
 msgid "Couldn't find a swap route with enough liquidity"
 msgstr ""
 
+#: src/components/TokenCard/TokenCard.tsx
+msgid "Arbitrum GM Pools are incentivized."
+msgstr ""
+
 #: src/components/Exchange/ConfirmationBox.js
 #: src/components/Synthetics/ConfirmationBox/ConfirmationBox.tsx
 msgid "Confirm Long"
@@ -2258,6 +2266,10 @@ msgstr ""
 
 #: src/components/Exchange/PositionSeller.js
 msgid "Requested decrease of {0} {longOrShortText} by {sizeDeltaUsd} USD."
+msgstr ""
+
+#: src/components/TokenCard/TokenCard.tsx
+msgid "Arbitrum and Avalanche GM Pools are incentivized."
 msgstr ""
 
 #: src/components/Exchange/NoLiquidityErrorModal.tsx
@@ -3243,7 +3255,7 @@ msgstr ""
 msgid "Trading guide"
 msgstr ""
 
-#: src/components/Synthetics/UserIncentiveDistributionList/UserIncentiveDistributionList.tsx
+#: src/domain/synthetics/common/incentivesAirdropMessages.ts
 msgid "TRADING Airdrop"
 msgstr ""
 
@@ -3801,8 +3813,8 @@ msgid "This competition is held on the {0} network. <0>Change your network</0> t
 msgstr ""
 
 #: src/components/Synthetics/TradeFeesRow/TradeFeesRow.tsx
-msgid "The Bonus Rebate will be airdropped as ARB tokens on a pro-rata basis. <0>Read more</0>."
-msgstr ""
+#~ msgid "The Bonus Rebate will be airdropped as ARB tokens on a pro-rata basis. <0>Read more</0>."
+#~ msgstr ""
 
 #: src/pages/LeaderboardPage/components/CompetitionCountdown.tsx
 msgid "This competition has ended."
@@ -5031,6 +5043,10 @@ msgstr ""
 msgid "Buy or Transfer ETH to Arbitrum"
 msgstr ""
 
+#: src/components/TokenCard/TokenCard.tsx
+msgid "Avalanche GM Pools are incentivized."
+msgstr ""
+
 #: src/components/Synthetics/MarketStats/MarketStats.tsx
 #: src/components/Synthetics/MarketStats/MarketStats.tsx
 #: src/components/Synthetics/MarketStats/MarketStats.tsx
@@ -5297,7 +5313,7 @@ msgstr ""
 msgid "Sell Fee"
 msgstr ""
 
-#: src/components/Synthetics/UserIncentiveDistributionList/UserIncentiveDistributionList.tsx
+#: src/domain/synthetics/common/incentivesAirdropMessages.ts
 msgid "GM Airdrop"
 msgstr ""
 
@@ -5908,6 +5924,10 @@ msgstr ""
 msgid "Staking..."
 msgstr ""
 
+#: src/components/Synthetics/TradeFeesRow/TradeFeesRow.tsx
+msgid "The Bonus Rebate will be airdropped as {0} tokens on a pro-rata basis. <0><1>Read more</1>.</0>"
+msgstr ""
+
 #: src/components/Synthetics/StatusNotification/GmStatusNotification.tsx
 msgid "Buy request sent"
 msgstr ""
@@ -6067,7 +6087,7 @@ msgstr ""
 msgid "You have set a high Acceptable Price Impact. The current Price Impact is {0}."
 msgstr ""
 
-#: src/components/Synthetics/UserIncentiveDistributionList/UserIncentiveDistributionList.tsx
+#: src/domain/synthetics/common/incentivesAirdropMessages.ts
 msgid "GLP to GM Airdrop"
 msgstr ""
 
@@ -6240,8 +6260,16 @@ msgstr ""
 msgid "Avg. Lev."
 msgstr ""
 
+#: src/domain/synthetics/common/incentivesAirdropMessages.ts
+msgid "Avalanche LP incentives"
+msgstr ""
+
 #: src/components/Synthetics/OrderEditor/OrderEditor.tsx
 msgid "As network fees have increased, an additional execution fee is needed."
+msgstr ""
+
+#: src/components/AprInfo/AprInfo.tsx
+msgid "The Bonus APR will be airdropped as {airdropTokenSymbol} tokens. <0>Read more</0>."
 msgstr ""
 
 #: src/pages/Ecosystem/Ecosystem.js
@@ -6265,8 +6293,8 @@ msgid "Top PnL ($)"
 msgstr ""
 
 #: src/components/AprInfo/AprInfo.tsx
-msgid "The Bonus APR will be airdropped as ARB tokens. <0>Read more</0>."
-msgstr ""
+#~ msgid "The Bonus APR will be airdropped as ARB tokens. <0>Read more</0>."
+#~ msgstr ""
 
 #: src/pages/BeginAccountTransfer/BeginAccountTransfer.tsx
 msgid "Sender has withdrawn all tokens from GMX Vesting Vault"
@@ -6663,6 +6691,10 @@ msgstr ""
 msgid "Price change to Liq."
 msgstr ""
 
+#: src/domain/synthetics/common/incentivesAirdropMessages.ts
+msgid "STIP.b LP incentives"
+msgstr ""
+
 #: src/components/Exchange/PositionsList.js
 msgid "Click on the Position to select its market, then use the trade box to increase your Position Size if needed."
 msgstr ""
@@ -6983,7 +7015,7 @@ msgstr ""
 msgid "Enter Referral Code"
 msgstr ""
 
-#: src/components/Synthetics/UserIncentiveDistributionList/UserIncentiveDistributionList.tsx
+#: src/domain/synthetics/common/incentivesAirdropMessages.ts
 #: src/pages/LeaderboardPage/components/LeaderboardNavigation.tsx
 msgid "EIP-4844, 20-27 Mar"
 msgstr ""
@@ -7128,6 +7160,10 @@ msgstr ""
 
 #: src/components/Referrals/AffiliatesStats.tsx
 msgid "Volume on V1"
+msgstr ""
+
+#: src/domain/synthetics/common/incentivesAirdropMessages.ts
+msgid "Avalanche trading incentives"
 msgstr ""
 
 #: src/components/Synthetics/TradeHistory/keys.ts
