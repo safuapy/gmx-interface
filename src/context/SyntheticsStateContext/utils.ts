@@ -4,21 +4,27 @@ import { Selector } from "reselect";
 import { OrderOption } from "domain/synthetics/trade/usePositionSellerState";
 import { TradeMode, TradeType } from "domain/synthetics/trade/types";
 import { LRUCache } from "./LruCache";
-import { SyntheticsState } from "./SyntheticsStateContextProvider";
+import { CommonAppState, LeaderboardAppState, TradeAppState } from "./types";
 export { useSyntheticsStateSelector as useSelector } from "./SyntheticsStateContextProvider";
 
 /**
- * @deprecated use createSelector instead
+ * @deprecated use createTradeSelector, createLeaderboardSelector, etc  instead
  */
-export const createSelectorDeprecated = createSelectorCommon.withTypes<SyntheticsState>();
-const context = createSelectionContext<SyntheticsState>();
+export const createSelectorDeprecated = createSelectorCommon.withTypes<TradeAppState>();
 
-export const createSelector = context.makeSelector;
+const makeCreateSelector = <T extends CommonAppState>() => {
+  const context = createSelectionContext<T>();
+  const createSelector = context.makeSelector;
+  return createSelector;
+};
+
+export const createTradeSelector = makeCreateSelector<TradeAppState>();
+export const createLeaderboardSelector = makeCreateSelector<LeaderboardAppState>();
 
 type Arg = boolean | string | undefined | null | number | TradeMode | TradeType | OrderOption | bigint;
 type SupportedArg = Arg | Record<string, Arg>;
 
-type CachedSelector<T> = EnhancedSelector<SyntheticsState, T> | Selector<SyntheticsState, T>;
+type CachedSelector<T> = EnhancedSelector<TradeAppState, T> | Selector<TradeAppState, T>;
 
 export function createSelectorFactory<SelectionResult, Args extends SupportedArg[]>(
   factory: (...args: Args) => CachedSelector<SelectionResult>

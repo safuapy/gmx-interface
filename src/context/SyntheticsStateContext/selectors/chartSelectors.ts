@@ -1,5 +1,5 @@
 import { getToken } from "config/tokens";
-import { createSelector } from "../utils";
+import { createTradeSelector as createSelector } from "../utils";
 import { selectChainId, selectTokensData } from "./globalSelectors";
 import {
   selectTradeboxAvailableTokensOptions,

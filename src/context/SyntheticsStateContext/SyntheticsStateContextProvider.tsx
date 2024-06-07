@@ -1,22 +1,17 @@
 import { getKeepLeverageKey } from "config/localStorage";
-import { SettingsContextType, useSettings } from "context/SettingsContext/SettingsContextProvider";
-import { UserReferralInfo, useUserReferralInfoRequest } from "domain/referrals";
+import { useSettings } from "context/SettingsContext/SettingsContextProvider";
+import { useUserReferralInfoRequest } from "domain/referrals";
 import { useGasLimits, useGasPrice } from "domain/synthetics/fees";
-import { RebateInfoItem, useRebatesInfoRequest } from "domain/synthetics/fees/useRebatesInfo";
+import { useRebatesInfoRequest } from "domain/synthetics/fees/useRebatesInfo";
 import useUiFeeFactor from "domain/synthetics/fees/utils/useUiFeeFactor";
-import { MarketsInfoResult, MarketsResult, useMarkets, useMarketsInfoRequest } from "domain/synthetics/markets";
-import { OrderEditorState, useOrderEditorState } from "domain/synthetics/orders/useOrderEditorState";
-import { AggregatedOrdersDataResult, useOrdersInfoRequest } from "domain/synthetics/orders/useOrdersInfo";
-import {
-  PositionsConstantsResult,
-  PositionsInfoResult,
-  usePositionsConstantsRequest,
-  usePositionsInfoRequest,
-} from "domain/synthetics/positions";
-import { PositionEditorState, usePositionEditorState } from "domain/synthetics/trade/usePositionEditorState";
-import { PositionSellerState, usePositionSellerState } from "domain/synthetics/trade/usePositionSellerState";
-import { ConfirmationBoxState, useConfirmationBoxState } from "domain/synthetics/trade/useConfirmationBoxState";
-import { TradeboxState, useTradeboxState } from "domain/synthetics/trade/useTradeboxState";
+import { useMarkets, useMarketsInfoRequest } from "domain/synthetics/markets";
+import { useOrderEditorState } from "domain/synthetics/orders/useOrderEditorState";
+import { useOrdersInfoRequest } from "domain/synthetics/orders/useOrdersInfo";
+import { usePositionsConstantsRequest, usePositionsInfoRequest } from "domain/synthetics/positions";
+import { useConfirmationBoxState } from "domain/synthetics/trade/useConfirmationBoxState";
+import { usePositionEditorState } from "domain/synthetics/trade/usePositionEditorState";
+import { usePositionSellerState } from "domain/synthetics/trade/usePositionSellerState";
+import { useTradeboxState } from "domain/synthetics/trade/useTradeboxState";
 import { ethers } from "ethers";
 import { useChainId } from "lib/chains";
 import { useLocalStorageSerializeKey } from "lib/localStorage";
@@ -24,57 +19,21 @@ import useWallet from "lib/wallets/useWallet";
 import { ReactNode, useCallback, useMemo, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Context, createContext, useContext, useContextSelector } from "use-context-selector";
-import { LeaderboardState, useLeaderboardState } from "./useLeaderboardState";
+import { TradeAppState } from "./types";
+import { useLeaderboardState } from "./useLeaderboardState";
 
-export type SyntheticsPageType = "actions" | "trade" | "pools" | "leaderboard" | "competitions";
+const StateCtx = createContext<TradeAppState | null>(null);
 
-export type SyntheticsState = {
-  pageType: SyntheticsPageType;
-  globals: {
-    chainId: number;
-    markets: MarketsResult;
-    marketsInfo: MarketsInfoResult;
-    positionsInfo: PositionsInfoResult;
-    account: string | undefined;
-    ordersInfo: AggregatedOrdersDataResult;
-    positionsConstants: PositionsConstantsResult;
-    uiFeeFactor: bigint;
-    userReferralInfo: UserReferralInfo | undefined;
+let latestState: TradeAppState | null = null;
 
-    closingPositionKey: string | undefined;
-    setClosingPositionKey: (key: string | undefined) => void;
-
-    keepLeverage: boolean | undefined;
-    setKeepLeverage: (value: boolean) => void;
-
-    gasLimits: ReturnType<typeof useGasLimits>;
-    gasPrice: ReturnType<typeof useGasPrice>;
-  };
-  claims: {
-    accruedPositionPriceImpactFees: RebateInfoItem[];
-    claimablePositionPriceImpactFees: RebateInfoItem[];
-  };
-  leaderboard: LeaderboardState;
-  settings: SettingsContextType;
-  tradebox: TradeboxState;
-  orderEditor: OrderEditorState;
-  positionSeller: PositionSellerState;
-  positionEditor: PositionEditorState;
-  confirmationBox: ConfirmationBoxState;
-};
-
-const StateCtx = createContext<SyntheticsState | null>(null);
-
-let latestState: SyntheticsState | null = null;
-
-export function SyntheticsStateContextProvider({
+export function TradeAppStateContextProvider({
   children,
   skipLocalReferralCode,
   pageType,
 }: {
   children: ReactNode;
   skipLocalReferralCode: boolean;
-  pageType: SyntheticsState["pageType"];
+  pageType: TradeAppState["pageType"];
 }) {
   const { chainId: selectedChainId } = useChainId();
 
@@ -138,7 +97,7 @@ export function SyntheticsStateContextProvider({
   const [keepLeverage, setKeepLeverage] = useLocalStorageSerializeKey(getKeepLeverageKey(chainId), true);
 
   const state = useMemo(() => {
-    const s: SyntheticsState = {
+    const s: TradeAppState = {
       pageType,
       globals: {
         chainId,
@@ -207,16 +166,16 @@ export function SyntheticsStateContextProvider({
   return <StateCtx.Provider value={state}>{children}</StateCtx.Provider>;
 }
 
-export function useSyntheticsStateSelector<Selected>(selector: (s: SyntheticsState) => Selected) {
+export function useSyntheticsStateSelector<Selected>(selector: (s: TradeAppState) => Selected) {
   const value = useContext(StateCtx);
   if (!value) {
     throw new Error("Used useSyntheticsStateSelector outside of SyntheticsStateContextProvider");
   }
-  return useContextSelector(StateCtx as Context<SyntheticsState>, selector) as Selected;
+  return useContextSelector(StateCtx as Context<TradeAppState>, selector) as Selected;
 }
 
 export function useCalcSelector() {
-  return useCallback(function useCalcSelector<Selected>(selector: (state: SyntheticsState) => Selected) {
+  return useCallback(function useCalcSelector<Selected>(selector: (state: TradeAppState) => Selected) {
     if (!latestState) throw new Error("Used calcSelector outside of SyntheticsStateContextProvider");
     return selector(latestState);
   }, []);

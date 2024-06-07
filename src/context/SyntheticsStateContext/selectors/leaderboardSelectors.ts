@@ -1,31 +1,31 @@
 import { LeaderboardAccount, LeaderboardPosition, LeaderboardPositionBase } from "domain/synthetics/leaderboard";
 import { LEADERBOARD_PAGES } from "domain/synthetics/leaderboard/constants";
 import { MarketInfo } from "domain/synthetics/markets";
-import { SyntheticsState } from "../SyntheticsStateContextProvider";
-import { createSelector } from "../utils";
-import { selectAccount, selectMarketsInfoData, selectTokensData, selectUserReferralInfo } from "./globalSelectors";
+import { LeaderboardAppState } from "../types";
+import { createLeaderboardSelector as createSelector } from "../utils";
+import { selectAccount, selectUserReferralInfo } from "./globalSelectors";
 
 const BASIS_POINTS_DIVISOR = 10000n;
 
-export const selectLeaderboardAccountBases = (s: SyntheticsState) => s.leaderboard.accounts;
+export const selectLeaderboardAccountBases = (s: LeaderboardAppState) => s.leaderboard.accounts;
 
-export const selectLeaderboardPositionBases = (s: SyntheticsState) => s.leaderboard.positions;
+export const selectLeaderboardPositionBases = (s: LeaderboardAppState) => s.leaderboard.positions;
 
-export const selectLeaderboardTimeframeType = (s: SyntheticsState) => s.leaderboard.leaderboardTimeframeType;
+export const selectLeaderboardTimeframeType = (s: LeaderboardAppState) => s.leaderboard.leaderboardTimeframeType;
 
-export const selectLeaderboardSetTimeframeType = (s: SyntheticsState) => s.leaderboard.setLeaderboardTimeframeType;
+export const selectLeaderboardSetTimeframeType = (s: LeaderboardAppState) => s.leaderboard.setLeaderboardTimeframeType;
 
-export const selectLeaderboardDataType = (s: SyntheticsState) => s.leaderboard.leaderboardDataType;
+export const selectLeaderboardDataType = (s: LeaderboardAppState) => s.leaderboard.leaderboardDataType;
 
-export const selectLeaderboardSetDataType = (s: SyntheticsState) => s.leaderboard.setLeaderboardDataType;
+export const selectLeaderboardSetDataType = (s: LeaderboardAppState) => s.leaderboard.setLeaderboardDataType;
 
-export const selectLeaderboardTimeframe = (s: SyntheticsState) => s.leaderboard.timeframe;
+export const selectLeaderboardTimeframe = (s: LeaderboardAppState) => s.leaderboard.timeframe;
 
-export const selectLeaderboardIsEndInFuture = (s: SyntheticsState) => s.leaderboard.isEndInFuture;
+export const selectLeaderboardIsEndInFuture = (s: LeaderboardAppState) => s.leaderboard.isEndInFuture;
 
-export const selectLeaderboardIsStartInFuture = (s: SyntheticsState) => s.leaderboard.isStartInFuture;
+export const selectLeaderboardIsStartInFuture = (s: LeaderboardAppState) => s.leaderboard.isStartInFuture;
 
-export const selectLeaderboardIsLoading = (s: SyntheticsState) => s.leaderboard.isLoading;
+export const selectLeaderboardIsLoading = (s: LeaderboardAppState) => s.leaderboard.isLoading;
 
 export const selectLeaderboardIsCompetition = createSelector(function selectLeaderboardIsCompetition(q) {
   const pageKey = q((s) => s.leaderboard.leaderboardPageKey);
@@ -46,11 +46,12 @@ export const selectLeaderboardIsCompetitionOver = createSelector(function select
 export const selectLeaderboardCurrentAccount = createSelector(function selectLeaderboardCurrentAccount(q):
   | LeaderboardAccount
   | undefined {
-  const accounts = q(selectLeaderboardAccounts);
   const currentAccount = q(selectAccount);
+  if (!currentAccount) return undefined;
+
+  const accounts = q(selectLeaderboardAccounts);
   const leaderboardAccount = accounts?.find((a) => a.account === currentAccount);
   if (leaderboardAccount) return leaderboardAccount;
-  if (!currentAccount) return undefined;
 
   return {
     account: currentAccount,

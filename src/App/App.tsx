@@ -73,7 +73,7 @@ import { GlobalStateProvider } from "context/GlobalContext/GlobalContextProvider
 import { SettingsContextProvider } from "context/SettingsContext/SettingsContextProvider";
 import { SubaccountContextProvider } from "context/SubaccountContext/SubaccountContext";
 import { SyntheticsEventsProvider } from "context/SyntheticsEvents";
-import { SyntheticsStateContextProvider } from "context/SyntheticsStateContext/SyntheticsStateContextProvider";
+import { TradeAppStateContextProvider } from "context/SyntheticsStateContext/SyntheticsStateContextProvider";
 import { subscribeToV1Events } from "context/WebsocketContext/subscribeToEvents";
 import { useWebsocketProvider, WebsocketContextProvider } from "context/WebsocketContext/WebsocketContextProvider";
 import { PendingTransaction } from "domain/legacy";
@@ -264,9 +264,9 @@ function FullApp() {
               </Route>
               <Route exact path="/pools">
                 {getIsSyntheticsSupported(chainId) ? (
-                  <SyntheticsStateContextProvider skipLocalReferralCode={false} pageType="pools">
+                  <TradeAppStateContextProvider skipLocalReferralCode={false} pageType="pools">
                     <MarketPoolsPage />
-                  </SyntheticsStateContextProvider>
+                  </TradeAppStateContextProvider>
                 ) : (
                   <SyntheticsFallbackPage />
                 )}
@@ -274,9 +274,9 @@ function FullApp() {
 
               <Route exact path="/trade/:tradeType?">
                 {getIsSyntheticsSupported(chainId) ? (
-                  <SyntheticsStateContextProvider skipLocalReferralCode={false} pageType="trade">
+                  <TradeAppStateContextProvider skipLocalReferralCode={false} pageType="trade">
                     <SyntheticsPage openSettings={openSettings} />
-                  </SyntheticsStateContextProvider>
+                  </TradeAppStateContextProvider>
                 ) : (
                   <SyntheticsFallbackPage />
                 )}
@@ -296,30 +296,24 @@ function FullApp() {
               </Route>
               <Route path="/leaderboard/">
                 {getIsSyntheticsSupported(chainId) ? (
-                  <SyntheticsStateContextProvider skipLocalReferralCode pageType="leaderboard">
+                  <TradeAppStateContextProvider skipLocalReferralCode pageType="leaderboard">
                     <LeaderboardPage />
-                  </SyntheticsStateContextProvider>
+                  </TradeAppStateContextProvider>
                 ) : (
                   <SyntheticsFallbackPage />
                 )}
               </Route>
               <Route exact path="/competitions/">
                 {getIsSyntheticsSupported(chainId) ? (
-                  <SyntheticsStateContextProvider skipLocalReferralCode pageType="competitions">
+                  <TradeAppStateContextProvider skipLocalReferralCode pageType="competitions">
                     <CompetitionRedirect />
-                  </SyntheticsStateContextProvider>
+                  </TradeAppStateContextProvider>
                 ) : (
                   <SyntheticsFallbackPage />
                 )}
               </Route>
               <Route path="/competitions/:leaderboardPageKey">
-                {getIsSyntheticsSupported(chainId) ? (
-                  <SyntheticsStateContextProvider skipLocalReferralCode pageType="competitions">
-                    <LeaderboardPage />
-                  </SyntheticsStateContextProvider>
-                ) : (
-                  <SyntheticsFallbackPage />
-                )}
+                {getIsSyntheticsSupported(chainId) ? <LeaderboardPage /> : <SyntheticsFallbackPage />}
               </Route>
               <Route exact path="/referrals">
                 <Referrals />
@@ -341,15 +335,15 @@ function FullApp() {
                 <Actions />
               </Route>
               <Route exact path="/actions">
-                <SyntheticsStateContextProvider pageType="actions" skipLocalReferralCode>
+                <TradeAppStateContextProvider pageType="actions" skipLocalReferralCode>
                   <SyntheticsActions />
-                </SyntheticsStateContextProvider>
+                </TradeAppStateContextProvider>
               </Route>
               <Redirect exact from="/actions/v2" to="/actions" />
               <Route exact path="/actions/:account">
-                <SyntheticsStateContextProvider pageType="actions" skipLocalReferralCode={false}>
+                <TradeAppStateContextProvider pageType="actions" skipLocalReferralCode={false}>
                   <SyntheticsActions />
-                </SyntheticsStateContextProvider>
+                </TradeAppStateContextProvider>
               </Route>
               <Route path="/actions/v2/:account">
                 {({ match }) => <Redirect to={`/actions/${match?.params.account}`} />}

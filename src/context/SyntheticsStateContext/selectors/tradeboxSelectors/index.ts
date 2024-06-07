@@ -45,9 +45,9 @@ import {
   makeSelectNextPositionValuesForIncrease,
   makeSelectSwapRoutes,
 } from "../tradeSelectors";
-import { SyntheticsState } from "context/SyntheticsStateContext/SyntheticsStateContextProvider";
-import { createSelector, createSelectorDeprecated } from "context/SyntheticsStateContext/utils";
+import { createTradeSelector as createSelector, createSelectorDeprecated } from "context/SyntheticsStateContext/utils";
 import { selectIsPnlInLeverage } from "../settingsSelectors";
+import { TradeAppState } from "context/SyntheticsStateContext/types";
 
 export * from "./selectTradeboxGetMaxLongShortLiquidityPool";
 export * from "./selectTradeboxChooseSuitableMarket";
@@ -55,45 +55,44 @@ export * from "./selectTradeboxAvailableMarketsOptions";
 export * from "./selectTradeboxRelatedMarketsStats";
 export * from "./selectTradeboxAvailableAndDisabledTokensForCollateral";
 
-const selectOnlyOnTradeboxPage = <T>(s: SyntheticsState, selection: T) =>
+const selectOnlyOnTradeboxPage = <T>(s: TradeAppState, selection: T) =>
   s.pageType === "trade" ? selection : undefined;
-export const selectTradeboxState = (s: SyntheticsState) => s.tradebox;
-export const selectTradeboxTradeType = (s: SyntheticsState) => s.tradebox.tradeType;
-export const selectTradeboxTradeMode = (s: SyntheticsState) => s.tradebox.tradeMode;
-export const selectTradeboxIsWrapOrUnwrap = (s: SyntheticsState) => s.tradebox.isWrapOrUnwrap;
-export const selectTradeboxFromTokenAddress = (s: SyntheticsState) => s.tradebox.fromTokenAddress;
-export const selectTradeboxToTokenAddress = (s: SyntheticsState) => s.tradebox.toTokenAddress;
-export const selectTradeboxMarketAddress = (s: SyntheticsState) =>
-  selectOnlyOnTradeboxPage(s, s.tradebox.marketAddress);
-export const selectTradeboxMarketInfo = (s: SyntheticsState) => s.tradebox.marketInfo;
-export const selectTradeboxCollateralTokenAddress = (s: SyntheticsState) =>
+export const selectTradeboxState = (s: TradeAppState) => s.tradebox;
+export const selectTradeboxTradeType = (s: TradeAppState) => s.tradebox.tradeType;
+export const selectTradeboxTradeMode = (s: TradeAppState) => s.tradebox.tradeMode;
+export const selectTradeboxIsWrapOrUnwrap = (s: TradeAppState) => s.tradebox.isWrapOrUnwrap;
+export const selectTradeboxFromTokenAddress = (s: TradeAppState) => s.tradebox.fromTokenAddress;
+export const selectTradeboxToTokenAddress = (s: TradeAppState) => s.tradebox.toTokenAddress;
+export const selectTradeboxMarketAddress = (s: TradeAppState) => selectOnlyOnTradeboxPage(s, s.tradebox.marketAddress);
+export const selectTradeboxMarketInfo = (s: TradeAppState) => s.tradebox.marketInfo;
+export const selectTradeboxCollateralTokenAddress = (s: TradeAppState) =>
   selectOnlyOnTradeboxPage(s, s.tradebox.collateralAddress);
-export const selectTradeboxCollateralToken = (s: SyntheticsState) => s.tradebox.collateralToken;
-export const selectTradeboxAvailableTradeModes = (s: SyntheticsState) => s.tradebox.avaialbleTradeModes;
-export const selectTradeboxAvailableTokensOptions = (s: SyntheticsState) => s.tradebox.availableTokensOptions;
-export const selectTradeboxFromTokenInputValue = (s: SyntheticsState) => s.tradebox.fromTokenInputValue;
-export const selectTradeboxToTokenInputValue = (s: SyntheticsState) => s.tradebox.toTokenInputValue;
-export const selectTradeboxStage = (s: SyntheticsState) => s.tradebox.stage;
-export const selectTradeboxFocusedInput = (s: SyntheticsState) => s.tradebox.focusedInput;
-export const selectTradeboxFixedTriggerThresholdType = (s: SyntheticsState) => s.tradebox.fixedTriggerThresholdType;
-export const selectTradeboxFixedTriggerOrderType = (s: SyntheticsState) => s.tradebox.fixedTriggerOrderType;
-export const selectTradeboxDefaultTriggerAcceptablePriceImpactBps = (s: SyntheticsState) =>
+export const selectTradeboxCollateralToken = (s: TradeAppState) => s.tradebox.collateralToken;
+export const selectTradeboxAvailableTradeModes = (s: TradeAppState) => s.tradebox.avaialbleTradeModes;
+export const selectTradeboxAvailableTokensOptions = (s: TradeAppState) => s.tradebox.availableTokensOptions;
+export const selectTradeboxFromTokenInputValue = (s: TradeAppState) => s.tradebox.fromTokenInputValue;
+export const selectTradeboxToTokenInputValue = (s: TradeAppState) => s.tradebox.toTokenInputValue;
+export const selectTradeboxStage = (s: TradeAppState) => s.tradebox.stage;
+export const selectTradeboxFocusedInput = (s: TradeAppState) => s.tradebox.focusedInput;
+export const selectTradeboxFixedTriggerThresholdType = (s: TradeAppState) => s.tradebox.fixedTriggerThresholdType;
+export const selectTradeboxFixedTriggerOrderType = (s: TradeAppState) => s.tradebox.fixedTriggerOrderType;
+export const selectTradeboxDefaultTriggerAcceptablePriceImpactBps = (s: TradeAppState) =>
   s.tradebox.defaultTriggerAcceptablePriceImpactBps;
-export const selectTradeboxSelectedTriggerAcceptablePriceImpactBps = (s: SyntheticsState) =>
+export const selectTradeboxSelectedTriggerAcceptablePriceImpactBps = (s: TradeAppState) =>
   s.tradebox.selectedTriggerAcceptablePriceImpactBps;
-export const selectTradeboxSetSelectedAcceptablePriceImpactBps = (s: SyntheticsState) =>
+export const selectTradeboxSetSelectedAcceptablePriceImpactBps = (s: TradeAppState) =>
   s.tradebox.setSelectedAcceptablePriceImpactBps;
-export const selectTradeboxCloseSizeInputValue = (s: SyntheticsState) => s.tradebox.closeSizeInputValue;
-export const selectTradeboxTriggerPriceInputValue = (s: SyntheticsState) => s.tradebox.triggerPriceInputValue;
-export const selectTradeboxTriggerRatioInputValue = (s: SyntheticsState) => s.tradebox.triggerRatioInputValue;
-export const selectTradeboxLeverageOption = (s: SyntheticsState) => s.tradebox.leverageOption;
-export const selectTradeboxIsLeverageEnabled = (s: SyntheticsState) => s.tradebox.isLeverageEnabled;
-export const selectTradeboxKeepLeverage = (s: SyntheticsState) => s.tradebox.keepLeverage;
-export const selectTradeboxSetActivePosition = (s: SyntheticsState) => s.tradebox.setActivePosition;
-export const selectTradeboxSetToTokenAddress = (s: SyntheticsState) => s.tradebox.setToTokenAddress;
-export const selectTradeboxSetTradeConfig = (s: SyntheticsState) => s.tradebox.setTradeConfig;
-export const selectTradeboxSetKeepLeverage = (s: SyntheticsState) => s.tradebox.setKeepLeverage;
-export const selectTradeboxSetCollateralAddress = (s: SyntheticsState) => s.tradebox.setCollateralAddress;
+export const selectTradeboxCloseSizeInputValue = (s: TradeAppState) => s.tradebox.closeSizeInputValue;
+export const selectTradeboxTriggerPriceInputValue = (s: TradeAppState) => s.tradebox.triggerPriceInputValue;
+export const selectTradeboxTriggerRatioInputValue = (s: TradeAppState) => s.tradebox.triggerRatioInputValue;
+export const selectTradeboxLeverageOption = (s: TradeAppState) => s.tradebox.leverageOption;
+export const selectTradeboxIsLeverageEnabled = (s: TradeAppState) => s.tradebox.isLeverageEnabled;
+export const selectTradeboxKeepLeverage = (s: TradeAppState) => s.tradebox.keepLeverage;
+export const selectTradeboxSetActivePosition = (s: TradeAppState) => s.tradebox.setActivePosition;
+export const selectTradeboxSetToTokenAddress = (s: TradeAppState) => s.tradebox.setToTokenAddress;
+export const selectTradeboxSetTradeConfig = (s: TradeAppState) => s.tradebox.setTradeConfig;
+export const selectTradeboxSetKeepLeverage = (s: TradeAppState) => s.tradebox.setKeepLeverage;
+export const selectTradeboxSetCollateralAddress = (s: TradeAppState) => s.tradebox.setCollateralAddress;
 
 export const selectTradeboxSwapRoutes = createSelector((q) => {
   const fromTokenAddress = q(selectTradeboxFromTokenAddress);

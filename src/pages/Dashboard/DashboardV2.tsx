@@ -33,7 +33,7 @@ import { ARBITRUM, AVALANCHE, getChainName } from "config/chains";
 import { getIsSyntheticsSupported } from "config/features";
 import { getIcons } from "config/icons";
 import { TOKEN_COLOR_MAP, getTokenBySymbol, getWhitelistedV1Tokens } from "config/tokens";
-import { SyntheticsStateContextProvider } from "context/SyntheticsStateContext/SyntheticsStateContextProvider";
+import { TradeAppStateContextProvider } from "context/SyntheticsStateContext/SyntheticsStateContextProvider";
 import { useFeesSummary, useTotalVolume, useVolumeInfo } from "domain/stats";
 import useUniqueUsers from "domain/stats/useUniqueUsers";
 import {
@@ -1218,9 +1218,9 @@ export default function DashboardV2() {
               </>
             )}
             {isV2 && getIsSyntheticsSupported(chainId) && (
-              <SyntheticsStateContextProvider skipLocalReferralCode={false} pageType="pools">
+              <TradeAppStateContextProvider skipLocalReferralCode={false} pageType="pools">
                 <MarketsList />
-              </SyntheticsStateContextProvider>
+              </TradeAppStateContextProvider>
             )}
           </div>
         </div>
