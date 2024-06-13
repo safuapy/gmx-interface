@@ -1,9 +1,10 @@
 import { getDecreasePositionAmounts } from "./decrease";
 import { TokenData } from "domain/synthetics/tokens";
-import { expandDecimals } from "lib/numbers";
+import { deserializeBigIntsInObject, expandDecimals } from "lib/numbers";
 import { MarketInfo } from "domain/synthetics/markets";
 import { PositionInfo } from "domain/synthetics/positions";
 import { DecreasePositionSwapType } from "domain/synthetics/orders";
+import { negativeCollateralMock, negativeCollateralResult } from "./mocks/negativeCollateralMock";
 
 const closeSizeUsd = BigInt(99);
 
@@ -228,5 +229,11 @@ describe("getDecreasePositionAmounts DecreasePositionSwapType", () => {
       userReferralInfo: undefined,
     });
     expect(amounts.decreaseSwapType).toEqual(DecreasePositionSwapType.SwapCollateralTokenToPnlToken);
+  });
+
+  it("negative collateral", () => {
+    const p = deserializeBigIntsInObject(negativeCollateralMock);
+    const amounts = getDecreasePositionAmounts(p as any);
+    expect(amounts).toEqual(negativeCollateralResult);
   });
 });

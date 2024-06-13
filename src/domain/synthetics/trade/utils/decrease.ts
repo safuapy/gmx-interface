@@ -351,7 +351,11 @@ export function getDecreasePositionAmounts(p: {
       pendingBorrowingFeesUsd: position.pendingBorrowingFeesUsd,
       pendingFundingFeesUsd: position.pendingFundingFeesUsd,
       pnl: undefined,
-    })!;
+    });
+
+    if (leverageWithoutPnl === undefined) {
+      return values;
+    }
 
     values.collateralDeltaUsd =
       remainingCollateralUsd - bigMath.mulDiv(nextSizeInUsd, BASIS_POINTS_DIVISOR_BIGINT, leverageWithoutPnl);
