@@ -31,16 +31,8 @@ import {
   usePositionSellerLeverageDisabledByCollateral,
 } from "context/SyntheticsStateContext/hooks/positionSellerHooks";
 import { useHasOutdatedUi } from "domain/legacy";
-import { estimateExecuteDecreaseOrderGasLimit, getExecutionFee } from "domain/synthetics/fees";
-import useUiFeeFactor from "domain/synthetics/fees/utils/useUiFeeFactor";
 import { DecreasePositionSwapType, OrderType, createDecreaseOrderTxn } from "domain/synthetics/orders";
-import {
-  formatAcceptablePrice,
-  formatLeverage,
-  formatLiquidationPrice,
-  getTriggerNameByOrderType,
-} from "domain/synthetics/positions";
-import { getMarkPrice, getTradeFees } from "domain/synthetics/trade";
+import { formatLeverage, formatLiquidationPrice, getTriggerNameByOrderType } from "domain/synthetics/positions";
 import { useDebugExecutionPrice } from "domain/synthetics/trade/useExecutionPrice";
 import { useHighExecutionFeeConsent } from "domain/synthetics/trade/useHighExecutionFeeConsent";
 import { OrderOption } from "domain/synthetics/trade/usePositionSellerState";
@@ -67,10 +59,9 @@ import { TradeFeesRow } from "../TradeFeesRow/TradeFeesRow";
 import { AllowedSlippageRow } from "./rows/AllowedSlippageRow";
 
 import TooltipWithPortal from "components/Tooltip/TooltipWithPortal";
+import { ExecutionPriceRow } from "../ExecutionPriceRow";
 import { useSettings } from "context/SettingsContext/SettingsContextProvider";
-import { selectGasLimits, selectGasPrice } from "context/SyntheticsStateContext/selectors/globalSelectors";
 import {
-  selectPositionSellerAcceptablePrice,
   selectPositionSellerDecreaseAmounts,
   selectPositionSellerMaxLiquidityPath,
   selectPositionSellerNextPositionValuesForDecrease,
@@ -79,6 +70,9 @@ import {
   selectPositionSellerSwapAmounts,
   selectPositionSellerSetDefaultReceiveToken,
   selectPositionSellerReceiveToken,
+  selectPositionSellerMarkPrice,
+  selectPositionSellerFees,
+  selectPositionSellerExecutionPrice,
 } from "context/SyntheticsStateContext/selectors/positionSellerSelectors";
 import {
   selectTradeboxAvailableTokensOptions,
@@ -86,9 +80,10 @@ import {
 } from "context/SyntheticsStateContext/selectors/tradeboxSelectors";
 import { useSelector } from "context/SyntheticsStateContext/utils";
 import { bigMath } from "lib/bigmath";
-import "./PositionSeller.scss";
 import { useLocalizedMap } from "lib/i18n";
 import { Token } from "domain/tokens";
+
+import "./PositionSeller.scss";
 
 export type Props = {
   setPendingTxns: (txns: any) => void;
@@ -116,11 +111,8 @@ export function PositionSeller(p: Props) {
   const { minCollateralUsd } = usePositionsConstants();
   const userReferralInfo = useUserReferralInfo();
   const { data: hasOutdatedUi } = useHasOutdatedUi();
-  const uiFeeFactor = useUiFeeFactor(chainId);
   const position = useSelector(selectPositionSellerPosition);
   const tradeFlags = useSelector(selectTradeboxTradeFlags);
-  const gasLimits = useSelector(selectGasLimits);
-  const gasPrice = useSelector(selectGasPrice);
   const submitButtonRef = useRef<HTMLButtonElement>(null);
   const { shouldDisableValidationForTesting } = useSettings();
   const localizedOrderOptionLabels = useLocalizedMap(ORDER_OPTION_LABELS);
@@ -189,13 +181,9 @@ export function PositionSeller(p: Props) {
     }
   }, [isVisible, resetPositionSeller]);
 
-  const markPrice = position
-    ? getMarkPrice({ prices: position.indexToken.prices, isLong: position.isLong, isIncrease: false })
-    : undefined;
-
+  const markPrice = useSelector(selectPositionSellerMarkPrice);
   const { maxLiquidity: maxSwapLiquidity } = useSelector(selectPositionSellerMaxLiquidityPath);
   const decreaseAmounts = useSelector(selectPositionSellerDecreaseAmounts);
-  const acceptablePrice = useSelector(selectPositionSellerAcceptablePrice);
 
   useDebugExecutionPrice(chainId, {
     skip: true,
@@ -214,49 +202,8 @@ export function PositionSeller(p: Props) {
 
   const nextPositionValues = useSelector(selectPositionSellerNextPositionValuesForDecrease);
 
-  const { fees, executionFee } = useMemo(() => {
-    if (!position || !decreaseAmounts || !gasLimits || !tokensData || gasPrice === undefined) {
-      return {};
-    }
-
-    const swapsCount =
-      (decreaseAmounts.decreaseSwapType === DecreasePositionSwapType.NoSwap ? 0 : 1) +
-      (swapAmounts?.swapPathStats?.swapPath?.length || 0);
-
-    const estimatedGas = estimateExecuteDecreaseOrderGasLimit(gasLimits, {
-      swapsCount,
-    });
-
-    return {
-      fees: getTradeFees({
-        isIncrease: false,
-        initialCollateralUsd: position.collateralUsd,
-        sizeDeltaUsd: decreaseAmounts.sizeDeltaUsd,
-        swapSteps: swapAmounts?.swapPathStats?.swapSteps || [],
-        positionFeeUsd: decreaseAmounts.positionFeeUsd,
-        swapPriceImpactDeltaUsd: swapAmounts?.swapPathStats?.totalSwapPriceImpactDeltaUsd || 0n,
-        positionPriceImpactDeltaUsd: decreaseAmounts.positionPriceImpactDeltaUsd,
-        priceImpactDiffUsd: decreaseAmounts.priceImpactDiffUsd,
-        borrowingFeeUsd: decreaseAmounts.borrowingFeeUsd,
-        fundingFeeUsd: decreaseAmounts.fundingFeeUsd,
-        feeDiscountUsd: decreaseAmounts.feeDiscountUsd,
-        swapProfitFeeUsd: decreaseAmounts.swapProfitFeeUsd,
-        uiFeeFactor,
-      }),
-      executionFee: getExecutionFee(chainId, gasLimits, tokensData, estimatedGas, gasPrice),
-    };
-  }, [
-    chainId,
-    decreaseAmounts,
-    gasLimits,
-    gasPrice,
-    position,
-    swapAmounts?.swapPathStats?.swapPath,
-    swapAmounts?.swapPathStats?.swapSteps,
-    swapAmounts?.swapPathStats?.totalSwapPriceImpactDeltaUsd,
-    tokensData,
-    uiFeeFactor,
-  ]);
+  const { fees, executionFee } = useSelector(selectPositionSellerFees);
+  const executionPrice = useSelector(selectPositionSellerExecutionPrice);
 
   const { element: highExecutionFeeAcknowledgement, isHighFeeConsentError } = useHighExecutionFeeConsent(
     executionFee?.feeUsd
@@ -458,6 +405,31 @@ export function PositionSeller(p: Props) {
   const indexPriceDecimals = position?.indexToken?.priceDecimals;
   const toToken = position?.indexToken;
 
+  const executionPriceFlags = useMemo(
+    () => ({
+      isLimit: false,
+      isMarket: orderOption === OrderOption.Market,
+      isIncrease: false,
+      isLong: !!position?.isLong,
+      isShort: !position?.isLong,
+      isSwap: false,
+      isPosition: true,
+      isTrigger: orderOption === OrderOption.Trigger,
+    }),
+    [position, orderOption]
+  );
+
+  const limitPriceRow = (
+    <ExecutionPriceRow
+      tradeFlags={executionPriceFlags}
+      displayDecimals={toToken?.priceDecimals}
+      fees={fees}
+      executionPrice={executionPrice ?? undefined}
+      acceptablePrice={decreaseAmounts?.acceptablePrice}
+      triggerOrderType={decreaseAmounts?.triggerOrderType}
+    />
+  );
+
   const triggerPriceRow = (
     <ExchangeInfoRow
       className="SwapBox-info-row"
@@ -467,28 +439,6 @@ export function PositionSeller(p: Props) {
           displayDecimals: toToken?.priceDecimals,
         }) || "-"
       }`}
-    />
-  );
-
-  const markPriceRow = (
-    <ExchangeInfoRow
-      label={t`Mark Price`}
-      value={
-        formatUsd(markPrice, {
-          displayDecimals: indexPriceDecimals,
-        }) || "-"
-      }
-    />
-  );
-
-  const entryPriceRow = (
-    <ExchangeInfoRow
-      label={t`Entry Price`}
-      value={
-        formatUsd(position?.entryPrice, {
-          displayDecimals: indexPriceDecimals,
-        }) || "-"
-      }
     />
   );
 
@@ -509,19 +459,6 @@ export function PositionSeller(p: Props) {
       />
     );
   })();
-
-  let acceptablePriceValue: React.ReactNode = "-";
-  if (isStopLoss) {
-    acceptablePriceValue = t`NA`;
-  } else if (decreaseAmounts?.sizeDeltaUsd) {
-    acceptablePriceValue = formatAcceptablePrice(acceptablePrice, {
-      displayDecimals: indexPriceDecimals,
-    });
-  } else {
-    acceptablePriceValue = "-";
-  }
-
-  const acceptablePriceRow = <ExchangeInfoRow label={t`Acceptable Price`} value={acceptablePriceValue} />;
 
   const liqPriceRow = position && (
     <ExchangeInfoRow
@@ -766,9 +703,7 @@ export function PositionSeller(p: Props) {
 
               <ExchangeInfo.Group>
                 {isTrigger && triggerPriceRow}
-                {!isTrigger && entryPriceRow}
-                {acceptablePriceRow}
-                {!isTrigger && markPriceRow}
+                {limitPriceRow}
                 {liqPriceRow}
               </ExchangeInfo.Group>
 

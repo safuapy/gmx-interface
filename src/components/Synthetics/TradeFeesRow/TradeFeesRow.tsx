@@ -53,11 +53,9 @@ export function TradeFeesRow(p: Props) {
   const rebateIsApplicable =
     shouldShowRebate && p.positionFee?.deltaUsd && p.positionFee.deltaUsd < 0 && p.feesType !== "swap";
 
-  const [fullPositionPriceImpact, hasRebates] = mergePositionPriceImpactWithPriceImpactDiff(
-    p.feesType,
-    p.positionPriceImpact,
-    p.priceImpactDiff
-  );
+  const hasRebates =
+    p.feesType !== "decrease" || !p.positionPriceImpact || !p.priceImpactDiff || p.priceImpactDiff.deltaUsd <= 0;
+
   const rebatesMessage = useMemo(
     () =>
       hasRebates ? (
@@ -73,23 +71,6 @@ export function TradeFeesRow(p: Props) {
   );
 
   const feeRows: FeeRow[] = useMemo(() => {
-    const positionPriceImpactRow =
-      fullPositionPriceImpact === undefined
-        ? undefined
-        : bigMath.abs(fullPositionPriceImpact.deltaUsd) > 0
-          ? {
-              id: "positionPriceImpact",
-              label: (
-                <>
-                  <div className="text-white">{t`Position Price Impact`}:</div>
-                  <div>({formatPercentage(bigMath.abs(fullPositionPriceImpact.bps))} of position size)</div>
-                </>
-              ),
-              value: formatDeltaUsd(fullPositionPriceImpact.deltaUsd),
-              className: getPositiveOrNegativeClass(fullPositionPriceImpact.deltaUsd, "text-green-500"),
-            }
-          : undefined;
-
     const priceImpactDiffUsd = (p.priceImpactDiff ? bigMath.abs(p.priceImpactDiff.deltaUsd) > 0 : false)
       ? {
           id: "priceImpactDiff",
@@ -292,7 +273,6 @@ export function TradeFeesRow(p: Props) {
 
     if (p.feesType === "increase") {
       return [
-        positionPriceImpactRow,
         swapPriceImpactRow,
         ...swapFeeRows,
         positionFeeRow,
@@ -309,7 +289,6 @@ export function TradeFeesRow(p: Props) {
 
     if (p.feesType === "decrease") {
       return [
-        positionPriceImpactRow,
         priceImpactDiffUsd,
         swapPriceImpactRow,
         borrowFeeRow,
@@ -329,7 +308,7 @@ export function TradeFeesRow(p: Props) {
     }
 
     return [];
-  }, [fullPositionPriceImpact, p, tradingIncentives, rebateIsApplicable, chainId]);
+  }, [p, tradingIncentives, rebateIsApplicable, chainId]);
 
   const totalFeeUsd = useMemo(() => {
     const totalBeforeRebate = p.totalFees?.deltaUsd;
@@ -345,9 +324,9 @@ export function TradeFeesRow(p: Props) {
 
   const title = useMemo(() => {
     if (p.feesType !== "swap" && shouldShowRebate && tradingIncentives) {
-      return p.feesType === "edit" ? t`Fees (Rebated)` : t`Fees (Rebated) and Price Impact`;
+      return t`Fees (Rebated)`;
     } else {
-      return p.feesType === "edit" ? t`Fees` : t`Fees and Price Impact`;
+      return t`Fees`;
     }
   }, [p.feesType, shouldShowRebate, tradingIncentives]);
 
@@ -419,22 +398,4 @@ export function TradeFeesRow(p: Props) {
   }, [feeRows, hasRebates, incentivesBottomText, rebatesMessage, totalFeeUsd, swapRouteMsg]);
 
   return <ExchangeInfoRow className="TradeFeesRow" isTop={p.isTop} label={title} value={value} />;
-}
-
-function mergePositionPriceImpactWithPriceImpactDiff(
-  feesType: TradeFeesType,
-  positionPriceImpact: FeeItem | undefined,
-  priceImpactDiff: FeeItem | undefined
-): [fullPositionPriceImpact: FeeItem | undefined, hasRebates: boolean] {
-  if (feesType !== "decrease" || !positionPriceImpact || !priceImpactDiff || priceImpactDiff.deltaUsd <= 0) {
-    return [positionPriceImpact, false];
-  }
-
-  return [
-    {
-      bps: positionPriceImpact.bps + priceImpactDiff.bps * -1n,
-      deltaUsd: positionPriceImpact.deltaUsd + priceImpactDiff.deltaUsd * -1n,
-    },
-    true,
-  ];
 }
