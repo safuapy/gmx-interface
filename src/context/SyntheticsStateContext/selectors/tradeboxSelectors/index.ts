@@ -385,7 +385,6 @@ export const selectTradeboxFees = createSelector(function selectTradeboxFees(q) 
       if (!swapAmounts || !swapAmounts.swapPathStats) return undefined;
 
       return getTradeFees({
-        isIncrease: false,
         initialCollateralUsd: swapAmounts.usdIn,
         sizeDeltaUsd: 0n,
         swapSteps: swapAmounts.swapPathStats.swapSteps,
@@ -408,7 +407,6 @@ export const selectTradeboxFees = createSelector(function selectTradeboxFees(q) 
       const selectedPosition = q(selectTradeboxSelectedPosition);
 
       return getTradeFees({
-        isIncrease: true,
         initialCollateralUsd: increaseAmounts.initialCollateralUsd,
         sizeDeltaUsd: increaseAmounts.sizeDeltaUsd,
         swapSteps: increaseAmounts.swapPathStats?.swapSteps || [],
@@ -431,7 +429,6 @@ export const selectTradeboxFees = createSelector(function selectTradeboxFees(q) 
       const selectedPosition = q(selectTradeboxSelectedPosition);
 
       return getTradeFees({
-        isIncrease: false,
         initialCollateralUsd: selectedPosition?.collateralUsd || 0n,
         sizeDeltaUsd: decreaseAmounts.sizeDeltaUsd,
         swapSteps: [],
