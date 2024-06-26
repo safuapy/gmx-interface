@@ -89,7 +89,9 @@ export default function ChartTokenSelector(props: Props) {
                       displaySize={20}
                       importSize={24}
                     />
-                    {selectedToken.symbol} {"/ USD"}
+                    <span className="whitespace-nowrap">
+                      {selectedToken.symbol} {"/ USD"}
+                    </span>
                   </span>
                 )}
                 <FaChevronDown fontSize={14} />

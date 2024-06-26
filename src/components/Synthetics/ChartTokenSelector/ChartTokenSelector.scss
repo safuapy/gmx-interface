@@ -1,4 +1,6 @@
 .Synths-ChartTokenSelector {
+  min-width: 16rem;
+
   .chart-token-selector {
     border: none;
     background: transparent;
@@ -6,8 +8,8 @@
     font-size: 2rem;
     display: inline-flex;
     align-items: center;
-    padding: 0.5rem;
     border-radius: var(--border-radius-sm);
+    padding: 0;
 
     &:hover {
       color: var(--color-blue-300);
