@@ -24,14 +24,11 @@ export function use24hVolumeUsd(chainId, tokenAddress?: string) {
     where:{
       period: "1h"
       indexToken: "${tokenAddress?.toLocaleLowerCase()}"
-      timestamp_gt: ${((Date.now() / 1000 - 86400) >> 0) + TIMEZONE_OFFSET_SEC} 
+      timestamp_gt: ${Math.floor(Date.now() / 1000 - 86400) + TIMEZONE_OFFSET_SEC} 
     }
   ) {
     id
     volumeUsd
-    indexToken
-    period
-    timestamp
   }
 }
 `);

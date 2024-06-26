@@ -273,7 +273,7 @@
 .ExchangeChart-top-inner {
   display: grid;
   grid-template-rows: 2;
-  grid-template-columns: auto auto auto auto auto auto auto auto auto auto auto;
+  grid-template-columns: auto auto auto auto auto auto auto;
   grid-column-gap: 2rem;
   align-items: center;
   width: 100%;
@@ -1015,17 +1015,25 @@ table.Exchange-list-small td {
 
 .ExchangeChart-header {
   display: grid;
-  grid-template-columns: auto 116.32px;
+  grid-template-columns: auto 106px;
   grid-column-gap: 1rem;
 }
 
 .VersionSwitch-wrapper {
-  padding: 1.5rem;
+  padding: 1rem;
 }
 
 @media (max-width: 1500px) {
   .Exchange-swap-box {
     width: 38.75rem;
+  }
+}
+
+@media (max-width: 1400px) {
+  .ExchangeChart-open-interest,
+  .ExchangeChart-24h-volume,
+  .ExchangeChart-net-rate {
+    display: none;
   }
 }
 
@@ -1072,13 +1080,17 @@ table.Exchange-list-small td {
     padding: 1rem;
   }
 
-  .ExchangeChart.tv .ExchangeChart-bottom {
-    top: 6rem;
+  .ExchangeChart-open-interest {
+    display: none;
   }
 
-  .ExchangeChart-info {
-    height: 50px;
+  .ExchangeChart.tv .ExchangeChart-bottom {
+    top: 8rem;
   }
+
+  /* .ExchangeChart-info {
+    height: 50px;
+  } */
 
   .Exchange-swap-box {
     width: auto;
