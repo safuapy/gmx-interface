@@ -567,6 +567,10 @@ msgstr ""
 msgid "Search Token"
 msgstr "Buscar Token"
 
+#: src/components/Synthetics/TVChart/TVChartHeaderLabels.tsx
+msgid "Price %:"
+msgstr ""
+
 #: src/pages/BuyGMX/BuyGMX.tsx
 msgid "Buy GMX using Decentralized Exchange Aggregators:"
 msgstr ""
@@ -3208,7 +3212,7 @@ msgstr "Comisiones de Financiación"
 msgid "Approval failed"
 msgstr "Aprobación fallida"
 
-#: src/components/Synthetics/TVChart/TVChartHeader.tsx
+#: src/components/Synthetics/TVChart/TVChartHeaderLabels.tsx
 #: src/pages/Dashboard/DashboardV2.tsx
 #: src/pages/Home/Home.js
 msgid "Open Interest"
@@ -3409,7 +3413,7 @@ msgid "Initial Collateral (Collateral excluding Borrow and Funding Fee)."
 msgstr ""
 
 #: src/components/Synthetics/MarketsList/MarketsList.tsx
-#: src/components/Synthetics/TVChart/TVChartHeader.tsx
+#: src/components/Synthetics/TVChart/TVChartHeaderLabels.tsx
 msgid "Net Rate / 1h"
 msgstr "Tasa Neta / 1h"
 
@@ -3488,8 +3492,8 @@ msgstr "Precio de activación para la orden."
 #: src/components/Synthetics/TradeHistory/TradeHistoryRow/utils/position.ts
 #: src/components/Synthetics/TVChart/TVChart.tsx
 #: src/components/Synthetics/TVChart/TVChart.tsx
-#: src/components/Synthetics/TVChart/TVChartHeader.tsx
-#: src/components/Synthetics/TVChart/TVChartHeader.tsx
+#: src/components/Synthetics/TVChart/TVChartHeaderLabels.tsx
+#: src/components/Synthetics/TVChart/TVChartHeaderLabels.tsx
 #: src/context/SyntheticsEvents/SyntheticsEventsProvider.tsx
 #: src/context/SyntheticsEvents/SyntheticsEventsProvider.tsx
 #: src/domain/synthetics/orders/utils.tsx
@@ -6380,8 +6384,8 @@ msgstr ""
 #: src/components/Synthetics/TradeHistory/TradeHistoryRow/utils/position.ts
 #: src/components/Synthetics/TVChart/TVChart.tsx
 #: src/components/Synthetics/TVChart/TVChart.tsx
-#: src/components/Synthetics/TVChart/TVChartHeader.tsx
-#: src/components/Synthetics/TVChart/TVChartHeader.tsx
+#: src/components/Synthetics/TVChart/TVChartHeaderLabels.tsx
+#: src/components/Synthetics/TVChart/TVChartHeaderLabels.tsx
 #: src/context/SyntheticsEvents/SyntheticsEventsProvider.tsx
 #: src/context/SyntheticsEvents/SyntheticsEventsProvider.tsx
 #: src/domain/synthetics/orders/utils.tsx
@@ -6749,6 +6753,10 @@ msgstr ""
 msgid "Image generation error, please refresh and try again."
 msgstr "Error de generación de imagen, por favor actualice e intente de nuevo"
 
+#: src/components/Synthetics/TVChart/TVChartHeaderLabels.tsx
+msgid "Price:"
+msgstr ""
+
 #: src/components/Synthetics/Claims/ClaimableCardUI.tsx
 #: src/components/Synthetics/TradeFeesRow/TradeFeesRow.tsx
 msgid "Price Impact Rebates"
@@ -6886,6 +6894,10 @@ msgstr ""
 
 #: src/domain/synthetics/orders/utils.tsx
 msgid "Limit Decrease"
+msgstr ""
+
+#: src/components/Synthetics/TVChart/TVChartHeaderLabels.tsx
+msgid "24h Change"
 msgstr ""
 
 #: src/components/AddressDropdown/AddressDropdown.tsx

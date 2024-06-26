@@ -567,6 +567,10 @@ msgstr "Max. Leverage Exceeded"
 msgid "Search Token"
 msgstr "Search Token"
 
+#: src/components/Synthetics/TVChart/TVChartHeaderLabels.tsx
+msgid "Price %:"
+msgstr "Price %:"
+
 #: src/pages/BuyGMX/BuyGMX.tsx
 msgid "Buy GMX using Decentralized Exchange Aggregators:"
 msgstr "Buy GMX using Decentralized Exchange Aggregators:"
@@ -3208,7 +3212,7 @@ msgstr "Funding Fees"
 msgid "Approval failed"
 msgstr "Approval failed"
 
-#: src/components/Synthetics/TVChart/TVChartHeader.tsx
+#: src/components/Synthetics/TVChart/TVChartHeaderLabels.tsx
 #: src/pages/Dashboard/DashboardV2.tsx
 #: src/pages/Home/Home.js
 msgid "Open Interest"
@@ -3412,7 +3416,7 @@ msgid "Initial Collateral (Collateral excluding Borrow and Funding Fee)."
 msgstr "Initial Collateral (Collateral excluding Borrow and Funding Fee)."
 
 #: src/components/Synthetics/MarketsList/MarketsList.tsx
-#: src/components/Synthetics/TVChart/TVChartHeader.tsx
+#: src/components/Synthetics/TVChart/TVChartHeaderLabels.tsx
 msgid "Net Rate / 1h"
 msgstr "Net Rate / 1h"
 
@@ -3491,8 +3495,8 @@ msgstr "Trigger price for the order."
 #: src/components/Synthetics/TradeHistory/TradeHistoryRow/utils/position.ts
 #: src/components/Synthetics/TVChart/TVChart.tsx
 #: src/components/Synthetics/TVChart/TVChart.tsx
-#: src/components/Synthetics/TVChart/TVChartHeader.tsx
-#: src/components/Synthetics/TVChart/TVChartHeader.tsx
+#: src/components/Synthetics/TVChart/TVChartHeaderLabels.tsx
+#: src/components/Synthetics/TVChart/TVChartHeaderLabels.tsx
 #: src/context/SyntheticsEvents/SyntheticsEventsProvider.tsx
 #: src/context/SyntheticsEvents/SyntheticsEventsProvider.tsx
 #: src/domain/synthetics/orders/utils.tsx
@@ -6386,8 +6390,8 @@ msgstr "Fulfilling Sell request"
 #: src/components/Synthetics/TradeHistory/TradeHistoryRow/utils/position.ts
 #: src/components/Synthetics/TVChart/TVChart.tsx
 #: src/components/Synthetics/TVChart/TVChart.tsx
-#: src/components/Synthetics/TVChart/TVChartHeader.tsx
-#: src/components/Synthetics/TVChart/TVChartHeader.tsx
+#: src/components/Synthetics/TVChart/TVChartHeaderLabels.tsx
+#: src/components/Synthetics/TVChart/TVChartHeaderLabels.tsx
 #: src/context/SyntheticsEvents/SyntheticsEventsProvider.tsx
 #: src/context/SyntheticsEvents/SyntheticsEventsProvider.tsx
 #: src/domain/synthetics/orders/utils.tsx
@@ -6755,6 +6759,10 @@ msgstr "Withdraw from GLP Vault"
 msgid "Image generation error, please refresh and try again."
 msgstr "Image generation error, please refresh and try again."
 
+#: src/components/Synthetics/TVChart/TVChartHeaderLabels.tsx
+msgid "Price:"
+msgstr "Price:"
+
 #: src/components/Synthetics/Claims/ClaimableCardUI.tsx
 #: src/components/Synthetics/TradeFeesRow/TradeFeesRow.tsx
 msgid "Price Impact Rebates"
@@ -6893,6 +6901,10 @@ msgstr "Click on the Position to select its market, then use the trade box to in
 #: src/domain/synthetics/orders/utils.tsx
 msgid "Limit Decrease"
 msgstr "Limit Decrease"
+
+#: src/components/Synthetics/TVChart/TVChartHeaderLabels.tsx
+msgid "24h Change"
+msgstr "24h Change"
 
 #: src/components/AddressDropdown/AddressDropdown.tsx
 #: src/components/Synthetics/SubaccountModal/SubaccountModal.tsx
