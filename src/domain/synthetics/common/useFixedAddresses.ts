@@ -16,3 +16,4 @@ export function useFixedAddreseses(marketsData: MarketsData | undefined, tokensD
       );
   }, [marketsData, tokensData]);
 }
+
