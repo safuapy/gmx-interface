@@ -83,3 +83,7 @@ html.theme-dark .chart-controls-bar {
 html.theme-dark .common-tooltip__ear-holder-EJBD96zX:after {
   display: none;
 }
+
+[data-section-name="candleSymbolTimezone"] {
+  display: none !important;
+}

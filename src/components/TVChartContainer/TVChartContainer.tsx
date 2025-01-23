@@ -181,11 +181,16 @@ export default function TVChartContainer({
       load_last_chart: true,
       auto_save_delay: 1,
       save_load_adapter: new SaveLoadAdapter(tvCharts, setTvCharts, tradePageVersion),
+      timezone: "exchange",
     };
     tvWidgetRef.current = new window.TradingView.widget(widgetOptions);
 
     tvWidgetRef.current!.onChartReady(function () {
       setChartReady(true);
+
+      tvWidgetRef.current?.applyOverrides({
+        timezone: "exchange",
+      });
 
       const savedPeriod = tvWidgetRef.current?.activeChart().resolution();
       const preferredPeriod = getObjectKeyFromValue(period, supportedResolutions) as ResolutionString;
