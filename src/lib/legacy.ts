@@ -1445,8 +1445,7 @@ export function getProcessedData(
 }
 
 export function getPageTitle(data) {
-  const title = t`Decentralized Perpetual Exchange | IntelMarket`;
-  return `${data} | ${title}`;
+  return `${data} | IntelMarket`;
 }
 
 export function isHashZero(value) {

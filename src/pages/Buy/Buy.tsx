@@ -11,7 +11,7 @@ import "./Buy.css";
 
 export default function BuyGMXGLP() {
   return (
-    <SEO title={getPageTitle(t`Buy GLP or INTEL`)}>
+    <SEO title="Buy GLP or INTEL | IntelMarket">
       <div className="BuyGMXGLP page-layout">
         <div className="default-container">
           <div className="BuyGMXGLP-container">

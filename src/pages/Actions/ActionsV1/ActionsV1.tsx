@@ -67,7 +67,7 @@ function ActionsV1({
         <div className="Actions-title">
           <PageTitle
             isTop
-            title={t`IntelMarket V1 Actions`}
+            title="IntelMarket V1 Actions"
             chainId={chainId}
             subtitle={
               <>
