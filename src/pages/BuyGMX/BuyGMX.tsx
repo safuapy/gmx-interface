@@ -72,7 +72,7 @@ export default function BuyGMX() {
         <div className="section-title-block">
           <div className="section-title-content">
             <div className="Page-title">
-              <Trans>Buy GMX on {chainName}</Trans>
+              <Trans>Buy INTEL on {chainName}</Trans>
               <img className="Page-title-icon ml-5 inline-block" src={icons?.network} alt={chainName} />
             </div>
             <div className="Page-description">
@@ -196,12 +196,12 @@ export default function BuyGMX() {
 function DecentralisedExchanges({ chainId, externalLinks }) {
   const isArbitrum = chainId === ARBITRUM;
   return (
-    <Card title={t`Buy GMX from decentralized exchanges`}>
+    <Card title={t`Buy INTEL from decentralized exchanges`}>
       <div className="App-card-content">
         {isArbitrum ? (
           <div className="exchange-info-group">
             <div className="BuyGMXGLP-description">
-              <Trans>Buy GMX from Uniswap or directly on GMX (make sure to select Arbitrum):</Trans>
+              <Trans>Buy INTEL from Uniswap or directly on IntelMarket (make sure to select Arbitrum):</Trans>
             </div>
             <div className="buttons-group">
               <Button
@@ -230,7 +230,7 @@ function DecentralisedExchanges({ chainId, externalLinks }) {
         ) : (
           <div className="exchange-info-group">
             <div className="BuyGMXGLP-description">
-              <Trans>Buy GMX from Traderjoe:</Trans>
+              <Trans>Buy INTEL from Traderjoe:</Trans>
             </div>
             <div className="buttons-group col-1">
               <Button
@@ -320,7 +320,7 @@ function DecentralisedExchanges({ chainId, externalLinks }) {
 
 function CentralisedExchanges({ chainId }) {
   return (
-    <Card title={t`Buy GMX from centralized services`}>
+    <Card title={t`Buy INTEL from centralized services`}>
       <div className="App-card-content">
         <div className="exchange-info-group">
           <div className="BuyGMXGLP-description">
