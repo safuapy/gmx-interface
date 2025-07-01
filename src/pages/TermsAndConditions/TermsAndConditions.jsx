@@ -13,7 +13,7 @@ export default function TermsAndConditions() {
       <div className="default-container Page page-layout">
         <div>
           <div className="Page-title-section center">
-            <div className="Page-title">GMX</div>
+            <div className="Page-title">IntelMarket</div>
             <div className="Page-subtitle">Terms and Conditions</div>
             <div className="Page-description">Last modified: August 1st, 2022</div>
           </div>

@@ -23,7 +23,7 @@ export default function SyntheticsActions() {
         <div className="Actions-title">
           <PageTitle
             isTop
-            title={t`GMX V2 Actions`}
+            title={t`IntelMarket V2 Actions`}
             chainId={chainId}
             subtitle={
               <>

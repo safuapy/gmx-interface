@@ -96,8 +96,8 @@ export function GmxCard({
               <img src={currentIcons.gmx} width="40" alt="GMX Token Icon" />
             </div>
             <div className="App-card-title-mark-info">
-              <div className="App-card-title-mark-title">GMX</div>
-              <div className="App-card-title-mark-subtitle">GMX</div>
+              <div className="App-card-title-mark-title">INTEL</div>
+              <div className="App-card-title-mark-subtitle">INTEL</div>
             </div>
             <div>
               <AssetDropdown assetSymbol="GMX" />
