@@ -1,5 +1,6 @@
 .App-header-backdrop {
-  background-color: rgba(0, 0, 0, 0.9);
+  background: linear-gradient(135deg, rgba(0, 0, 0, 0.8) 0%, rgba(176, 38, 255, 0.1) 100%);
+  backdrop-filter: blur(10px);
   position: fixed;
   z-index: 1000;
   top: 0;
@@ -10,21 +11,22 @@
 
 .App-header.large {
   height: 6.2rem;
-  backdrop-filter: blur(4px);
+  backdrop-filter: blur(20px);
   display: flex;
   justify-content: space-between;
   position: relative;
   padding-left: 3.2rem;
   padding-right: 3.2rem;
-  background: transparent 0% 0% no-repeat padding-box;
-  border-bottom: 1px solid var(--color-slate-700);
+  background: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.05) 100%);
+  border-bottom: 1px solid rgba(176, 38, 255, 0.2);
+  box-shadow: 0 4px 20px rgba(176, 38, 255, 0.1);
 }
 
 .App-header.large::after {
   height: 1.3rem;
   width: 100%;
   content: " ";
-  background: transparent linear-gradient(180deg, #00000030 0%, transparent 100%) 0% 0% no-repeat padding-box;
+  background: linear-gradient(180deg, rgba(176, 38, 255, 0.1) 0%, transparent 100%);
   position: absolute;
   bottom: -1.3rem;
   left: 0;
@@ -40,7 +42,9 @@
 }
 
 .App-header-drawer {
-  background: var(--color-slate-750) 0% 0% no-repeat padding-box;
+  background: linear-gradient(135deg, var(--color-cyber-800) 0%, var(--color-cyber-900) 100%);
+  backdrop-filter: blur(20px);
+  border-left: 1px solid rgba(176, 38, 255, 0.2);
   opacity: 1;
   position: fixed;
   z-index: 1001;
@@ -52,6 +56,7 @@
   overflow-y: auto;
   -ms-overflow-style: none; /* Internet Explorer 10+ */
   scrollbar-width: none; /* Firefox */
+  box-shadow: -10px 0 30px rgba(176, 38, 255, 0.2);
 }
 .App-header-drawer::-webkit-scrollbar {
   display: none; /* Safari and Chrome */
@@ -61,12 +66,15 @@
 .App-header-drawer .App-header-link-container a {
   font-size: var(--font-size-body-large);
   line-height: var(--line-height-body-large);
-  font-weight: normal;
+  font-weight: 500;
   letter-spacing: 0.1px;
-  color: var(--color-slate-100);
+  color: var(--color-cyber-200);
   padding: 1.5rem 1.6rem;
   text-decoration: none;
   display: block;
+  transition: all 0.3s ease;
+  border-radius: 8px;
+  margin: 0.5rem 1rem;
 }
 
 .App-header-drawer .App-header-link-container .a:hover,
@@ -75,8 +83,10 @@
 .App-header-drawer .App-header-link-container a:hover,
 .App-header-drawer .App-header-link-container a:focus,
 .App-header-drawer .App-header-link-container a.active {
-  background: #303fd024;
+  background: linear-gradient(135deg, rgba(176, 38, 255, 0.2) 0%, rgba(176, 38, 255, 0.1) 100%);
   color: var(--color-white);
+  box-shadow: 0 4px 15px rgba(176, 38, 255, 0.2);
+  transform: translateX(5px);
 }
 
 .App-header.large .App-header-link-container {
@@ -107,21 +117,33 @@
 .App-header-menu-icon-block {
   display: flex;
   align-items: center;
-  border: solid 1px var(--color-gray-800);
-  border-radius: 4px;
-  height: 3.6rem;
+  border: 1px solid rgba(176, 38, 255, 0.3);
+  border-radius: 12px;
+  height: 4.8rem;
+  background: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.05) 100%);
+  backdrop-filter: blur(10px);
+  transition: all 0.3s ease;
+}
+
+.App-header-menu-icon-block:hover {
+  border-color: rgba(176, 38, 255, 0.6);
+  box-shadow: 0 0 20px rgba(176, 38, 255, 0.3);
+  transform: translateY(-2px);
 }
 
 .App-header-menu-icon {
   color: var(--color-white);
   font-size: 2rem;
   cursor: pointer;
-  opacity: 0.7;
+  opacity: 0.8;
   margin: 0.7rem;
+  transition: all 0.3s ease;
 }
 
 .App-header-menu-icon:hover {
-  opacity: 0.9;
+  opacity: 1;
+  color: var(--color-purple-300);
+  text-shadow: 0 0 10px rgba(176, 38, 255, 0.5);
 }
 
 .App-header a.App-header-link-main,
@@ -131,6 +153,12 @@
   margin-left: -1.5rem;
   display: flex;
   margin-right: 1.2rem;
+  transition: all 0.3s ease;
+}
+
+.App-header-link-main:hover {
+  transform: scale(1.05);
+  filter: drop-shadow(0 0 10px rgba(176, 38, 255, 0.3));
 }
 
 .App-header-link-main img {
@@ -149,29 +177,35 @@
   vertical-align: middle;
   display: inline-block;
   cursor: pointer;
+  transition: all 0.3s ease;
 }
 
 .App-header .a.active,
 .App-header a.active {
   pointer-events: all;
   opacity: 1;
-  color: var(--color-gray-50);
+  color: var(--color-purple-300);
+  text-shadow: 0 0 10px rgba(176, 38, 255, 0.5);
 }
 
 .App-header .a:hover,
 .App-header a:hover {
   opacity: 1;
-  color: var(--color-gray-50);
+  color: var(--color-purple-300);
+  text-shadow: 0 0 10px rgba(176, 38, 255, 0.5);
+  transform: translateY(-2px);
 }
 
 .App-header-container-left .a,
 .App-header-container-left a {
   padding: 1.8rem 1.7rem;
   display: block;
-  color: var(--color-slate-100);
+  color: var(--color-cyber-200);
   font-size: var(--font-size-body-large);
   line-height: var(--line-height-body-large);
-  font-weight: normal;
+  font-weight: 500;
+  border-radius: 8px;
+  transition: all 0.3s ease;
 }
 .App-header.large .App-header-container-left a {
   white-space: nowrap;
@@ -179,8 +213,17 @@
   text-overflow: ellipsis;
 }
 
+.App-header-container-left a:hover {
+  background: linear-gradient(135deg, rgba(176, 38, 255, 0.1) 0%, rgba(176, 38, 255, 0.05) 100%);
+  color: var(--color-purple-300);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(176, 38, 255, 0.2);
+}
+
 .App-header-container-left a.active {
-  color: var(--color-white);
+  color: var(--color-purple-300);
+  background: linear-gradient(135deg, rgba(176, 38, 255, 0.2) 0%, rgba(176, 38, 255, 0.1) 100%);
+  box-shadow: 0 4px 15px rgba(176, 38, 255, 0.3);
 }
 
 .App-header-container-right {

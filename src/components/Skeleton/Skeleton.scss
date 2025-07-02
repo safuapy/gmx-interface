@@ -1,6 +1,22 @@
-.react-loading-skeleton::after {
-  background: linear-gradient(to right, transparent, #b4bbff1a, transparent);
-  animation-duration: 2s;
+.react-loading-skeleton {
+  background: linear-gradient(135deg, var(--color-cyber-800) 0%, var(--color-cyber-700) 100%);
+  border-radius: 8px;
+  position: relative;
+  overflow: hidden;
+
+  &::after {
+    background: linear-gradient(90deg, transparent, rgba(176, 38, 255, 0.3), transparent);
+    animation-duration: 1.5s;
+    animation-name: react-loading-skeleton;
+    animation-iteration-count: infinite;
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    transform: translateX(-100%);
+  }
 }
 
 @keyframes react-loading-skeleton {
@@ -12,5 +28,28 @@
   }
   100% {
     transform: translateX(100%);
+  }
+}
+
+/* Modern skeleton variants */
+.skeleton-glow {
+  background: linear-gradient(135deg, var(--color-cyber-800) 0%, var(--color-cyber-700) 100%);
+  border: 1px solid rgba(176, 38, 255, 0.2);
+  box-shadow: 0 4px 15px rgba(176, 38, 255, 0.1);
+
+  &::after {
+    background: linear-gradient(90deg, transparent, rgba(176, 38, 255, 0.4), transparent);
+    animation-duration: 2s;
+  }
+}
+
+.skeleton-neon {
+  background: linear-gradient(135deg, var(--color-cyber-900) 0%, var(--color-cyber-800) 100%);
+  border: 1px solid rgba(176, 38, 255, 0.3);
+  box-shadow: 0 0 20px rgba(176, 38, 255, 0.2);
+
+  &::after {
+    background: linear-gradient(90deg, transparent, var(--color-neon-purple), transparent);
+    animation-duration: 1s;
   }
 }

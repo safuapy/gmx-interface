@@ -7,12 +7,60 @@ const defaultConfig = require("tailwindcss/defaultConfig");
 const flattenColorPalette = require("tailwindcss/lib/util/flattenColorPalette");
 
 /**
- * @See https://www.notion.so/gmxio/Colors-Clean-Up-13303574745d80deb5dcebb6f15e41ad#13303574745d8066aad0cbd650848ca6
+ * 2025 Techno-Punk Crypto Color Palette
+ * Modern gradients, neon accents, and futuristic aesthetics
  */
 const colors = {
+  // Primary Purple Gradient System
+  purple: {
+    50: "#faf5ff",
+    100: "#f3e8ff", 
+    200: "#e9d5ff",
+    300: "#d8b4fe",
+    400: "#c084fc",
+    500: "#a855f7",
+    600: "#9333ea",
+    700: "#7c3aed",
+    800: "#6b21a8",
+    900: "#581c87",
+    950: "#3b0764",
+  },
+  // Neon Accent Colors
+  neon: {
+    purple: "#b026ff",
+    pink: "#ff0080",
+    cyan: "#00ffff",
+    green: "#00ff41",
+    yellow: "#ffff00",
+    orange: "#ff6b35",
+    blue: "#0080ff",
+  },
+  // Dark Cyberpunk Backgrounds
+  cyber: {
+    50: "rgba(255, 255, 255, 0.95)",
+    100: "#e2e8f0",
+    200: "#cbd5e1",
+    300: "#94a3b8",
+    400: "#64748b",
+    500: "#475569",
+    600: "#334155",
+    700: "#1e293b",
+    800: "#0f172a",
+    900: "#020617",
+    950: "#000000",
+  },
+  // Gradient Backgrounds
+  gradient: {
+    primary: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
+    secondary: "linear-gradient(135deg, #f093fb 0%, #f5576c 100%)",
+    cyber: "linear-gradient(135deg, #0f0f23 0%, #1a1a2e 50%, #16213e 100%)",
+    neon: "linear-gradient(135deg, #b026ff 0%, #ff0080 50%, #00ffff 100%)",
+    glass: "linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.05) 100%)",
+  },
+  // Legacy colors for compatibility
   blue: {
     300: "#7885ff",
-    400: "#4d5ffa",
+    400: "#4d5ffa", 
     500: "#3d51ff",
     600: "#2d42fc",
     700: "#2e3dcd",
@@ -121,10 +169,38 @@ function customUtilsPlugin({ addUtilities, matchUtilities, matchVariant, addVari
     `@media (hover: none) {:merge(.group):active &}`,
   ]);
 
+  // Modern gradient utilities
   addUtilities({
     ".text-input-bg": {
       background:
-        "linear-gradient(90deg, var(--color-cold-blue-900) 0%, color-mix(in srgb, var(--color-slate-500) 40%, transparent) 100%)",
+        "linear-gradient(90deg, var(--color-cyber-800) 0%, color-mix(in srgb, var(--color-purple-600) 20%, transparent) 100%)",
+    },
+    ".bg-gradient-primary": {
+      background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
+    },
+    ".bg-gradient-secondary": {
+      background: "linear-gradient(135deg, #f093fb 0%, #f5576c 100%)",
+    },
+    ".bg-gradient-cyber": {
+      background: "linear-gradient(135deg, #0f0f23 0%, #1a1a2e 50%, #16213e 100%)",
+    },
+    ".bg-gradient-neon": {
+      background: "linear-gradient(135deg, #b026ff 0%, #ff0080 50%, #00ffff 100%)",
+    },
+    ".bg-glass": {
+      background: "linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.05) 100%)",
+      backdropFilter: "blur(10px)",
+      border: "1px solid rgba(255,255,255,0.1)",
+    },
+    ".text-glow": {
+      textShadow: "0 0 10px currentColor, 0 0 20px currentColor, 0 0 30px currentColor",
+    },
+    ".box-glow": {
+      boxShadow: "0 0 20px rgba(176, 38, 255, 0.3), 0 0 40px rgba(176, 38, 255, 0.1)",
+    },
+    ".border-glow": {
+      border: "1px solid rgba(176, 38, 255, 0.3)",
+      boxShadow: "0 0 10px rgba(176, 38, 255, 0.2), inset 0 0 10px rgba(176, 38, 255, 0.1)",
     },
   });
 }

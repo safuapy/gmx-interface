@@ -83,14 +83,17 @@ $app-card-padding: 1.5rem;
 
 .App-highlight-box {
   background: linear-gradient(
-    45deg,
-    rgba(80, 10, 245, 1) 0%,
-    rgba(43, 118, 224, 1) 35%,
-    rgba(7, 157, 250, 1) 77%,
-    rgba(2, 207, 207, 1) 100%
+    135deg,
+    var(--color-neon-purple) 0%,
+    var(--color-purple-600) 25%,
+    var(--color-neon-cyan) 50%,
+    var(--color-purple-400) 75%,
+    var(--color-neon-purple) 100%
   );
-  border-radius: 0.3rem;
-  box-shadow: 0 0 0.4rem 0.6rem rgba(45, 66, 252, 0.15);
+  border-radius: 16px;
+  box-shadow: 0 8px 32px rgba(176, 38, 255, 0.4);
+  animation: glow 3s ease-in-out infinite;
+  border: 1px solid rgba(176, 38, 255, 0.3);
 }
 
 .App-box,
@@ -99,9 +102,23 @@ $app-card-padding: 1.5rem;
 .App-box-highlight,
 .App-box-solid {
   position: relative;
-  border-radius: 0.4rem;
-  background: var(--color-slate-800);
+  border-radius: 16px;
+  background: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.05) 100%);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(176, 38, 255, 0.2);
   font-size: var(--font-size-body-medium);
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 20px rgba(176, 38, 255, 0.1);
+}
+
+.App-box:hover,
+.App-card:hover,
+.App-card-primary:hover,
+.App-box-highlight:hover,
+.App-box-solid:hover {
+  border-color: rgba(176, 38, 255, 0.4);
+  box-shadow: 0 8px 32px rgba(176, 38, 255, 0.2);
+  transform: translateY(-4px);
 }
 
 .App-card-space-between {
@@ -159,7 +176,50 @@ $app-card-padding: 1.5rem;
 .App-card-info-subtitle {
   font-weight: normal;
   letter-spacing: 0px;
-  color: var(--color-gray-400);
+  color: var(--color-cyber-300);
+}
+
+/* Modern Animations */
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.7; }
+}
+
+@keyframes glow {
+  0%, 100% { 
+    box-shadow: 0 4px 20px rgba(176, 38, 255, 0.1);
+  }
+  50% { 
+    box-shadow: 0 8px 32px rgba(176, 38, 255, 0.3), 0 0 40px rgba(176, 38, 255, 0.2);
+  }
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+.float {
+  animation: float 3s ease-in-out infinite;
+}
+
+.pulse {
+  animation: pulse 2s ease-in-out infinite;
+}
+
+.glow {
+  animation: glow 2s ease-in-out infinite;
+}
+
+.shimmer {
+  background: linear-gradient(90deg, transparent, rgba(176, 38, 255, 0.2), transparent);
+  background-size: 200% 100%;
+  animation: shimmer 2s infinite;
 }
 
 .App-card-title-iconlist {
@@ -179,12 +239,11 @@ $app-card-padding: 1.5rem;
 
 .Wallet-btn {
   display: block;
-  box-shadow: inset 0px 0px 1rem 0.5rem rgba(27, 30, 46, 0.2);
-  background: var(--dark-blue);
+  background: linear-gradient(135deg, var(--color-purple-600) 0%, var(--color-purple-700) 100%);
   height: 5.1rem;
   width: 26.35rem;
-  border: 1px solid var(--color-stroke-primary);
-  border-radius: 0.3rem;
+  border: 1px solid rgba(176, 38, 255, 0.3);
+  border-radius: 12px;
   position: relative;
   color: var(--color-white);
   font-size: 2rem;
@@ -193,10 +252,31 @@ $app-card-padding: 1.5rem;
   text-align: left;
   padding-left: 1.85rem;
   padding-top: 1.05rem;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(176, 38, 255, 0.2);
+  overflow: hidden;
 }
+
+.Wallet-btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+  transition: left 0.5s;
+}
+
+.Wallet-btn:hover::before {
+  left: 100%;
+}
+
 .Wallet-btn:hover {
-  background: var(--dark-blue-hover);
-  border-color: var(--dark-blue-border);
+  background: linear-gradient(135deg, var(--color-purple-500) 0%, var(--color-purple-600) 100%);
+  border-color: rgba(176, 38, 255, 0.6);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(176, 38, 255, 0.4);
 }
 .Wallet-btn:active {
   background: var(--dark-blue-active);
