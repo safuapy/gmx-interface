@@ -44,7 +44,7 @@ export default function BuyGlp() {
               </div>
             )}
             <Trans>
-              Purchase <ExternalLink href="https://docs.gmx.io/docs/providing-liquidity/v1">GLP tokens</ExternalLink> to
+              Purchase <ExternalLink href="https://docs.intelmarkets.trade/docs/providing-liquidity/v1">GLP tokens</ExternalLink> to
               earn {nativeTokenSymbol} fees from swaps and leverage trading.
             </Trans>
           </div>

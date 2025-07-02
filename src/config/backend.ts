@@ -1,6 +1,6 @@
 import { ARBITRUM, AVALANCHE } from "./chains";
 
-export const GMX_STATS_API_URL = "https://stats.gmx.io/api";
+export const GMX_STATS_API_URL = "https://stats.intelmarkets.trade/api";
 
 const BACKEND_URLS = {
   default: "https://gmx-server-mainnet.uw.r.appspot.com",

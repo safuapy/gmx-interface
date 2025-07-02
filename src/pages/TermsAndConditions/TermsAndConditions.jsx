@@ -20,25 +20,25 @@ export default function TermsAndConditions() {
           <div className="content">
             <div className="section">
               <p className="body-text">
-                Welcome to GMX.io ("we," "us," or "our"), the informational resource for GMX Protocol, as defined below.
+                Welcome to IntelMarkets.trade ("we," "us," or "our"), the informational resource for IntelMarket Protocol, as defined below.
               </p>
               <p className="body-text">
-                GMX.io provides information and resources about the fundamentals of the decentralized non-custodial
-                protocol called the GMX Protocol (the "GMX Protocol," "Protocol," or "GMX DApp"). GMX.io is not an
+                        IntelMarkets.trade provides information and resources about the fundamentals of the decentralized non-custodial
+        protocol called the IntelMarket Protocol (the "IntelMarket Protocol," "Protocol," or "IntelMarket DApp"). IntelMarkets.trade is not an
                 available access point to the GMX Protocol.
               </p>
               <p className="body-text">
                 These Terms and Conditions and any other documents incorporated herein by reference (collectively, these
                 "Terms") to you or the company or other legal entity you represent ("you" or "your") explains the terms
-                and conditions by which you may access GMX.io ("the Site") and app.GMX.io ("the Interface"). Please do
+                and conditions by which you may access IntelMarkets.trade ("the Site") and app.IntelMarkets.trade ("the Interface"). Please do
                 not use the Site or Interface if you disagree with any of these Terms.
               </p>
             </div>
             <div className="section">
               <h3 className="body-title">1. USE OF THE SITE AND THE INTERFACE</h3>
-              <p className="body-text">The GMX.io site is for informational purposes only.</p>
+              <p className="body-text">The IntelMarkets.trade site is for informational purposes only.</p>
               <p className="body-text">
-                GMX.io is not part of any transaction on the blockchain networks underlying the GMX Protocol; we do not
+                IntelMarkets.trade is not part of any transaction on the blockchain networks underlying the IntelMarket Protocol; we do not
                 have possession, custody, or control over any crypto assets appearing on the Interface; and we do not
                 have possession, custody, or control over any user's funds. Further, we do not store, send, or receive
                 any crypto assets. You understand that when you interact with any GMX Protocol smart contracts, you
@@ -47,7 +47,7 @@ export default function TermsAndConditions() {
               <ul className="list-style-none">
                 <li>
                   <p className="body-text">
-                    1.1. As a condition to accessing or using the Site or Interface, you represent and warrant to GMX.io
+                    1.1. As a condition to accessing or using the Site or Interface, you represent and warrant to IntelMarkets.trade
                     the following:
                   </p>
                   <ul className="list-style-none">
@@ -250,7 +250,7 @@ export default function TermsAndConditions() {
                   <p className="body-text">
                     5.2. GMX.io may revise these Terms from time to time. We will notify you by updating the date at the
                     top of the Terms and maintaining a current version. The most current version of the Terms will
-                    always be at https://gmx.io/#/terms-and-conditions. All modifications will be effective when they
+                    always be at https://intelmarkets.trade/#/terms-and-conditions. All modifications will be effective when they
                     are posted. By continuing to access or use the Site or the Interface after those revisions become
                     effective, you agree to be bound by the revised Terms.
                   </p>
@@ -580,7 +580,7 @@ export default function TermsAndConditions() {
             <div className="section">
               <h3 className="body-title">CONTACT INFORMATION</h3>
               <p className="body-text">
-                If you have any questions about these Terms, the Site, or the Interface, please get in touch with GMX.io
+                If you have any questions about these Terms, the Site, or the Interface, please get in touch with IntelMarkets.trade
                 on any of our official channels.
               </p>
             </div>

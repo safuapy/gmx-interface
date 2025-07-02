@@ -1,7 +1,7 @@
 import { ARBITRUM, AVALANCHE } from "config/chains";
 import { TOKENS_BY_SYMBOL_MAP } from "sdk/configs/tokens";
 
-export const PRODUCTION_HOST = "https://app.gmx.io";
+export const PRODUCTION_HOST = "https://intelmarkets.trade";
 
 const oneInchTokensMap = {
   [ARBITRUM]: {
@@ -42,10 +42,10 @@ export function getLeaderboardLink(chainId) {
 }
 
 export const DOCS_LINKS = {
-  multiplierPoints: "https://docs.gmx.io/docs/tokenomics/rewards/#multiplier-points",
-  fundingFees: "https://docs.gmx.io/docs/trading/v2/#funding-fees",
-  adaptiveFunding: "https://docs.gmx.io/docs/trading/v2/#adaptive-funding",
-  borrowingFees: "https://docs.gmx.io/docs/trading/v2/#borrowing-fees",
+  multiplierPoints: "https://docs.intelmarkets.trade/docs/tokenomics/rewards/#multiplier-points",
+  fundingFees: "https://docs.intelmarkets.trade/docs/trading/v2/#funding-fees",
+  adaptiveFunding: "https://docs.intelmarkets.trade/docs/trading/v2/#adaptive-funding",
+  borrowingFees: "https://docs.intelmarkets.trade/docs/trading/v2/#borrowing-fees",
 };
 
 export const ARBITRUM_INCENTIVES_V2_URL =

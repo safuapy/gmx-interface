@@ -191,7 +191,7 @@ export const appEventsData: EventData[] = [
     bodyText: (
       <>
         Stop Market orders are now enabled on GMX.{" "}
-        <ExternalLink href="https://docs.gmx.io/docs/trading/v2#stop-market-orders">Read more</ExternalLink>.
+        <ExternalLink href="https://docs.intelmarkets.trade/docs/trading/v2#stop-market-orders">Read more</ExternalLink>.
       </>
     ),
   },

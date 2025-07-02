@@ -196,8 +196,8 @@ function StakeContent() {
         subtitle={
           <div>
             <Trans>
-              Deposit <ExternalLink href="https://docs.gmx.io/docs/tokenomics/gmx-token">GMX</ExternalLink> and{" "}
-              <ExternalLink href="https://docs.gmx.io/docs/providing-liquidity/gmx-token">esGMX</ExternalLink> tokens to
+                      Deposit <ExternalLink href="https://docs.intelmarkets.trade/docs/tokenomics/gmx-token">GMX</ExternalLink> and{" "}
+        <ExternalLink href="https://docs.intelmarkets.trade/docs/providing-liquidity/gmx-token">esGMX</ExternalLink> tokens to
               earn rewards.
             </Trans>
             {earnMsg && <div className="Page-description">{earnMsg}</div>}

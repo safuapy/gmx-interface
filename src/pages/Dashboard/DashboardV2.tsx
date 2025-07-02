@@ -118,8 +118,8 @@ export default function DashboardV2() {
           subtitle={
             <div>
               <Trans>For detailed stats:</Trans>{" "}
-              {chainId === ARBITRUM && <ExternalLink href="https://stats.gmx.io">V1 Analytics</ExternalLink>}
-              {chainId === AVALANCHE && <ExternalLink href="https://stats.gmx.io/avalanche">V1 Analytics</ExternalLink>}
+                      {chainId === ARBITRUM && <ExternalLink href="https://stats.intelmarkets.trade">V1 Analytics</ExternalLink>}
+        {chainId === AVALANCHE && <ExternalLink href="https://stats.intelmarkets.trade/avalanche">V1 Analytics</ExternalLink>}
               {(chainId === ARBITRUM || chainId === AVALANCHE) && " | "}
               <ExternalLink href="https://dune.com/gmx-io/gmx-analytics">V2 Analytics</ExternalLink>
               {" | "}

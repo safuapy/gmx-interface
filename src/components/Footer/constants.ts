@@ -36,10 +36,9 @@ export function getFooterLinks(isHome) {
   return FOOTER_LINKS[isHome ? "home" : "app"];
 }
 
-export const SOCIAL_LINKS: SocialLink[] = [
-  { link: "https://twitter.com/GMX_IO", name: "Twitter", icon: xIcon },
-  { link: "https://gmxio.substack.com/", name: "Substack", icon: substackIcon },
-  { link: "https://github.com/gmx-io", name: "Github", icon: githubIcon },
-  { link: "https://t.me/GMX_IO", name: "Telegram", icon: telegramIcon },
-  { link: "https://discord.gg/H5PeQru3Aa", name: "Discord", icon: discordIcon },
+export const SOCIAL_LINKS = [
+  { link: "https://github.com/intelmarkets", name: "GitHub", icon: githubIcon },
+  { link: "https://t.me/intelmarkets", name: "Telegram", icon: telegramIcon },
+  { link: "https://discord.gg/intelmarkets", name: "Discord", icon: discordIcon },
+  { link: "https://twitter.com/intelmarkets", name: "Twitter", icon: xIcon },
 ];

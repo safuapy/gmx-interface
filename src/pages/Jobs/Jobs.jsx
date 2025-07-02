@@ -41,7 +41,7 @@ function NoJob() {
         <p className="subheading">
           <Trans>
             GMX is not actively looking for new hires at the moment. However, if you think you can contribute to the
-            project, please email <ExternalLink href="mailto:jobs@gmx.io">jobs@gmx.io</ExternalLink>.
+            project, please email <ExternalLink href="mailto:jobs@intelmarkets.trade">jobs@intelmarkets.trade</ExternalLink>.
           </Trans>
         </p>
       </div>
@@ -72,8 +72,8 @@ function NoJob() {
 //       <p>The salary is 60,000 to 120,000 USD + 1,000 to 3,000 GMX a year.</p>
 //       <p className="jobs-contact">
 //         If the job suits you, please get in touch with{" "}
-//         <a target="_blank" href="mailto:jobs@gmx.io" rel="noopener noreferrer">
-//           jobs@gmx.io
+//         <a target="_blank" href="mailto:jobs@intelmarkets.trade" rel="noopener noreferrer">
+//           jobs@intelmarkets.trade
 //         </a>{" "}
 //         using the following email subject: Application for Senior front-end developer: [Your name]
 //       </p>

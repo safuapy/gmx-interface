@@ -14,8 +14,8 @@ type EcosystemGmxPage = {
 export const gmxPages: EcosystemGmxPage[] = [
   {
     title: msg`GMX Governance`,
-    link: "https://gov.gmx.io/",
-    linkLabel: "gov.gmx.io",
+    link: "https://gov.intelmarkets.trade/",
+    linkLabel: "gov.intelmarkets.trade",
     about: msg`GMX Governance Page`,
     chainIds: [ARBITRUM, AVALANCHE],
   },

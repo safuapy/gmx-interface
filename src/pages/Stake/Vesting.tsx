@@ -248,7 +248,7 @@ export function Vesting({ processedData }: { processedData: ProcessedData | unde
               Convert esGMX tokens to GMX tokens.
               <br />
               Please read the{" "}
-              <ExternalLink href="https://docs.gmx.io/docs/tokenomics/rewards#vesting">
+              <ExternalLink href="https://docs.intelmarkets.trade/docs/tokenomics/rewards#vesting">
                 vesting details
               </ExternalLink>{" "}
               before using the vaults.
