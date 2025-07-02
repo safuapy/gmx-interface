@@ -65,7 +65,7 @@ for (let j = 0; j < CHAIN_IDS.length; j++) {
   V1_TOKENS[chainId] = [];
   V2_TOKENS[chainId] = [];
 
-  let tokens = TOKENS[chainId];
+  let tokens = TOKENS[chainId] || [];
   let wrappedTokenAddress: string | undefined;
 
   for (let i = 0; i < tokens.length; i++) {
