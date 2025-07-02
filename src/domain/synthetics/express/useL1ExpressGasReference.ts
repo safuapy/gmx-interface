@@ -1,3 +1,5 @@
+// This file is not relevant for Ethereum L1. Arbitrum-specific gas logic removed.
+
 import useSWR from "swr";
 import { decodeFunctionResult, encodeFunctionData, size } from "viem";
 

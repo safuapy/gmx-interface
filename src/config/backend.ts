@@ -4,9 +4,6 @@ export const GMX_STATS_API_URL = "https://stats.intelmarkets.trade/api";
 
 const BACKEND_URLS = {
   default: "https://gmx-server-mainnet.uw.r.appspot.com",
-
-  [ARBITRUM]: "https://gmx-server-mainnet.uw.r.appspot.com",
-  [AVALANCHE]: "https://gmx-avax-server.uc.r.appspot.com",
 };
 
 export function getServerBaseUrl(chainId: number) {
@@ -21,7 +18,7 @@ export function getServerBaseUrl(chainId: number) {
     }
   }
 
-  return BACKEND_URLS[chainId] || BACKEND_URLS.default;
+  return BACKEND_URLS.default;
 }
 
 export function getServerUrl(chainId: number, path: string) {
