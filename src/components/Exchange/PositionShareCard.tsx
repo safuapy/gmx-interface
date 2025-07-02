@@ -11,7 +11,7 @@ import { getTokenVisualMultiplier } from "sdk/configs/tokens";
 
 import SpinningLoader from "components/Common/SpinningLoader";
 
-import gmxLogo from "img/gmx-logo-with-name.svg";
+import gmxLogo from "img/logo_INTEL.svg";
 
 type Props = {
   entryPrice: bigint | undefined;
