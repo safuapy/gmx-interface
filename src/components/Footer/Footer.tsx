@@ -62,6 +62,15 @@ export default function Footer({ showRedirectModal, redirectPopupTimestamp, isMo
           })}
         >
           {getFooterLinks(isHome).map(({ external, label, link, isAppLink }) => {
+            if (label === "Media Kit") {
+              // Placeholder for Media Kit link
+              return (
+                <div key="MediaKitPlaceholder" className={linkClassName}>
+                  {/* TODO: Replace with actual Media Kit link */}
+                  Media Kit (placeholder)
+                </div>
+              );
+            }
             if (external) {
               return (
                 <ExternalLink key={label} href={link} className={linkClassName}>
@@ -95,11 +104,11 @@ export default function Footer({ showRedirectModal, redirectPopupTimestamp, isMo
               </NavLink>
             );
           })}
-          {!isHome && (
-            <div className={linkClassName} onClick={() => setIsUserFeedbackModalVisible(true)}>
-              <Trans>Leave feedback</Trans>
-            </div>
-          )}
+          {/* Placeholder for Leave Feedback, always visible */}
+          <div className={linkClassName} style={{ opacity: 0.5 }}>
+            {/* TODO: Connect to feedback modal or page */}
+            Leave feedback (placeholder)
+          </div>
         </div>
         <div
           className={cx("flex gap-24", {
