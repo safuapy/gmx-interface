@@ -11,8 +11,8 @@ import { isHomeSite } from "lib/legacy";
 import { HeaderPromoBanner } from "components/HeaderPromoBanner/HeaderPromoBanner";
 import { OneClickPromoBanner } from "components/OneClickPromoBanner/OneClickPromoBanner";
 
-import logoImg from "img/logo_GMX.svg"; // TODO: Replace with IntelMarket logo
-import logoSmallImg from "img/logo_GMX_small.svg"; // TODO: Replace with IntelMarket logo
+import logoImg from "img/logo_INTEL.svg";
+import logoSmallImg from "img/logo_INTEL_small.svg";
 
 import { AppHeaderLinks } from "./AppHeaderLinks";
 import { AppHeaderUser } from "./AppHeaderUser";
@@ -107,8 +107,8 @@ export function Header({ disconnectAccountAndCloseSettings, openSettings, showRe
           <div className="App-header large">
             <div className="App-header-container-left">
               <Link className="App-header-link-main" to="/">
-                <img src={logoImg} className="big" alt="IntelMarket Logo" />
-                <img src={logoSmallImg} className="small" alt="IntelMarket Logo" />
+                <img src={logoImg} className="big" alt="IntelMarket" />
+                <img src={logoSmallImg} className="small" alt="IntelMarket" />
               </Link>
               {isHomeSite() ? (
                 <HomeHeaderLinks showRedirectModal={showRedirectModal} />
@@ -138,8 +138,8 @@ export function Header({ disconnectAccountAndCloseSettings, openSettings, showRe
             >
               <div className="App-header-container-left">
                 <div className="App-header-link-main clickable" onClick={toggleDrawer}>
-                  <img src={logoImg} className="big" alt="IntelMarket Logo" />
-                  <img src={logoSmallImg} className="small" alt="IntelMarket Logo" />
+                  <img src={logoImg} className="big" alt="IntelMarket" />
+                  <img src={logoSmallImg} className="small" alt="IntelMarket" />
                 </div>
               </div>
               <div className="App-header-container-right">
