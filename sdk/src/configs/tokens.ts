@@ -8,7 +8,24 @@ import { getContract } from "./contracts";
 export const NATIVE_TOKEN_ADDRESS = zeroAddress;
 
 export const TOKENS: { [chainId: number]: Token[] } = {
-  // TODO: Add Ethereum L1 tokens after deployment
+  1: [
+    {
+      name: "Ethereum",
+      symbol: "ETH",
+      address: zeroAddress,
+      decimals: 18,
+      isNative: true,
+      isWrapped: false,
+      isStable: false,
+      isV1Available: true,
+      isTempHidden: false,
+      isPlatformToken: false,
+      isPlatformTradingToken: false,
+      isSynthetic: false,
+      categories: [],
+    },
+  ],
+  // TODO: Add more tokens as needed
 };
 
 export const TOKEN_COLOR_MAP = {
@@ -95,7 +112,9 @@ for (let j = 0; j < CHAIN_IDS.length; j++) {
     }
   }
 
-  NATIVE_TOKENS_MAP[chainId].wrappedAddress = wrappedTokenAddress;
+  if (NATIVE_TOKENS_MAP[chainId]) {
+    NATIVE_TOKENS_MAP[chainId].wrappedAddress = wrappedTokenAddress;
+  }
 }
 
 export function getSyntheticTokens(chainId: number) {
