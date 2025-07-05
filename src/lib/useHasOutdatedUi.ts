@@ -11,7 +11,8 @@ export function useHasOutdatedUi() {
   const { chainId } = useChainId();
   const { active } = useWallet();
 
-  const { data: minVersion } = useSWR([chainId, active], {
+  // Disable version check in development to avoid CORS issues
+  const { data: minVersion } = useSWR(isDevelopment() ? null : [chainId, active], {
     fetcher: async () => {
       const noCacheParam = Math.random().toString().substring(2, 8);
 

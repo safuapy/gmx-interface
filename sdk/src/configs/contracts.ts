@@ -9,7 +9,7 @@ export const CONTRACTS = {
   [ETH_MAINNET]: {
     // Ethereum mainnet - minimal configuration for wallet balance fetching
     // All trading functionality still uses Arbitrum contracts
-    Multicall: "0x5BA1e12693Dc8F9c48aAD8770482f4739bEeD696", // Standard Ethereum multicall
+    Multicall: "0xcA11bde05977b3631167028862bE2a173976CA11", // Standard Multicall3 contract on Ethereum mainnet
     
     // Zero addresses for all other contracts since we only fetch balances from L1
     Vault: zeroAddress,

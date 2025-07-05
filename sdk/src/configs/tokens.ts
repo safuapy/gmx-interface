@@ -35,7 +35,7 @@ export const TOKENS: { [chainId: number]: Token[] } = {
       name: "USD Coin",
       symbol: "USDC",
       decimals: 6,
-      address: "0xA0b86a33E6441E8dd2D3b6D8e2c49E3eE44A31a2", // USDC on Ethereum mainnet
+      address: "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48", // Real USDC on Ethereum mainnet
       isStable: true,
       imageUrl: "https://assets.coingecko.com/coins/images/6319/thumb/USD_Coin_icon.png?1547042389",
       coingeckoUrl: "https://www.coingecko.com/en/coins/usd-coin",
