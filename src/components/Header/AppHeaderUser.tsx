@@ -2,7 +2,7 @@ import { Trans } from "@lingui/macro";
 import { useConnectModal } from "@rainbow-me/rainbowkit";
 import { useCallback } from "react";
 
-import { ARBITRUM, AVALANCHE, AVALANCHE_FUJI, BOTANIX, getChainName } from "config/chains";
+import { ARBITRUM, AVALANCHE, AVALANCHE_FUJI, BOTANIX, getChainName, ETH_MAINNET, WALLET_CHAIN_ID } from "config/chains";
 import { isDevelopment } from "config/env";
 import { getIcon } from "config/icons";
 import { useChainId } from "lib/chains";
@@ -33,7 +33,20 @@ type Props = {
   menuToggle?: React.ReactNode;
 };
 
+// UI shows only Ethereum - all data is fetched from Arbitrum behind the scenes
 const NETWORK_OPTIONS = [
+  {
+    label: "Ethereum",
+    value: WALLET_CHAIN_ID,
+    icon: getIcon(WALLET_CHAIN_ID, "network"),
+    color: "#627EEA",
+  },
+];
+
+// Keep all other network options in code but hidden from UI
+// These can be re-enabled by uncommenting the section below
+/*
+const ALL_NETWORK_OPTIONS = [
   {
     label: getChainName(ARBITRUM),
     value: ARBITRUM,
@@ -55,13 +68,14 @@ const NETWORK_OPTIONS = [
 ];
 
 if (isDevelopment()) {
-  NETWORK_OPTIONS.push({
+  ALL_NETWORK_OPTIONS.push({
     label: getChainName(AVALANCHE_FUJI),
     value: AVALANCHE_FUJI,
     icon: getIcon(AVALANCHE_FUJI, "network"),
     color: "#E841424D",
   });
 }
+*/
 
 export function AppHeaderUser({
   small,
@@ -79,7 +93,10 @@ export function AppHeaderUser({
 
   const tradeLink = tradePageVersion === 2 ? "/trade" : "/v1";
 
-  const selectorLabel = getChainName(chainId);
+  // Always show "Ethereum" in the UI regardless of connected chain
+  // This gives the impression that the app is running on Ethereum L1
+  // while all contract operations happen on Arbitrum behind the scenes
+  const selectorLabel = "Ethereum";
 
   const trackLaunchApp = useCallback(() => {
     userAnalytics.pushEvent<LandingPageLaunchAppEvent>(
@@ -138,6 +155,7 @@ export function AppHeaderUser({
     );
   }
 
+  // For connected users, use the actual chainId for account URL (still Arbitrum)
   const accountUrl = getAccountUrl(chainId, account);
 
   return (

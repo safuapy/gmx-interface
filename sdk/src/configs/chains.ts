@@ -1,26 +1,28 @@
 import { defineChain } from "viem";
-import { arbitrum, avalanche, avalancheFuji, Chain } from "viem/chains";
+import { arbitrum, avalanche, avalancheFuji, mainnet, Chain } from "viem/chains";
 
+export const ETH_MAINNET = 1;
+export const ARBITRUM = 42161;
 export const AVALANCHE = 43114;
 export const AVALANCHE_FUJI = 43113;
-export const ARBITRUM = 42161;
-export const ETH_MAINNET = 1;
-export const BOTANIX = 3637;
-
-export const SUPPORTED_CHAIN_IDS: UiSupportedChain[] = [ARBITRUM, AVALANCHE, BOTANIX];
-export const SUPPORTED_CHAIN_IDS_DEV: UiSupportedChain[] = [...SUPPORTED_CHAIN_IDS, AVALANCHE_FUJI];
+export const BOTANIX = 3636;
 
 export type UiContractsChain = typeof ARBITRUM | typeof AVALANCHE | typeof AVALANCHE_FUJI | typeof BOTANIX;
-export type UiSupportedChain = UiContractsChain;
+export type UiSupportedChain = UiContractsChain | typeof ETH_MAINNET;
 
-export const CHAIN_NAMES_MAP: Record<UiContractsChain, string> = {
+export const SUPPORTED_CHAIN_IDS: UiSupportedChain[] = [ETH_MAINNET, ARBITRUM, AVALANCHE, BOTANIX];
+export const SUPPORTED_CHAIN_IDS_DEV: UiSupportedChain[] = [...SUPPORTED_CHAIN_IDS, AVALANCHE_FUJI];
+
+export const CHAIN_NAMES_MAP: Record<UiSupportedChain, string> = {
+  [ETH_MAINNET]: "Ethereum",
   [ARBITRUM]: "Arbitrum",
   [AVALANCHE]: "Avalanche",
   [AVALANCHE_FUJI]: "Avalanche Fuji",
   [BOTANIX]: "Botanix",
 };
 
-export const HIGH_EXECUTION_FEES_MAP: Record<UiContractsChain, number> = {
+export const HIGH_EXECUTION_FEES_MAP: Record<UiContractsChain | typeof ETH_MAINNET, number> = {
+  [ETH_MAINNET]: 5, // 5 USD
   [ARBITRUM]: 5, // 5 USD
   [AVALANCHE]: 5, // 5 USD
   [AVALANCHE_FUJI]: 5, // 5 USD
@@ -31,6 +33,7 @@ export const HIGH_EXECUTION_FEES_MAP: Record<UiContractsChain, number> = {
 // applied to EIP-1559 transactions only
 // is not applied to execution fee calculation
 export const MAX_FEE_PER_GAS_MAP: Record<number, bigint> = {
+  [ETH_MAINNET]: 50000000000n, // 50 gwei
   [AVALANCHE]: 200000000000n, // 200 gwei
   [BOTANIX]: 20n,
 };
@@ -39,6 +42,7 @@ export const MAX_FEE_PER_GAS_MAP: Record<number, bigint> = {
 // applied to EIP-1559 transactions only
 // is also applied to the execution fee calculation
 export const GAS_PRICE_PREMIUM_MAP: Record<number, bigint> = {
+  [ETH_MAINNET]: 0n,
   [ARBITRUM]: 0n,
   [AVALANCHE]: 6000000000n, // 6 gwei
 };
@@ -47,6 +51,7 @@ export const GAS_PRICE_PREMIUM_MAP: Record<number, bigint> = {
   that was a constant value in ethers v5, after ethers v6 migration we use it as a minimum for maxPriorityFeePerGas
 */
 export const MAX_PRIORITY_FEE_PER_GAS_MAP: Record<UiSupportedChain, bigint | undefined> = {
+  [ETH_MAINNET]: 1500000000n,
   [ARBITRUM]: 1500000000n,
   [AVALANCHE]: 1500000000n,
   [AVALANCHE_FUJI]: 1500000000n,
@@ -54,6 +59,7 @@ export const MAX_PRIORITY_FEE_PER_GAS_MAP: Record<UiSupportedChain, bigint | und
 };
 
 export const EXCESSIVE_EXECUTION_FEES_MAP: Record<UiSupportedChain, number> = {
+  [ETH_MAINNET]: 10, // 10 USD
   [ARBITRUM]: 10, // 10 USD
   [AVALANCHE]: 10, // 10 USD
   [AVALANCHE_FUJI]: 10, // 10 USD
@@ -63,6 +69,7 @@ export const EXCESSIVE_EXECUTION_FEES_MAP: Record<UiSupportedChain, number> = {
 // avoid botanix gas spikes when chain is not actively used
 // if set, execution fee value should not be less than this in USD equivalent
 export const MIN_EXECUTION_FEE_USD: Record<UiSupportedChain, bigint | undefined> = {
+  [ETH_MAINNET]: undefined,
   [ARBITRUM]: undefined,
   [AVALANCHE]: undefined,
   [AVALANCHE_FUJI]: undefined,
@@ -122,6 +129,7 @@ export const botanix: Chain = defineChain({
 });
 
 const VIEM_CHAIN_BY_CHAIN_ID: Record<UiSupportedChain, Chain> = {
+  [ETH_MAINNET]: mainnet,
   [AVALANCHE_FUJI]: avalancheFuji,
   [ARBITRUM]: arbitrum,
   [AVALANCHE]: avalanche,
@@ -154,6 +162,10 @@ export const EXECUTION_FEE_CONFIG_V2: {
     defaultBufferBps?: number;
   };
 } = {
+  [ETH_MAINNET]: {
+    shouldUseMaxPriorityFeePerGas: true,
+    defaultBufferBps: 1000, // 10%
+  },
   [AVALANCHE]: {
     shouldUseMaxPriorityFeePerGas: true,
     defaultBufferBps: 1000, // 10%
@@ -181,6 +193,12 @@ export const GAS_LIMITS_STATIC_CONFIG: Record<
     tokenPermitGasLimit: bigint;
   }
 > = {
+  [ETH_MAINNET]: {
+    createOrderGasLimit: 1_000_000n,
+    updateOrderGasLimit: 800_000n,
+    cancelOrderGasLimit: 700_000n,
+    tokenPermitGasLimit: 90_000n,
+  },
   [ARBITRUM]: {
     createOrderGasLimit: 1_000_000n,
     updateOrderGasLimit: 800_000n,

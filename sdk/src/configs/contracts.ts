@@ -2,7 +2,72 @@ import { type Address, zeroAddress } from "viem";
 
 import { ARBITRUM, AVALANCHE, AVALANCHE_FUJI, BOTANIX } from "./chains";
 
+// Add ETH_MAINNET import
+export const ETH_MAINNET = 1;
+
 export const CONTRACTS = {
+  [ETH_MAINNET]: {
+    // Ethereum mainnet - minimal configuration for wallet balance fetching
+    // All trading functionality still uses Arbitrum contracts
+    Multicall: "0x5BA1e12693Dc8F9c48aAD8770482f4739bEeD696", // Standard Ethereum multicall
+    
+    // Zero addresses for all other contracts since we only fetch balances from L1
+    Vault: zeroAddress,
+    Router: zeroAddress,
+    VaultReader: zeroAddress,
+    Reader: zeroAddress,
+    GlpManager: zeroAddress,
+    RewardRouter: zeroAddress,
+    GlpRewardRouter: zeroAddress,
+    RewardReader: zeroAddress,
+    GovToken: zeroAddress,
+    NATIVE_TOKEN: "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2", // WETH on mainnet
+    GLP: zeroAddress,
+    GMX: zeroAddress,
+    ES_GMX: zeroAddress,
+    BN_GMX: zeroAddress,
+    USDG: zeroAddress,
+    ES_GMX_IOU: zeroAddress,
+    StakedGmxTracker: zeroAddress,
+    BonusGmxTracker: zeroAddress,
+    FeeGmxTracker: zeroAddress,
+    StakedGlpTracker: zeroAddress,
+    FeeGlpTracker: zeroAddress,
+    ExtendedGmxTracker: zeroAddress,
+    StakedGmxDistributor: zeroAddress,
+    StakedGlpDistributor: zeroAddress,
+    GmxVester: zeroAddress,
+    GlpVester: zeroAddress,
+    AffiliateVester: zeroAddress,
+    OrderBook: zeroAddress,
+    OrderExecutor: zeroAddress,
+    OrderBookReader: zeroAddress,
+    PositionRouter: zeroAddress,
+    PositionManager: zeroAddress,
+    UniswapGmxEthPool: zeroAddress,
+    ReferralStorage: zeroAddress,
+    ReferralReader: zeroAddress,
+    Timelock: zeroAddress,
+    DataStore: zeroAddress,
+    EventEmitter: zeroAddress,
+    SubaccountRouter: zeroAddress,
+    ExchangeRouter: zeroAddress,
+    DepositVault: zeroAddress,
+    WithdrawalVault: zeroAddress,
+    OrderVault: zeroAddress,
+    ShiftVault: zeroAddress,
+    SyntheticsReader: zeroAddress,
+    SyntheticsRouter: zeroAddress,
+    GlvReader: zeroAddress,
+    GlvRouter: zeroAddress,
+    GlvVault: zeroAddress,
+    GelatoRelayRouter: zeroAddress,
+    SubaccountGelatoRelayRouter: zeroAddress,
+    ExternalHandler: zeroAddress,
+    OpenOceanRouter: zeroAddress,
+    ChainlinkPriceFeedProvider: zeroAddress,
+    ArbitrumNodeInterface: zeroAddress,
+  },
   [ARBITRUM]: {
     // arbitrum mainnet
     Vault: "0x489ee077994B6658eAfA855C308275EAd8097C4A",

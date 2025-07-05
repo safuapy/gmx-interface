@@ -1,4 +1,4 @@
-import { ARBITRUM, AVALANCHE, AVALANCHE_FUJI, BOTANIX } from "./chains";
+import { ARBITRUM, AVALANCHE, AVALANCHE_FUJI, BOTANIX, ETH_MAINNET } from "./chains";
 
 /*
   A temporary solution before positions sorting logic is updated
@@ -8,6 +8,13 @@ import { ARBITRUM, AVALANCHE, AVALANCHE_FUJI, BOTANIX } from "./chains";
   or update arrays based on marketInfo sorting in runtime
 */
 export const SORTED_MARKETS = {
+  [ETH_MAINNET]: [
+    // Fake L1 markets - same as key Arbitrum markets
+    "0x47c031236e19d024b42f8AE6780E44A573170703", // BTC/USD
+    "0x70d95587d40A2caf56bd97485aB3Eec10Bee6336", // ETH/USD
+    "0x09400D9DB990D5ed3f35D7be61DfAEB900Af03C9", // SOL/USD
+    "0xC25cEf6061Cf5dE5eb761b50E4743c1F5D7E5407", // ARB/USD
+  ],
   [ARBITRUM]: [
     "0x47c031236e19d024b42f8AE6780E44A573170703",
     "0x7C11F78Ce78768518D743E81Fdfa2F860C6b9A77",

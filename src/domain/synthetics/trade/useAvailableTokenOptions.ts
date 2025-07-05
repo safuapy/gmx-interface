@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useRef } from "react";
 import { zeroAddress } from "viem";
 
-import { ARBITRUM, AVALANCHE, AVALANCHE_FUJI, BOTANIX, UiSupportedChain } from "config/chains";
+import { ARBITRUM, AVALANCHE, AVALANCHE_FUJI, BOTANIX, UiSupportedChain, ETH_MAINNET } from "config/chains";
 import { getSortedMarketsAddressesKey } from "config/localStorage";
 import { SORTED_MARKETS } from "config/static/sortedMarkets";
 import { GlvAndGmMarketsInfoData, Market, MarketInfo, MarketsData, isMarketInfo } from "domain/synthetics/markets";
@@ -59,8 +59,9 @@ function getSortedMarketsConfigs(marketsData?: MarketsData, sortedAddresses?: st
   return resultSortedAddresses.map((address) => getByKey(marketsData, address)).filter(Boolean) as Market[];
 }
 
-const FORCE_ALLOWED_COLLATERAL_TOKENS: Record<UiSupportedChain, string[]> = {
+const FORCE_ALLOWED_COLLATERAL_TOKENS: Record<UiSupportedChain | typeof ETH_MAINNET, string[]> = {
   // handled by wrapOrUnwrap or by stakeOrUnstake
+  [ETH_MAINNET]: [], // Fake L1 - no forced collateral tokens needed
   [BOTANIX]: [
     // bBTC
     zeroAddress,

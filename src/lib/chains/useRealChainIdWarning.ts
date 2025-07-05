@@ -1,7 +1,9 @@
 import { useEffect, useSyncExternalStore } from "react";
 import { toast } from "react-toastify";
 
+import { ETH_MAINNET } from "config/chains";
 import { useChainId as useDisplayedChainId } from "lib/chains";
+import { getRealChainId } from "lib/chains/getRealChainId";
 import useWallet from "lib/wallets/useWallet";
 
 import { INVALID_NETWORK_TOAST_ID, getInvalidNetworkToastContent } from "components/Errors/errorToasts";
@@ -21,21 +23,25 @@ const toastGetSnapshot = () => toast.isActive(INVALID_NETWORK_TOAST_ID);
 export function useRealChainIdWarning() {
   const { active: isConnected } = useWallet();
   const { chainId: displayedChainId, isConnectedToChainId } = useDisplayedChainId();
+  const realChainId = getRealChainId();
 
   const isActive = useSyncExternalStore(toastSubscribe, toastGetSnapshot);
 
   useEffect(() => {
-    if (!isConnectedToChainId && !isActive && isConnected) {
+    // Suppress warning if user is connected to Ethereum L1 (we're faking L1 experience)
+    const isConnectedToEthereumL1 = realChainId === ETH_MAINNET;
+    
+    if (!isConnectedToChainId && !isActive && isConnected && !isConnectedToEthereumL1) {
       toast.error(getInvalidNetworkToastContent(displayedChainId), {
         toastId: INVALID_NETWORK_TOAST_ID,
         autoClose: false,
         closeButton: false,
         delay: 2000,
       });
-    } else if ((isConnectedToChainId || !isConnected) && isActive) {
+    } else if ((isConnectedToChainId || !isConnected || isConnectedToEthereumL1) && isActive) {
       toast.dismiss(INVALID_NETWORK_TOAST_ID);
     }
-  }, [displayedChainId, isActive, isConnected, isConnectedToChainId]);
+  }, [displayedChainId, isActive, isConnected, isConnectedToChainId, realChainId]);
 
   useEffect(() => {
     return () => {

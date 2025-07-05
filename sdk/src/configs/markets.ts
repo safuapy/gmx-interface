@@ -2,7 +2,7 @@
   This files is used to pre-build data during the build process.
   Avoid adding client-side code here, as it can break the build process.
 */
-import { ARBITRUM, AVALANCHE, AVALANCHE_FUJI, BOTANIX, UiContractsChain } from "./chains";
+import { ARBITRUM, AVALANCHE, AVALANCHE_FUJI, BOTANIX, UiContractsChain, ETH_MAINNET } from "./chains";
 
 export const SWAP_GRAPH_MAX_MARKETS_PER_TOKEN = 5;
 
@@ -17,7 +17,38 @@ export type MarketConfig = {
   ATTENTION
   When adding new markets, please add them also to the end of the list in ./src/configs/static/sortedMarkets.ts
 */
-export const MARKETS: Record<UiContractsChain, Record<string, MarketConfig>> = {
+export const MARKETS: Record<UiContractsChain | typeof ETH_MAINNET, Record<string, MarketConfig>> = {
+  [ETH_MAINNET]: {
+    // Fake L1 markets - same as Arbitrum since we're using Arbitrum data
+    // BTC/USD [WBTC.e-USDC]
+    "0x47c031236e19d024b42f8AE6780E44A573170703": {
+      marketTokenAddress: "0x47c031236e19d024b42f8AE6780E44A573170703",
+      indexTokenAddress: "0x47904963fc8b2340414262125aF798B9655E58Cd",
+      longTokenAddress: "0x2f2a2543B76A4166549F7aaB2e75Bef0aefC5B0f",
+      shortTokenAddress: "0xaf88d065e77c8cC2239327C5EDb3A432268e5831",
+    },
+    // ETH/USD [WETH-USDC]
+    "0x70d95587d40A2caf56bd97485aB3Eec10Bee6336": {
+      marketTokenAddress: "0x70d95587d40A2caf56bd97485aB3Eec10Bee6336",
+      indexTokenAddress: "0x82aF49447D8a07e3bd95BD0d56f35241523fBab1",
+      longTokenAddress: "0x82aF49447D8a07e3bd95BD0d56f35241523fBab1",
+      shortTokenAddress: "0xaf88d065e77c8cC2239327C5EDb3A432268e5831",
+    },
+    // SOL/USD [SOL-USDC]
+    "0x09400D9DB990D5ed3f35D7be61DfAEB900Af03C9": {
+      marketTokenAddress: "0x09400D9DB990D5ed3f35D7be61DfAEB900Af03C9",
+      indexTokenAddress: "0x2bcC6D6CdBbDC0a4071e48bb3B969b06B3330c07",
+      longTokenAddress: "0x2bcC6D6CdBbDC0a4071e48bb3B969b06B3330c07",
+      shortTokenAddress: "0xaf88d065e77c8cC2239327C5EDb3A432268e5831",
+    },
+    // ARB/USD [ARB-USDC]
+    "0xC25cEf6061Cf5dE5eb761b50E4743c1F5D7E5407": {
+      marketTokenAddress: "0xC25cEf6061Cf5dE5eb761b50E4743c1F5D7E5407",
+      indexTokenAddress: "0x912CE59144191C1204E64559FE8253a0e49E6548",
+      longTokenAddress: "0x912CE59144191C1204E64559FE8253a0e49E6548",
+      shortTokenAddress: "0xaf88d065e77c8cC2239327C5EDb3A432268e5831",
+    },
+  },
   [ARBITRUM]: {
     // BTC/USD [WBTC.e-USDC]
     "0x47c031236e19d024b42f8AE6780E44A573170703": {

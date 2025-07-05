@@ -18,15 +18,23 @@ export const SUPPORTED_CHAIN_IDS = isDevelopment() ? SDK_SUPPORTED_CHAIN_IDS_DEV
 
 const { parseEther } = ethers;
 
+// Wallet connection allows Ethereum L1 (for UI appearance)
+export const WALLET_CHAIN_ID = ETH_MAINNET;
+
+// But all contract operations and data fetching use Arbitrum
+// This keeps the original functionality intact
+export const DEFAULT_CHAIN_ID = ARBITRUM;
+export const CHAIN_ID = DEFAULT_CHAIN_ID;
+
+// Chain ID used for fetching trading data (markets, positions, etc.)
+export const DATA_CHAIN_ID = ARBITRUM;
+
 export const ENV_ARBITRUM_RPC_URLS = import.meta.env.VITE_APP_ARBITRUM_RPC_URLS;
 export const ENV_AVALANCHE_RPC_URLS = import.meta.env.VITE_APP_AVALANCHE_RPC_URLS;
 export const ENV_BOTANIX_RPC_URLS = import.meta.env.VITE_APP_BOTANIX_RPC_URLS;
 
-// TODO take it from web3
-export const DEFAULT_CHAIN_ID = ARBITRUM;
-export const CHAIN_ID = DEFAULT_CHAIN_ID;
-
-export const IS_NETWORK_DISABLED: Record<UiContractsChain, boolean> = {
+export const IS_NETWORK_DISABLED: Record<UiContractsChain | typeof ETH_MAINNET, boolean> = {
+  [ETH_MAINNET]: false,
   [ARBITRUM]: false,
   [AVALANCHE]: false,
   [AVALANCHE_FUJI]: false,
@@ -40,6 +48,19 @@ export const NETWORK_EXECUTION_TO_CREATE_FEE_FACTOR = {
 } as const;
 
 const constants = {
+  [ETH_MAINNET]: {
+    nativeTokenSymbol: "ETH",
+    wrappedTokenSymbol: "WETH",
+    defaultCollateralSymbol: "USDC",
+    defaultFlagOrdersEnabled: false,
+    positionReaderPropsLength: 9,
+    v2: false, // Ethereum mainnet is used for wallet connection only
+
+    SWAP_ORDER_EXECUTION_GAS_FEE: parseEther("0.003"),
+    INCREASE_ORDER_EXECUTION_GAS_FEE: parseEther("0.003"),
+    DECREASE_ORDER_EXECUTION_GAS_FEE: parseEther("0.003001"),
+  },
+
   [ARBITRUM]: {
     nativeTokenSymbol: "ETH",
     wrappedTokenSymbol: "WETH",
@@ -127,7 +148,8 @@ export const RPC_PROVIDERS: Record<UiContractsChain | typeof ETH_MAINNET, string
   ],
 };
 
-export const FALLBACK_PROVIDERS: Record<UiContractsChain, string[]> = {
+export const FALLBACK_PROVIDERS: Record<UiContractsChain | typeof ETH_MAINNET, string[]> = {
+  [ETH_MAINNET]: ["https://rpc.ankr.com/eth", "https://ethereum-rpc.publicnode.com"],
   [ARBITRUM]: ENV_ARBITRUM_RPC_URLS ? JSON.parse(ENV_ARBITRUM_RPC_URLS) : [getAlchemyArbitrumHttpUrl()],
   [AVALANCHE]: ENV_AVALANCHE_RPC_URLS ? JSON.parse(ENV_AVALANCHE_RPC_URLS) : [getAlchemyAvalancheHttpUrl()],
   [AVALANCHE_FUJI]: [
@@ -186,6 +208,8 @@ export function getExplorerUrl(chainId) {
     return "https://ropsten.etherscan.io/";
   } else if (chainId === 42) {
     return "https://kovan.etherscan.io/";
+  } else if (chainId === ETH_MAINNET) {
+    return "https://etherscan.io/";
   } else if (chainId === ARBITRUM) {
     return "https://arbiscan.io/";
   } else if (chainId === AVALANCHE) {

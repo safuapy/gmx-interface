@@ -1,6 +1,6 @@
 import { Chain, ClientConfig, createPublicClient, http } from "viem";
 
-import { ARBITRUM, AVALANCHE, AVALANCHE_FUJI, BOTANIX, UiContractsChain, getViemChain } from "config/chains";
+import { ARBITRUM, AVALANCHE, AVALANCHE_FUJI, BOTANIX, ETH_MAINNET, UiContractsChain, getViemChain } from "config/chains";
 import { isWebWorker } from "config/env";
 import {
   MulticallErrorEvent,
@@ -26,7 +26,7 @@ export type MulticallProviderUrls = {
 };
 
 const BATCH_CONFIGS: Record<
-  UiContractsChain,
+  UiContractsChain | typeof ETH_MAINNET,
   {
     http: {
       batchSize: number;
@@ -35,6 +35,18 @@ const BATCH_CONFIGS: Record<
     client: ClientConfig["batch"];
   }
 > = {
+  [ETH_MAINNET]: {
+    http: {
+      batchSize: 0, // disable batches for Ethereum mainnet
+      wait: 0,
+    },
+    client: {
+      multicall: {
+        batchSize: 1024 * 1024,
+        wait: 0,
+      },
+    },
+  },
   [ARBITRUM]: {
     http: {
       batchSize: 0, // disable batches, here batchSize is the number of eth_calls in a batch

@@ -1,9 +1,11 @@
 import random from "lodash/random";
 import sample from "lodash/sample";
 
-import { ARBITRUM, AVALANCHE, AVALANCHE_FUJI, BOTANIX, UiContractsChain } from "./chains";
+import { ARBITRUM, AVALANCHE, AVALANCHE_FUJI, BOTANIX, ETH_MAINNET, UiContractsChain } from "./chains";
 
-const ORACLE_KEEPER_URLS: Record<UiContractsChain, string[]> = {
+const ORACLE_KEEPER_URLS: Record<UiContractsChain | typeof ETH_MAINNET, string[]> = {
+  [ETH_MAINNET]: ["https://arbitrum-api.gmxinfra.io", "https://arbitrum-api.gmxinfra2.io"], // Fake L1 but use Arbitrum data
+
   [ARBITRUM]: ["https://arbitrum-api.gmxinfra.io", "https://arbitrum-api.gmxinfra2.io"],
 
   [AVALANCHE]: ["https://avalanche-api.gmxinfra.io", "https://avalanche-api.gmxinfra2.io"],

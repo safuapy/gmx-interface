@@ -12,7 +12,7 @@ import {
 } from "@rainbow-me/rainbowkit/wallets";
 import once from "lodash/once";
 import { Chain, http } from "viem";
-import { arbitrum, avalanche, avalancheFuji } from "viem/chains";
+import { arbitrum, avalanche, avalancheFuji, mainnet } from "viem/chains";
 
 import { botanix } from "config/chains";
 import { isDevelopment } from "config/env";
@@ -49,8 +49,11 @@ export const getRainbowKitConfig = once(() =>
   getDefaultConfig({
     appName: APP_NAME,
     projectId: WALLET_CONNECT_PROJECT_ID,
-    chains: [arbitrum, avalanche, botanix as Chain, ...(isDevelopment() ? [avalancheFuji] : [])],
+    // Primary chain for wallet connection is Ethereum mainnet
+    // Keep all other chains available but hidden from UI
+    chains: [mainnet, arbitrum, avalanche, botanix as Chain, ...(isDevelopment() ? [avalancheFuji] : [])],
     transports: {
+      [mainnet.id]: http(),
       [arbitrum.id]: http(),
       [avalanche.id]: http(),
       [avalancheFuji.id]: http(),

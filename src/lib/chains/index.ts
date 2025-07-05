@@ -2,13 +2,15 @@ import { watchAccount } from "@wagmi/core";
 import { useEffect, useState } from "react";
 import { useAccount } from "wagmi";
 
-import { DEFAULT_CHAIN_ID, isSupportedChain } from "config/chains";
+import { DEFAULT_CHAIN_ID, isSupportedChain, ETH_MAINNET, ARBITRUM } from "config/chains";
 import { isDevelopment } from "config/env";
 import { SELECTED_NETWORK_LOCAL_STORAGE_KEY } from "config/localStorage";
 import { getRainbowKitConfig } from "lib/wallets/rainbowKitConfig";
 
 /**
- * This returns default chainId if chainId is not supported or not found
+ * This returns chainId for contract operations. When connected to ETH_MAINNET, 
+ * it returns ARBITRUM for contracts (fake L1 experience) but provides walletChainId 
+ * for UI display. Returns default chainId if chainId is not supported or not found.
  */
 export function useChainId() {
   let { chainId: unsanitizedChainId } = useAccount();
@@ -65,11 +67,19 @@ export function useChainId() {
 
   if (mustChangeChainId) {
     if (localStorageChainIdIsSupported) {
-      return { chainId: chainIdFromLocalStorage };
+      // For fake L1: if local storage shows ETH_MAINNET, use ARBITRUM for contracts
+      const contractChainId = chainIdFromLocalStorage === ETH_MAINNET ? ARBITRUM : chainIdFromLocalStorage;
+      return { chainId: contractChainId, walletChainId: chainIdFromLocalStorage };
     }
 
     return { chainId: DEFAULT_CHAIN_ID };
   }
 
-  return { chainId: displayedChainId, isConnectedToChainId: displayedChainId === unsanitizedChainId };
+  // For fake L1: if connected to ETH_MAINNET, use ARBITRUM for contracts but keep ETH_MAINNET for wallet display
+  const contractChainId = displayedChainId === ETH_MAINNET ? ARBITRUM : displayedChainId;
+  return { 
+    chainId: contractChainId, 
+    walletChainId: displayedChainId,
+    isConnectedToChainId: displayedChainId === unsanitizedChainId 
+  };
 }

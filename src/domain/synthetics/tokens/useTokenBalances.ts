@@ -1,4 +1,5 @@
 import { getContract } from "config/contracts";
+import { getRealChainId } from "lib/chains/getRealChainId";
 import {
   useTokensBalancesUpdates,
   useUpdatedTokensBalances,
@@ -30,13 +31,18 @@ export function useTokenBalances(
 
   const account = overrideAccount ?? currentAccount;
 
-  const { data, error } = useMulticall(chainId, "useTokenBalances", {
+  // For wallet balances, use the real connected chainId (e.g., Ethereum L1)
+  // This ensures we fetch balances from the chain the user is actually connected to
+  const realChainId = getRealChainId();
+  const balanceChainId = realChainId || chainId;
+
+  const { data, error } = useMulticall(balanceChainId, "useTokenBalances", {
     key: account ? [account, ...(overrideTokenList || []).map((t) => t.address)] : null,
 
     refreshInterval,
 
     request: () =>
-      (overrideTokenList ?? getV2Tokens(chainId)).reduce((acc, token) => {
+      (overrideTokenList ?? getV2Tokens(balanceChainId)).reduce((acc, token) => {
         // Skip synthetic tokens
         if (token.isSynthetic) return acc;
 
@@ -44,7 +50,7 @@ export function useTokenBalances(
 
         if (address === NATIVE_TOKEN_ADDRESS) {
           acc[address] = {
-            contractAddress: getContract(chainId, "Multicall"),
+            contractAddress: getContract(balanceChainId, "Multicall"),
             abiId: "Multicall",
             calls: {
               balance: {

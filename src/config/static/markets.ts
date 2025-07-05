@@ -6,7 +6,7 @@
 */
 import { MARKETS as SDK_MARKETS } from "sdk/configs/markets";
 
-import { ARBITRUM, AVALANCHE, AVALANCHE_FUJI, BOTANIX, UiContractsChain } from "./chains";
+import { ARBITRUM, AVALANCHE, AVALANCHE_FUJI, BOTANIX, UiContractsChain, ETH_MAINNET } from "./chains";
 
 type MarketUiConfig = {
   enabled: boolean;
@@ -16,7 +16,26 @@ type MarketUiConfig = {
   ATTENTION
   When adding new markets, please add them also to the end of the list in ./sortedMarkets.ts
 */
-const MARKETS_UI_CONFIGS: Record<UiContractsChain, Record<string, MarketUiConfig>> = {
+const MARKETS_UI_CONFIGS: Record<UiContractsChain | typeof ETH_MAINNET, Record<string, MarketUiConfig>> = {
+  [ETH_MAINNET]: {
+    // Fake L1 markets - same as Arbitrum since we're using Arbitrum data
+    // BTC/USD [WBTC.e-USDC]
+    "0x47c031236e19d024b42f8AE6780E44A573170703": {
+      enabled: true,
+    },
+    // ETH/USD [WETH-USDC]
+    "0x70d95587d40A2caf56bd97485aB3Eec10Bee6336": {
+      enabled: true,
+    },
+    // SOL/USD [SOL-USDC]
+    "0x09400D9DB990D5ed3f35D7be61DfAEB900Af03C9": {
+      enabled: true,
+    },
+    // ARB/USD [ARB-USDC]
+    "0xC25cEf6061Cf5dE5eb761b50E4743c1F5D7E5407": {
+      enabled: true,
+    },
+  },
   [ARBITRUM]: {
     // BTC/USD [WBTC.e-USDC]
     "0x47c031236e19d024b42f8AE6780E44A573170703": {
