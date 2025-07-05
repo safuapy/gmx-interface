@@ -215,8 +215,13 @@ export function handleEntryError<T extends SidecarOrderEntry>(
       sizeError = t`Limit size is required`;
     }
 
-    if (entry?.increaseAmounts?.estimatedLeverage && entry?.increaseAmounts?.estimatedLeverage > MAX_ALLOWED_LEVERAGE) {
-      sizeError = t`Max leverage: ${(MAX_ALLOWED_LEVERAGE / BASIS_POINTS_DIVISOR).toFixed(1)}x`;
+    // Skip leverage validation when fake 1000x leverage is enabled
+    if (typeof window !== 'undefined' && window.localStorage?.getItem('fake-eth-mainnet-leverage') === 'true') {
+      // Allow any leverage when fake mode is enabled - this is cosmetic only
+    } else {
+      if (entry?.increaseAmounts?.estimatedLeverage && entry?.increaseAmounts?.estimatedLeverage > MAX_ALLOWED_LEVERAGE) {
+        sizeError = t`Max leverage: ${(MAX_ALLOWED_LEVERAGE / BASIS_POINTS_DIVISOR).toFixed(1)}x`;
+      }
     }
   } else {
     if (entry.percentage?.value === undefined || entry.percentage?.value === 0n) {

@@ -30,7 +30,7 @@ export function BotanixBanner() {
           <span className="text-[#fccd0d]">Botanix</span> currently only supports
         </Trans>{" "}
         <Link to="/trade" className="underline">
-          <Trans>V2 trading</Trans>
+          <Trans>trading</Trans>
         </Link>{" "}
         <Trans>and</Trans>{" "}
         <Link to="/pools" className="underline">

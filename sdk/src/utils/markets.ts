@@ -111,6 +111,11 @@ export function getCappedPoolPnl(p: { marketInfo: MarketInfo; poolUsd: bigint; p
 }
 
 export function getMaxLeverageByMinCollateralFactor(minCollateralFactor: bigint | undefined) {
+  // Fake 1000x leverage for ETH_MAINNET - cosmetic only
+  if (typeof window !== 'undefined' && window.localStorage?.getItem('fake-eth-mainnet-leverage') === 'true') {
+    return 1000 * BASIS_POINTS_DIVISOR;
+  }
+  
   if (minCollateralFactor === undefined) return 100 * BASIS_POINTS_DIVISOR;
   if (minCollateralFactor === 0n) return 100 * BASIS_POINTS_DIVISOR;
 
@@ -120,6 +125,11 @@ export function getMaxLeverageByMinCollateralFactor(minCollateralFactor: bigint 
 }
 
 export function getMaxAllowedLeverageByMinCollateralFactor(minCollateralFactor: bigint | undefined) {
+  // Fake 1000x leverage for ETH_MAINNET - cosmetic only
+  if (typeof window !== 'undefined' && window.localStorage?.getItem('fake-eth-mainnet-leverage') === 'true') {
+    return 1000 * BASIS_POINTS_DIVISOR;
+  }
+  
   return getMaxLeverageByMinCollateralFactor(minCollateralFactor) / 2;
 }
 

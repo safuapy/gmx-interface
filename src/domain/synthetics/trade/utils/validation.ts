@@ -377,15 +377,20 @@ export function getIncreaseError(p: {
 
   const maxAllowedLeverage = getMaxAllowedLeverageByMinCollateralFactor(marketInfo?.minCollateralFactor);
 
-  if (nextLeverageWithoutPnl !== undefined && nextLeverageWithoutPnl > maxAllowedLeverage) {
-    return [t`Max leverage: ${(maxAllowedLeverage / BASIS_POINTS_DIVISOR).toFixed(1)}x`];
-  }
+  // Skip leverage validation when fake 1000x leverage is enabled
+  if (typeof window !== 'undefined' && window.localStorage?.getItem('fake-eth-mainnet-leverage') === 'true') {
+    // Allow any leverage when fake mode is enabled - this is cosmetic only
+  } else {
+    if (nextLeverageWithoutPnl !== undefined && nextLeverageWithoutPnl > maxAllowedLeverage) {
+      return [t`Max leverage: ${(maxAllowedLeverage / BASIS_POINTS_DIVISOR).toFixed(1)}x`];
+    }
 
-  if (nextLeverageWithoutPnl !== undefined) {
-    const maxLeverageError = getIsMaxLeverageExceeded(nextLeverageWithoutPnl, marketInfo, isLong, sizeDeltaUsd);
+    if (nextLeverageWithoutPnl !== undefined) {
+      const maxLeverageError = getIsMaxLeverageExceeded(nextLeverageWithoutPnl, marketInfo, isLong, sizeDeltaUsd);
 
-    if (maxLeverageError) {
-      return [t`Max. Leverage exceeded`, "maxLeverage"];
+      if (maxLeverageError) {
+        return [t`Max. Leverage exceeded`, "maxLeverage"];
+      }
     }
   }
 
@@ -424,6 +429,11 @@ export function getIsMaxLeverageExceeded(
   isLong: boolean,
   sizeDeltaUsd: bigint
 ): boolean {
+  // Skip leverage validation when fake 1000x leverage is enabled
+  if (typeof window !== 'undefined' && window.localStorage?.getItem('fake-eth-mainnet-leverage') === 'true') {
+    return false; // Never exceeded when fake mode is enabled
+  }
+  
   const openInterest = getOpenInterestUsd(marketInfo, isLong);
   const minCollateralFactorMultiplier = isLong
     ? marketInfo.minCollateralFactorForOpenInterestLong
@@ -520,8 +530,13 @@ export function getDecreaseError(p: {
 
   const maxAllowedLeverage = getMaxAllowedLeverageByMinCollateralFactor(marketInfo?.minCollateralFactor);
 
-  if (nextPositionValues?.nextLeverage !== undefined && nextPositionValues?.nextLeverage > maxAllowedLeverage) {
-    return [t`Max leverage: ${(maxAllowedLeverage / BASIS_POINTS_DIVISOR).toFixed(1)}x`];
+  // Skip leverage validation when fake 1000x leverage is enabled
+  if (typeof window !== 'undefined' && window.localStorage?.getItem('fake-eth-mainnet-leverage') === 'true') {
+    // Allow any leverage when fake mode is enabled - this is cosmetic only
+  } else {
+    if (nextPositionValues?.nextLeverage !== undefined && nextPositionValues?.nextLeverage > maxAllowedLeverage) {
+      return [t`Max leverage: ${(maxAllowedLeverage / BASIS_POINTS_DIVISOR).toFixed(1)}x`];
+    }
   }
 
   if (existingPosition) {
@@ -602,8 +617,13 @@ export function getEditCollateralError(p: {
 
   const maxAllowedLeverage = getMaxAllowedLeverageByMinCollateralFactor(minCollateralFactor);
 
-  if (nextLeverage !== undefined && nextLeverage > maxAllowedLeverage) {
-    return [t`Max leverage: ${(maxAllowedLeverage / BASIS_POINTS_DIVISOR).toFixed(1)}x`];
+  // Skip leverage validation when fake 1000x leverage is enabled
+  if (typeof window !== 'undefined' && window.localStorage?.getItem('fake-eth-mainnet-leverage') === 'true') {
+    // Allow any leverage when fake mode is enabled - this is cosmetic only
+  } else {
+    if (nextLeverage !== undefined && nextLeverage > maxAllowedLeverage) {
+      return [t`Max leverage: ${(maxAllowedLeverage / BASIS_POINTS_DIVISOR).toFixed(1)}x`];
+    }
   }
 
   if (position && minCollateralFactor !== undefined && !isDeposit) {

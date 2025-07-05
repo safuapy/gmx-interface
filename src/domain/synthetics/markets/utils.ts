@@ -422,6 +422,11 @@ export function getIsZeroPriceImpactMarket(marketInfo: MarketInfo) {
 export function getTradeboxLeverageSliderMarks(maxLeverage: number) {
   const allowedLeverage = Math.round(maxLeverage / 2 / BASIS_POINTS_DIVISOR);
 
+  // Fake 1000x leverage marks for ETH_MAINNET
+  if (typeof window !== 'undefined' && window.localStorage?.getItem('fake-eth-mainnet-leverage') === 'true') {
+    return [1, 100, 200, 300, 400, 500, 600, 700, 800, 900, 1000];
+  }
+
   if (allowedLeverage >= 125) {
     return [0.1, 1, 2, 5, 10, 25, 50, 75, 100, allowedLeverage];
   } else if (allowedLeverage >= 120) {

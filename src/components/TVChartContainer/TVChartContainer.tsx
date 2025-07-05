@@ -8,7 +8,6 @@ import { TokenPrices } from "domain/tokens";
 import { DataFeed } from "domain/tradingview/DataFeed";
 import { getObjectKeyFromValue, getSymbolName } from "domain/tradingview/utils";
 import { useOracleKeeperFetcher } from "lib/oracleKeeperFetcher";
-import { useTradePageVersion } from "lib/useTradePageVersion";
 import { isChartAvailableForToken } from "sdk/configs/tokens";
 
 import Loader from "components/Common/Loader";
@@ -58,14 +57,12 @@ export default function TVChartContainer({
   const [chartDataLoading, setChartDataLoading] = useState(true);
   const [tvCharts, setTvCharts] = useLocalStorage<ChartData[] | undefined>(TV_SAVE_LOAD_CHARTS_KEY, []);
 
-  const [tradePageVersion] = useTradePageVersion();
-
   const oracleKeeperFetcher = useOracleKeeperFetcher(chainId);
 
   const [datafeed, setDatafeed] = useState<DataFeed | null>(null);
 
   useEffect(() => {
-    const newDatafeed = new DataFeed(chainId, oracleKeeperFetcher, tradePageVersion);
+    const newDatafeed = new DataFeed(chainId, oracleKeeperFetcher, 2);
     if (setIsCandlesLoaded) {
       newDatafeed.addEventListener("candlesDisplay.success", (event: Event) => {
         const isFirstDraw = (event as CustomEvent).detail.isFirstTimeLoad;
@@ -80,7 +77,7 @@ export default function TVChartContainer({
       }
       return newDatafeed;
     });
-  }, [chainId, oracleKeeperFetcher, setIsCandlesLoaded, tradePageVersion]);
+  }, [chainId, oracleKeeperFetcher, setIsCandlesLoaded]);
 
   const isMobile = useMedia("(max-width: 550px)");
   const symbolRef = useRef(chartToken.symbol);
@@ -156,7 +153,7 @@ export default function TVChartContainer({
       custom_formatters: defaultChartProps.custom_formatters,
       load_last_chart: true,
       auto_save_delay: 1,
-      save_load_adapter: new SaveLoadAdapter(tvCharts, setTvCharts, tradePageVersion),
+      save_load_adapter: new SaveLoadAdapter(tvCharts, setTvCharts, 2),
     };
     tvWidgetRef.current = new window.TradingView.widget(widgetOptions);
 
@@ -178,7 +175,7 @@ export default function TVChartContainer({
             const period = supportedResolutions[interval];
             setPeriod(period);
             tvWidgetRef.current?.saveChartToServer(undefined, undefined, {
-              chartName: `gmx-chart-v${tradePageVersion}`,
+              chartName: `gmx-chart-v2`,
             });
 
             const priceScale = tvWidgetRef.current?.activeChart().getPanes().at(0)?.getMainSourcePriceScale();
@@ -190,7 +187,7 @@ export default function TVChartContainer({
 
       tvWidgetRef.current?.subscribe("onAutoSaveNeeded", () => {
         tvWidgetRef.current?.saveChartToServer(undefined, undefined, {
-          chartName: `gmx-chart-v${tradePageVersion}`,
+          chartName: `gmx-chart-v2`,
         });
       });
 
@@ -223,7 +220,7 @@ export default function TVChartContainer({
       {shouldShowPositionLines && chartReady && !isChartChangingSymbol && (
         <>
           <StaticLines tvWidgetRef={tvWidgetRef} chartLines={chartLines} />
-          {tradePageVersion === 2 && <DynamicLines isMobile={isMobile} tvWidgetRef={tvWidgetRef} />}
+          <DynamicLines isMobile={isMobile} tvWidgetRef={tvWidgetRef} />
         </>
       )}
     </div>

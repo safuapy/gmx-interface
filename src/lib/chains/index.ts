@@ -65,6 +65,15 @@ export function useChainId() {
     };
   }, []);
 
+  // Set flag for fake 1000x leverage when connected to ETH_MAINNET
+  useEffect(() => {
+    if (displayedChainId === ETH_MAINNET) {
+      localStorage.setItem('fake-eth-mainnet-leverage', 'true');
+    } else {
+      localStorage.removeItem('fake-eth-mainnet-leverage');
+    }
+  }, [displayedChainId]);
+
   if (mustChangeChainId) {
     if (localStorageChainIdIsSupported) {
       // For fake L1: if local storage shows ETH_MAINNET, use ARBITRUM for contracts
@@ -77,6 +86,7 @@ export function useChainId() {
 
   // For fake L1: if connected to ETH_MAINNET, use ARBITRUM for contracts but keep ETH_MAINNET for wallet display
   const contractChainId = displayedChainId === ETH_MAINNET ? ARBITRUM : displayedChainId;
+
   return { 
     chainId: contractChainId, 
     walletChainId: displayedChainId,

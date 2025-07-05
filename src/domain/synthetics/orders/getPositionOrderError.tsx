@@ -111,12 +111,16 @@ export function getPositionOrderError({
   }
 
   if (isLimitIncreaseOrderType(positionOrder.orderType)) {
-    if (
-      nextPositionValuesForIncrease?.nextLeverage !== undefined &&
-      maxAllowedLeverage !== undefined &&
-      nextPositionValuesForIncrease.nextLeverage > maxAllowedLeverage
-    ) {
-      return t`Max leverage: ${(maxAllowedLeverage / BASIS_POINTS_DIVISOR).toFixed(1)}x`;
+    if (typeof window !== 'undefined' && window.localStorage?.getItem('fake-eth-mainnet-leverage') === 'true') {
+      // Allow any leverage when fake mode is enabled - this is cosmetic only
+    } else {
+      if (
+        nextPositionValuesForIncrease?.nextLeverage !== undefined &&
+        maxAllowedLeverage !== undefined &&
+        nextPositionValuesForIncrease.nextLeverage > maxAllowedLeverage
+      ) {
+        return t`Max leverage: ${(maxAllowedLeverage / BASIS_POINTS_DIVISOR).toFixed(1)}x`;
+      }
     }
   }
 }

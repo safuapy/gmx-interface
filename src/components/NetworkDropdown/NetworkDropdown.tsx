@@ -8,12 +8,10 @@ import { BiChevronDown } from "react-icons/bi";
 
 import { getIcon } from "config/icons";
 import { useChainId } from "lib/chains";
-import { useTradePageVersion } from "lib/useTradePageVersion";
 import { switchNetwork } from "lib/wallets";
 import useWallet from "lib/wallets/useWallet";
 
 import type { ModalProps } from "components/Modal/Modal";
-import { VersionSwitch } from "components/VersionSwitch/VersionSwitch";
 
 import language24Icon from "img/ic_language24.svg";
 import SettingsIcon16 from "img/ic_settings_16.svg?react";
@@ -67,7 +65,7 @@ export default function NetworkDropdown(props) {
           className: "network-popup",
           isVisible: activeModal === NETWORK_MODAL_KEY,
           setIsVisible: () => setActiveModal(null),
-          label: t`Networks and Settings`,
+          label: t`Networks`,
         };
       default:
         return {
@@ -89,13 +87,13 @@ export default function NetworkDropdown(props) {
   );
 }
 function NavIcons({ selectorLabel }) {
-  const { chainId } = useChainId();
-  const icon = getIcon(chainId, "network");
-  const [currentVersion] = useTradePageVersion();
+  const { chainId, walletChainId } = useChainId();
+  // For UI display, use walletChainId to show Ethereum logo when connected to ETH_MAINNET
+  const displayChainId = walletChainId || chainId;
+  const icon = getIcon(displayChainId, "network");
 
   return (
     <>
-      <span className="text-body-small mr-7 inline-block h-fit rounded-4 bg-cold-blue-500 p-4">V{currentVersion}</span>
       <button className="mr-4">
         <img className="network-dropdown-icon" src={icon} alt={selectorLabel} />
       </button>
@@ -115,10 +113,7 @@ function DesktopDropdown({ setActiveModal, selectorLabel, networkOptions, openSe
         </Menu.Button>
         <Menu.Items as="div" className="menu-items network-dropdown-items" data-qa="networks-dropdown">
           <div className="dropdown-label">
-            <Trans>Version and Network</Trans>
-          </div>
-          <div className="px-8 pb-8">
-            <VersionSwitch />
+            <Trans>Network</Trans>
           </div>
           <div className="network-dropdown-list">
             <NetworkMenuItems networkOptions={networkOptions} selectorLabel={selectorLabel} />
