@@ -334,7 +334,7 @@ export default function TokenCard({ showRedirectModal }: Props) {
                 className="!py-11 tracking-normal"
                 newTab
                 variant="secondary"
-                to="https://docs.gmx.io/docs/category/tokenomics"
+                to="https://docs.intelmarkets.trade/docs/category/tokenomics"
               >
                 <Trans>Read more</Trans>
               </Button>
@@ -381,7 +381,7 @@ export default function TokenCard({ showRedirectModal }: Props) {
                 className="!py-11 tracking-normal"
                 newTab
                 variant="secondary"
-                to="https://docs.gmx.io/docs/providing-liquidity/v2/#glv-pools"
+                to="https://docs.intelmarkets.trade/docs/providing-liquidity/v2/#glv-pools"
               >
                 <Trans>Read more</Trans>
               </Button>
@@ -428,7 +428,7 @@ export default function TokenCard({ showRedirectModal }: Props) {
                 className="!py-11 tracking-normal"
                 newTab
                 variant="secondary"
-                to="https://docs.gmx.io/docs/providing-liquidity/v2"
+                to="https://docs.intelmarkets.trade/docs/providing-liquidity/v2"
               >
                 <Trans>Read more</Trans>
               </Button>
@@ -490,7 +490,7 @@ export default function TokenCard({ showRedirectModal }: Props) {
                 className="!py-11 tracking-normal"
                 newTab
                 variant="secondary"
-                to="https://docs.gmx.io/docs/providing-liquidity/v1"
+                to="https://docs.intelmarkets.trade/docs/providing-liquidity/v1"
               >
                 <Trans>Read more</Trans>
               </Button>

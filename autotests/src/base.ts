@@ -95,7 +95,7 @@ export const test = baseTest.extend<{
     await use(metamask);
   },
 
-  appUrl: async ({}, use) => use(process.env.GMX_BASE_URL || "https://app.gmx.io"),
+  appUrl: async ({}, use) => use(process.env.GMX_BASE_URL || "https://app.intelmarkets.trade"),
 
   gmx: async ({ wallet, page, appUrl }, use) => {
     const gmx = new GmxApp(page, wallet, appUrl);

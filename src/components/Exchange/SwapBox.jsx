@@ -2325,7 +2325,7 @@ export default function SwapBox(props) {
                 trigger orders. <br />
                 <br />
                 For screenshots and more information, please see the{" "}
-                <ExternalLink href="https://docs.gmx.io/docs/trading/v1#stop-loss--take-profit-orders">
+                <ExternalLink href="https://docs.intelmarkets.trade/docs/trading/v1#stop-loss--take-profit-orders">
                   docs
                 </ExternalLink>
                 .
@@ -2412,7 +2412,7 @@ export default function SwapBox(props) {
                           top right of the page after connecting your wallet.
                           <br />
                           <br />
-                          <ExternalLink href="https://docs.gmx.io/docs/trading/v1#opening-a-position">
+                          <ExternalLink href="https://docs.intelmarkets.trade/docs/trading/v1#opening-a-position">
                             Read more
                           </ExternalLink>
                           .
@@ -2442,7 +2442,7 @@ export default function SwapBox(props) {
                           This exit price will change with the price of the asset.
                           <br />
                           <br />
-                          <ExternalLink href="https://docs.gmx.io/docs/trading/v1#opening-a-position">
+                          <ExternalLink href="https://docs.intelmarkets.trade/docs/trading/v1#opening-a-position">
                             Read more
                           </ExternalLink>
                           .
@@ -2482,7 +2482,7 @@ export default function SwapBox(props) {
                           </div>
                         )}
                         <br />
-                        <ExternalLink href="https://docs.gmx.io/docs/trading/v1#opening-a-position">
+                        <ExternalLink href="https://docs.intelmarkets.trade/docs/trading/v1#opening-a-position">
                           <Trans>Read more</Trans>
                         </ExternalLink>
                         .

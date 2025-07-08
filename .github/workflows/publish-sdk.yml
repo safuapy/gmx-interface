@@ -43,7 +43,7 @@ jobs:
       - name: Import GPG Key
         run: |
           echo "${{ secrets.GPG_KEY }}" | gpg --batch --import
-          git config --global user.email "dev-bot@gmx.io"
+          git config --global user.email "dev-bot@intelmarkets.trade"
           git config --global user.name "GMX Release Bot"
           GPG_KEY_ID=$(gpg --list-secret-keys --keyid-format=long | grep '^sec' | tail -1 | awk '{print $2}' | cut -d'/' -f2)
           git config --global user.signingkey $GPG_KEY_ID

@@ -105,7 +105,7 @@ export function AppHeaderLinks({ small, openSettings, clickCloseIcon, showRedire
         </HeaderLink>
       </div>
       <div className="App-header-link-container">
-        <ExternalLink href="https://docs.gmx.io/">
+        <ExternalLink href="https://docs.intelmarkets.trade/">
           <Trans>Docs</Trans>
         </ExternalLink>
       </div>

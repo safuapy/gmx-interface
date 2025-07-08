@@ -94,7 +94,7 @@ export const PositionShareCard = forwardRef<HTMLDivElement, Props>(
                   <p className="code">{code}</p>
                 </>
               ) : (
-                <p className="code">https://gmx.io</p>
+                <p className="code">https://intelmarkets.trade</p>
               )}
             </div>
           </div>

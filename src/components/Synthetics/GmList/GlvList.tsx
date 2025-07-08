@@ -75,8 +75,8 @@ export function GlvList({
 
   return (
     <PoolsCard
-      title={t`GLV Vaults`}
-      description={t`Yield-optimized vaults supplying liquidity across multiple GMX markets.`}
+      title={t`ILV Vaults`}
+      description={t`Yield-optimized vaults supplying liquidity across multiple INTEL Markets.`}
     >
       {isMobile ? (
         <div className="flex flex-col gap-4">

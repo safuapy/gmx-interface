@@ -21,7 +21,7 @@ jobs:
       - name: Merge master into test
         run: |
           git config user.name "GMX Release Bot"
-          git config user.email "release-bot@gmx.io"
+          git config user.email "release-bot@intelmarkets.trade"
           git checkout test
           git merge master
           git push origin test

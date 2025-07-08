@@ -51,13 +51,13 @@ export function RedirectPopupModal({
       <br />
       <Trans>
         Alternative links can be found in the{" "}
-        <ExternalLink href="https://docs.gmx.io/docs/community/frontends">docs</ExternalLink>.
+        <ExternalLink href="https://docs.intelmarkets.trade/docs/community/frontends">docs</ExternalLink>.
         <br />
         <br />
-        By clicking Agree you accept the <ExternalLink href="https://gmx.io/#/terms-and-conditions">
+        By clicking Agree you accept the <ExternalLink href="https://intelmarkets.trade/#/terms-and-conditions">
           T&Cs
         </ExternalLink>{" "}
-        and <ExternalLink href="https://gmx.io/#/referral-terms">Referral T&Cs</ExternalLink>.
+        and <ExternalLink href="https://intelmarkets.trade/#/referral-terms">Referral T&Cs</ExternalLink>.
         <br />
         <br />
       </Trans>

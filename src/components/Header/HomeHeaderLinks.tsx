@@ -51,7 +51,7 @@ export function HomeHeaderLinks({ small, clickCloseIcon, showRedirectModal }: Pr
     },
     {
       label: t`Governance`,
-      link: "https://gov.gmx.io/",
+      link: "https://gov.intelmarkets.trade/",
     },
     {
       label: t`Voting`,
@@ -59,7 +59,7 @@ export function HomeHeaderLinks({ small, clickCloseIcon, showRedirectModal }: Pr
     },
     {
       label: t`Docs`,
-      link: "https://docs.gmx.io/",
+      link: "https://docs.intelmarkets.trade/",
     },
   ];
   return (

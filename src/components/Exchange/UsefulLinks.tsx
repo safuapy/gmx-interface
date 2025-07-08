@@ -18,7 +18,7 @@ export default function UsefulLinks({ className }) {
       <div className="App-card-divider"></div>
       <div className="Exchange-info-row">
         <div className="Exchange-info-label-button">
-          <ExternalLink href="https://docs.gmx.io/docs/trading/v1">
+          <ExternalLink href="https://docs.intelmarkets.trade/docs/trading/v1">
             <Trans>Trading guide</Trans>
           </ExternalLink>
         </div>
@@ -32,7 +32,7 @@ export default function UsefulLinks({ className }) {
       </div>
       <div className="Exchange-info-row">
         <div className="Exchange-info-label-button">
-          <ExternalLink href="https://docs.gmx.io/docs/trading/v1/#rpc-urls">
+          <ExternalLink href="https://docs.intelmarkets.trade/docs/trading/v1/#rpc-urls">
             <Trans>Speed up page loading</Trans>
           </ExternalLink>
         </div>

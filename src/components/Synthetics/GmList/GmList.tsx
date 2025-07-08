@@ -116,7 +116,7 @@ export function GmList({
   return (
     <PoolsCard
       title={t`GM Pools`}
-      description={t`Pools providing liquidity to specific GMX markets, supporting single-asset and native asset options.`}
+      description={t`Pools providing liquidity to specific INTEL Markets, supporting single-asset and native asset options.`}
       bottom={
         pageCount > 1 ? (
           <Pagination page={currentPage} pageCount={pageCount} onPageChange={setCurrentPage} topMargin={false} />

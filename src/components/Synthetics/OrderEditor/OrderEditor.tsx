@@ -418,7 +418,7 @@ export function OrderEditor(p: Props) {
         tooltip: (
           <>
             <Trans>Decrease the size to match the max. allowed leverage:</Trans>{" "}
-            <ExternalLink href="https://docs.gmx.io/docs/trading/v2/#max-leverage">Read more</ExternalLink>.
+            <ExternalLink href="https://docs.intelmarkets.trade/docs/trading/v2/#max-leverage">Read more</ExternalLink>.
             <br />
             <br />
             <span onClick={detectAndSetAvailableMaxLeverage} className="Tradebox-handle">

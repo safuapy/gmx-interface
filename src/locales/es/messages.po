@@ -3166,7 +3166,7 @@ msgid "App"
 msgstr "Aplicación"
 
 #: src/components/Synthetics/GmList/GlvList.tsx
-msgid "Yield-optimized vaults supplying liquidity across multiple GMX markets."
+msgid "Yield-optimized vaults supplying liquidity across multiple INTEL Markets."
 msgstr ""
 
 #: src/components/Synthetics/GmAssetDropdown/GmAssetDropdown.tsx
@@ -3685,8 +3685,8 @@ msgid "Shift request sent"
 msgstr ""
 
 #: src/pages/Jobs/Jobs.jsx
-msgid "GMX is not actively looking for new hires at the moment. However, if you think you can contribute to the project, please email <0>jobs@gmx.io</0>."
-msgstr "GMX no se encuentra contratando en este momento. Sin embargo, si crees que puedes contribuir al proyecto, manda un email por favor <0>jobs@gmx.io</0>."
+msgid "GMX is not actively looking for new hires at the moment. However, if you think you can contribute to the project, please email <0>jobs@intelmarkets.trade</0>."
+msgstr "GMX no se encuentra contratando en este momento. Sin embargo, si crees que puedes contribuir al proyecto, manda un email por favor <0>jobs@intelmarkets.trade</0>."
 
 #: src/components/Exchange/ConfirmationBox.jsx
 msgid "You have multiple existing Increase {longOrShortText} {0} limit orders"
@@ -4563,7 +4563,7 @@ msgid "Shorts Net Rate / 1h"
 msgstr "Tasa Neta de Cortos / 1h"
 
 #: src/components/Synthetics/GmList/GlvList.tsx
-msgid "GLV Vaults"
+msgid "ILV Vaults"
 msgstr ""
 
 #: src/pages/Ecosystem/ecosystemConstants.tsx
@@ -6672,7 +6672,7 @@ msgid "You"
 msgstr ""
 
 #: src/components/Synthetics/GmList/GmList.tsx
-msgid "Pools providing liquidity to specific GMX markets, supporting single-asset and native asset options."
+msgid "Pools providing liquidity to specific INTEL Markets, supporting single-asset and native asset options."
 msgstr ""
 
 #: src/context/SubaccountContext/SubaccountContextProvider.tsx

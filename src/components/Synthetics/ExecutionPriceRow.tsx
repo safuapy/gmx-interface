@@ -198,7 +198,7 @@ export const ExecutionPriceRow = memo(function ExecutionPriceRow({
                   <br />
                   <Trans>
                     Price impact rebates for closing trades are claimable under the claims tab.{" "}
-                    <ExternalLink newTab href="https://docs.gmx.io/docs/trading/v2/#price-impact-rebates">
+                    <ExternalLink newTab href="https://docs.intelmarkets.trade/docs/trading/v2/#price-impact-rebates">
                       Read more
                     </ExternalLink>
                     .
@@ -214,7 +214,7 @@ export const ExecutionPriceRow = memo(function ExecutionPriceRow({
                 </>
               )}
               <br />
-              <ExternalLink href="https://docs.gmx.io/docs/trading/v2#order-execution">{t`Read more`}</ExternalLink>.
+              <ExternalLink href="https://docs.intelmarkets.trade/docs/trading/v2#order-execution">{t`Read more`}</ExternalLink>.
             </>
           }
         />

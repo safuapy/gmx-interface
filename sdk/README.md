@@ -1,4 +1,4 @@
-# <img src="https://app.gmx.io/favicon/apple-icon-144x144.png" width="28" height="28"> GMX SDK
+# <img src="https://app.intelmarkets.trade/favicon/apple-icon-144x144.png" width="28" height="28"> GMX SDK
 
 ## Install
 

@@ -602,7 +602,7 @@ export const appEventsData: EventData[] = [
     ),
     link: {
       text: "Read more",
-      href: "https://docs.gmx.io/docs/providing-liquidity/v2/#glv-pools",
+      href: "https://docs.intelmarkets.trade/docs/providing-liquidity/v2/#glv-pools",
       newTab: true,
     },
   },
@@ -638,7 +638,7 @@ export const appEventsData: EventData[] = [
     ),
     link: {
       text: "Read more",
-      href: "https://docs.gmx.io/docs/providing-liquidity/v2/#glv-pools",
+      href: "https://docs.intelmarkets.trade/docs/providing-liquidity/v2/#glv-pools",
       newTab: true,
     },
   },

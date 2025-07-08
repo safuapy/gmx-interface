@@ -24,11 +24,11 @@ export function getFooterLinks(isHome) {
     home: [
       { label: t`Terms and Conditions`, link: "/terms-and-conditions" },
       { label: t`Referral Terms`, link: "/referral-terms" },
-      { label: t`Media Kit`, link: "https://docs.gmx.io/docs/community/media-kit", external: true },
+      { label: t`Media Kit`, link: "https://docs.intelmarkets.trade/docs/community/media-kit", external: true },
       // { label: "Jobs", link: "/jobs", isAppLink: true },
     ],
     app: [
-      { label: t`Media Kit`, link: "https://docs.gmx.io/docs/community/media-kit", external: true },
+      { label: t`Media Kit`, link: "https://docs.intelmarkets.trade/docs/community/media-kit", external: true },
       { label: t`Charts by TradingView`, link: "https://www.tradingview.com/", external: true },
       // { label: "Jobs", link: "/jobs" },
     ],
