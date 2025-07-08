@@ -215,22 +215,22 @@ export function ClaimModal(props: {
       <div className="CompoundModal-menu">
         <div>
           <Checkbox isChecked={shouldClaimGmx} setIsChecked={setShouldClaimGmx} disabled={shouldStakeGmx}>
-            <Trans>Claim GMX Rewards</Trans>
+            <Trans>Claim INTEL Rewards</Trans>
           </Checkbox>
         </div>
         <div>
           <Checkbox isChecked={shouldStakeGmx} setIsChecked={toggleShouldStakeGmx}>
-            <Trans>Stake GMX Rewards</Trans>
+            <Trans>Stake INTEL Rewards</Trans>
           </Checkbox>
         </div>
         <div>
           <Checkbox isChecked={shouldClaimEsGmx} setIsChecked={setShouldClaimEsGmx} disabled={shouldStakeEsGmx}>
-            <Trans>Claim esGMX Rewards</Trans>
+            <Trans>Claim esINTEL Rewards</Trans>
           </Checkbox>
         </div>
         <div>
           <Checkbox isChecked={shouldStakeEsGmx} setIsChecked={toggleShouldStakeEsGmx}>
-            <Trans>Stake esGMX Rewards</Trans>
+            <Trans>Stake esINTEL Rewards</Trans>
           </Checkbox>
         </div>
         {isNativeTokenToClaim && (

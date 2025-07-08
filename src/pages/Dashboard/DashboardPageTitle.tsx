@@ -9,14 +9,9 @@ export function DashboardPageTitle({ tradePageVersion }: { tradePageVersion: num
       subtitle={
         tradePageVersion === 1 ? (
           <>
-            <Trans>
-              INTEL is the utility and governance token. Accrues 30% and 27% of V1 and V2 markets generated fees,
-              respectively.
-            </Trans>
+            <Trans>Market Tokens (MT) are market-specific liquidity tokens for IntelMarkets. Each market has its own MT that earns fees from trading activity.</Trans>
             <br />
-            <Trans>
-              GLP is the liquidity provider token for IntelMarket V1 markets. Accrues 70% of the V1 markets generated fees.
-            </Trans>
+            <Trans>Vault Tokens (VT) are the liquidity provider tokens for IntelMarkets vaults. Each VT represents a basket of MT tokens and earns a share of market fees.</Trans>
           </>
         ) : (
           <>

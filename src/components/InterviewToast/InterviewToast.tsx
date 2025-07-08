@@ -19,7 +19,7 @@ export function InterviewToast({ type, onButtonClick }: Props) {
         <br />
         <br />
         <div onClick={onButtonClick} className="text-xl cursor-pointer text-slate-100 underline">
-          <Trans>Give us your feedback on GMX.</Trans>
+          <Trans>Share your feedback on IntelMarkets.</Trans>
         </div>
         <br />
         <Trans>
@@ -52,7 +52,7 @@ export function InterviewToast({ type, onButtonClick }: Props) {
         <br />
         <br />
         <div onClick={onButtonClick} className="text-xl cursor-pointer text-slate-100 underline">
-          <Trans>Click here to give us your feedback on GMX.</Trans>
+          <Trans>Click here to share your feedback on IntelMarkets.</Trans>
         </div>
       </div>
     );

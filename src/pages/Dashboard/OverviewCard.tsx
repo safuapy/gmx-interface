@@ -411,7 +411,7 @@ export function OverviewCard({
         </div>
         <div className="App-card-row">
           <div className="label">
-            <Trans>GLP Pool</Trans>
+            <Trans>ILP Pool</Trans>
           </div>
           <div>
             <TooltipComponent
@@ -419,7 +419,7 @@ export function OverviewCard({
               position="bottom-end"
               content={
                 <>
-                  <Trans>Total value of tokens in the GLP pools.</Trans>
+                  <Trans>Total value of tokens in the ILP pools.</Trans>
                   <br />
                   <br />
                   <StatsTooltipRow

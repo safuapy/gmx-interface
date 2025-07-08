@@ -70,7 +70,7 @@ export function EscrowedGmxCard({
         <div className="inline-flex items-center">
           <img className="mr-5 h-20" alt="GLP" src={icons?.esgmx} height={20} />
           <span>
-            <Trans>Escrowed GMX</Trans>
+            <Trans>Escrowed INTEL</Trans>
           </span>
         </div>
       </div>

@@ -258,10 +258,10 @@ export default function Home({ showRedirectModal }) {
         <div className="Home-cta-container default-container">
           <div className="Home-cta-info">
             <div className="Home-cta-info__title">
-              <Trans>Available on your preferred network</Trans>
+              <Trans>Trade on Ethereum</Trans>
             </div>
             <div className="Home-cta-info__description">
-              <Trans>GMX is currently live on Arbitrum and Avalanche.</Trans>
+              <Trans>Experience decentralized perpetual trading on the Ethereum network.</Trans>
             </div>
           </div>
           <div className="Home-cta-options">

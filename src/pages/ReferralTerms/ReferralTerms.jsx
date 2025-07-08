@@ -14,7 +14,7 @@ export default function ReferralTerms() {
       <div className="default-container Page page-layout">
         <div>
           <div className="Page-title-section center">
-            <div className="Page-title">GMX Referral Program</div>
+            <div className="Page-title">IntelMarkets Referral Program</div>
             <div className="Page-subtitle">Terms and Conditions</div>
             <div className="Page-description">Last modified: August 1st, 2022</div>
           </div>
@@ -31,7 +31,7 @@ export default function ReferralTerms() {
               <p className="body-text">
                 These Terms and Conditions and any other documents incorporated herein by reference (collectively, these
                 "Terms") to you or the company or other legal entity you represent ("you," "your," "the Referrer," "the
-                Affiliate"), explains the terms and conditions by which you may use the GMX Referral Program ("Referral
+                Affiliate"), explains the terms and conditions by which you may use the IntelMarkets Referral Program ("Referral
                 Program") as defined below.
               </p>
               <p className="body-text">

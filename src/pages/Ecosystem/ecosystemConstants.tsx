@@ -171,10 +171,10 @@ type EcosystemDashboardProject = {
 
 export const dashboardProjects: EcosystemDashboardProject[] = [
   {
-    title: msg`GMX Referrals Dashboard`,
+    title: msg`IntelMarkets Referrals Dashboard`,
     link: "https://www.gmxreferrals.com/",
     linkLabel: "gmxreferrals.com",
-    about: msg`Dashboard for GMX referral stats`,
+    about: msg`Dashboard for IntelMarkets referral stats`,
     creatorLabel: "@kyzoeth",
     creatorLink: "https://x.com/kyzoeth",
     chainIds: [ARBITRUM, AVALANCHE],
@@ -524,9 +524,9 @@ export const telegramGroups: EcosystemTelegramGroup[] = [
     about: msg`Telegram Group (Portuguese)`,
   },
   {
-    title: msg`GMX Trading Chat`,
+    title: msg`IntelMarkets Trading Chat`,
     link: "https://t.me/gambittradingchat",
     linkLabel: "t.me",
-    about: msg`GMX community discussion`,
+    about: msg`IntelMarkets community discussion`,
   },
 ];

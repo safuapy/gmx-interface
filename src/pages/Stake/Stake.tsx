@@ -191,7 +191,7 @@ function StakeContent() {
 
       <PageTitle
         isTop
-        title={t`Stake`}
+        title={t`Stake INTEL`}
         qa="earn-page"
         subtitle={
           <div>
@@ -228,7 +228,7 @@ function StakeContent() {
         isVisible={isStakeEsGmxModalVisible}
         setIsVisible={setIsStakeEsGmxModalVisible}
         chainId={chainId}
-        title={t`Stake esGMX`}
+        title={t`Stake esINTEL`}
         maxAmount={processedData?.esGmxBalance}
         value={stakeEsGmxValue}
         setValue={setStakeEsGmxValue}
@@ -289,9 +289,9 @@ function StakeContent() {
           title={t`Incentives & Prizes`}
           subtitle={
             incentiveStats?.lp?.isActive || incentiveStats?.trading?.isActive ? (
-              <Trans>Earn {incentivesToken} token incentives by purchasing GM tokens or trading in GMX V2.</Trans>
+              <Trans>Earn rewards by providing liquidity and trading on IntelMarkets.</Trans>
             ) : (
-              <Trans>Earn prizes by participating in GMX Trading Competitions.</Trans>
+              <Trans>Earn rewards by providing liquidity and trading on IntelMarkets.</Trans>
             )
           }
         />

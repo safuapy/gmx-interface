@@ -42,7 +42,7 @@ export function MarketsListV1({
     <>
       <div className="token-table-wrapper App-box">
         <div className="text-body-large flex items-center p-16">
-          <Trans>GLP Index Composition</Trans>{" "}
+          <Trans>ILP Index Composition</Trans>{" "}
           <img src={currentIcons.network} className="ml-5" width="16" alt="Network Icon" />
         </div>
         <table className="w-full">
@@ -159,7 +159,7 @@ export function MarketsListV1({
       </div>
 
       <div className="glp-composition-small">
-        <PageTitle title={t`GLP Index Composition`} />
+        <PageTitle title={t`ILP Index Composition`} />
       </div>
 
       <div className="token-grid">

@@ -144,7 +144,7 @@ function Referrals() {
           subtitle={
             !isBotanix ? (
               <Trans>
-                Get fee discounts and earn rebates through the GMX referral program.
+                Get fee discounts and earn rebates through the IntelMarkets referral program.
                 <br />
                 For more information, please read the{" "}
                 <ExternalLink href="https://docs.intelmarkets.trade/docs/referrals">referral program details</ExternalLink>.

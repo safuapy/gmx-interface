@@ -21,9 +21,7 @@ export function NotifyModal() {
     <Modal isVisible={notifyModalOpen} setIsVisible={setNotifyModalOpen} label={t`GMX Alerts`}>
       <div className="NotifyModal">
         <p className="text-body-medium">
-          <Trans>
-            Get alerts and announcements from GMX to stay on top of your trades, liquidation risk, and&nbsp;more.
-          </Trans>
+          <Trans>IntelMarkets Trading Alerts</Trans>
         </p>
         <NotifyBulletList />
         <Button

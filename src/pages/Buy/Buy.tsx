@@ -11,7 +11,7 @@ import "./Buy.css";
 
 export default function BuyGMXGLP() {
   return (
-    <SEO title="Buy GLP or INTEL | IntelMarket">
+    <SEO title="Buy ILP or INTEL | IntelMarket">
       <div className="BuyGMXGLP page-layout">
         <div className="default-container">
           <div className="BuyGMXGLP-container">
