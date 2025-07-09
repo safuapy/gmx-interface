@@ -254,7 +254,7 @@ export default function TokenCard({ showRedirectModal }: Props) {
     if (avalancheIncentiveState?.lp?.isActive) {
       return (
         <Trans>
-          {avalancheLink} GM Pools are <span className="whitespace-nowrap">incentivized{sparkle}.</span>
+          {avalancheLink} IntelMarkets Pools are <span className="whitespace-nowrap">incentivized{sparkle}.</span>
         </Trans>
       );
     } else {

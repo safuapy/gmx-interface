@@ -122,7 +122,7 @@ export function OverviewCard({
     const stakedGmxUsdArbitrum = bigMath.mulDiv(gmxPrice, stakedGmxArbitrum, expandDecimals(1, GMX_DECIMALS));
     const stakedGmxUsdAvalanche = bigMath.mulDiv(gmxPrice, stakedGmxAvalanche, expandDecimals(1, GMX_DECIMALS));
 
-    // GMX Staked + GLP Pools + GM Pools
+    // GMX Staked + GLP Pools + IntelMarkets Pools
     displayTvlArbitrum = stakedGmxUsdArbitrum + glpMarketCapArbitrum + gmTvlArbitrum + arbitrumPositionsCollateralUsd;
     displayTvlAvalanche =
       stakedGmxUsdAvalanche + glpMarketCapAvalanche + gmTvlAvalanche + avalanchePositionsCollateralUsd;
@@ -380,7 +380,7 @@ export function OverviewCard({
                   <ul className="my-8 list-disc">
                     <li className="p-2">GMX Staked</li>
                     <li className="p-2">GLP Pool</li>
-                    <li className="p-2">GM Pools</li>
+                    <li className="p-2">IntelMarkets Pools</li>
                     <li className="p-2">Positions' Collateral</li>
                   </ul>
                   <StatsTooltipRow
@@ -450,7 +450,7 @@ export function OverviewCard({
         </div>
         <div className="App-card-row">
           <div className="label">
-            <Trans>GM Pools</Trans>
+            <Trans>IntelMarkets Pools</Trans>
           </div>
           <div>
             <TooltipComponent
@@ -458,7 +458,7 @@ export function OverviewCard({
               position="bottom-end"
               content={
                 <>
-                  <Trans>Total value of tokens in GM Pools.</Trans>
+                  <Trans>Total value of tokens in IntelMarkets Pools.</Trans>
                   <br />
                   <br />
                   <StatsTooltipRow

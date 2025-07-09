@@ -1983,7 +1983,7 @@ msgstr "코드 확인중..."
 #: src/components/Synthetics/GmList/GmList.tsx
 #: src/components/Synthetics/MarketsList/MarketsList.tsx
 #: src/pages/Dashboard/OverviewCard.tsx
-msgid "GM Pools"
+msgid "IntelMarkets Pools"
 msgstr ""
 
 #: src/components/Synthetics/TradeBox/TradeBoxRows/AvailableLiquidityRow.tsx
@@ -4504,7 +4504,7 @@ msgid "Claim V2 Rebates from your referred Traders."
 msgstr ""
 
 #: src/pages/Dashboard/OverviewCard.tsx
-msgid "Total value of tokens in GM Pools."
+msgid "Total value of tokens in IntelMarkets Pools."
 msgstr ""
 
 #: src/components/Glp/GlpSwap.jsx
@@ -7633,7 +7633,7 @@ msgid "GMX ecosystem pages."
 msgstr "GMX 이코시스템 페이지"
 
 #: src/components/TokenCard/TokenCard.tsx
-msgid "{avalancheLink} GM Pools are <0>incentivized{sparkle}.</0>"
+msgid "{avalancheLink} IntelMarkets Pools are <0>incentivized{sparkle}.</0>"
 msgstr ""
 
 #: src/components/Exchange/PositionsList.jsx
