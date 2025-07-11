@@ -5,10 +5,6 @@ export type PositionPercent = "25%" | "50%" | "75%" | "100%";
 export type GmxNavigation =
   | "/trade"
   | "/dashboard"
-  | "/earn"
-  | "/leaderboard"
-  | "/buy_glp"
-  | "/pools"
-  | "/referrals";
+  | "/earn";
 export type EditOperation = "Deposit" | "Withdraw";
 export type CloseOperation = "Market" | "TP/SL";

@@ -51,18 +51,13 @@ export function AppHeaderLinks({ small, openSettings, clickCloseIcon, showRedire
         </HeaderLink>
       </div>
       <div className="App-header-link-container">
-        <HeaderLink qa="pools" to="/pools" showRedirectModal={showRedirectModal}>
-          <Trans>Pools</Trans>
+        <HeaderLink qa="dashboard" to="/dashboard" showRedirectModal={showRedirectModal}>
+          <Trans>Dashboard</Trans>
         </HeaderLink>
       </div>
       <div className="App-header-link-container">
-        <HeaderLink qa="stake" to="/stake" showRedirectModal={showRedirectModal}>
-          <Trans>Stake</Trans>
-        </HeaderLink>
-      </div>
-      <div className="App-header-link-container">
-        <HeaderLink qa="stats" to="/stats" showRedirectModal={showRedirectModal}>
-          <Trans>Stats</Trans>
+        <HeaderLink qa="earn" to="/earn" showRedirectModal={showRedirectModal}>
+          <Trans>Earn</Trans>
         </HeaderLink>
       </div>
       <div className="App-header-link-container">
@@ -71,34 +66,6 @@ export function AppHeaderLinks({ small, openSettings, clickCloseIcon, showRedire
         </ExternalLink>
       </div>
 
-      <div className="App-header-link-container">
-        <HeaderLink
-          onClick={() => {
-            userAnalytics.pushEvent<ReferralTopMenuClickEvent>({
-              event: "ReferralCodeAction",
-              data: {
-                action: "ReferralTopMenuClick",
-              },
-            });
-          }}
-          qa="referrals"
-          to="/referrals"
-          showRedirectModal={showRedirectModal}
-        >
-          <Trans>Referrals</Trans>
-        </HeaderLink>
-      </div>
-
-      <div className="App-header-link-container">
-        <HeaderLink
-          qa="leaderboard"
-          to="/leaderboard"
-          showRedirectModal={showRedirectModal}
-          isActive={isLeaderboardActive}
-        >
-          <Trans>Leaderboard</Trans>
-        </HeaderLink>
-      </div>
       {small && (
         <div className="App-header-link-container">
           <a href="#" onClick={openNotifyModal}>
