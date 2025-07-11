@@ -99,16 +99,6 @@ export function AppHeaderLinks({ small, openSettings, clickCloseIcon, showRedire
           <Trans>Leaderboard</Trans>
         </HeaderLink>
       </div>
-      <div className="App-header-link-container">
-        <HeaderLink qa="ecosystem" to="/ecosystem" showRedirectModal={showRedirectModal}>
-          <Trans>Ecosystem</Trans>
-        </HeaderLink>
-      </div>
-      <div className="App-header-link-container">
-        <ExternalLink href="https://docs.intelmarkets.trade/">
-          <Trans>Docs</Trans>
-        </ExternalLink>
-      </div>
       {small && (
         <div className="App-header-link-container">
           <a href="#" onClick={openNotifyModal}>

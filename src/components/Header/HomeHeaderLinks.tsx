@@ -45,22 +45,6 @@ export function HomeHeaderLinks({ small, clickCloseIcon, showRedirectModal }: Pr
         );
       },
     },
-    {
-      label: t`Protocol`,
-      link: "https://github.com/gmx-io",
-    },
-    {
-      label: t`Governance`,
-      link: "https://gov.intelmarkets.trade/",
-    },
-    {
-      label: t`Voting`,
-      link: "https://snapshot.org/#/gmx.eth",
-    },
-    {
-      label: t`Docs`,
-      link: "https://docs.intelmarkets.trade/",
-    },
   ];
   return (
     <div className="App-header-links">

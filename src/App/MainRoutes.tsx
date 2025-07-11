@@ -24,7 +24,6 @@ import BuyGMX from "pages/BuyGMX/BuyGMX";
 import ClaimEsGmx from "pages/ClaimEsGmx/ClaimEsGmx";
 import CompleteAccountTransfer from "pages/CompleteAccountTransfer/CompleteAccountTransfer";
 import DashboardV2 from "pages/Dashboard/DashboardV2";
-import Ecosystem from "pages/Ecosystem/Ecosystem";
 import { Exchange } from "pages/Exchange/Exchange";
 import Jobs from "pages/Jobs/Jobs";
 import { CompetitionRedirect, LeaderboardPage } from "pages/LeaderboardPage/LeaderboardPage";
@@ -155,9 +154,6 @@ export function MainRoutes({ openSettings }: { openSettings: () => void }) {
       </Route>
       <Route exact path="/buy_gmx">
         <BuyGMX />
-      </Route>
-      <Route exact path="/ecosystem">
-        <Ecosystem />
       </Route>
       <Route path="/leaderboard/">
         <SyntheticsStateContextProvider skipLocalReferralCode pageType="leaderboard">
