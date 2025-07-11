@@ -1,5 +1,5 @@
 .App-header-backdrop {
-  background: linear-gradient(135deg, rgba(0, 0, 0, 0.8) 0%, rgba(176, 38, 255, 0.1) 100%);
+  background: rgba(0, 0, 0, 0.7);
   backdrop-filter: blur(10px);
   position: fixed;
   z-index: 1000;
@@ -10,31 +10,27 @@
 }
 
 .App-header.large {
-  height: 6.2rem;
+  height: 7.2rem;
   backdrop-filter: blur(20px);
   display: flex;
   justify-content: space-between;
   position: relative;
-  padding-left: 3.2rem;
-  padding-right: 3.2rem;
-  background: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.05) 100%);
-  border-bottom: 1px solid rgba(176, 38, 255, 0.2);
-  box-shadow: 0 4px 20px rgba(176, 38, 255, 0.1);
+  padding: 0 4rem;
+  background: rgba(0, 0, 0, 0.2);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  z-index: 100;
 }
 
 .App-header.large::after {
-  height: 1.3rem;
-  width: 100%;
-  content: " ";
-  background: linear-gradient(180deg, rgba(176, 38, 255, 0.1) 0%, transparent 100%);
-  position: absolute;
-  bottom: -1.3rem;
-  left: 0;
+  display: none;
 }
 
 .App-header.large .App-header-links {
   display: flex;
-  min-width: 0;
+  align-items: center;
+  height: 100%;
+  gap: 1rem;
 }
 
 .App-header-link-home {
@@ -42,21 +38,11 @@
 }
 
 .App-header-drawer {
-  background: linear-gradient(135deg, var(--color-cyber-800) 0%, var(--color-cyber-900) 100%);
+  background: rgba(0, 0, 0, 0.95);
   backdrop-filter: blur(20px);
-  border-left: 1px solid rgba(176, 38, 255, 0.2);
-  opacity: 1;
-  position: fixed;
-  z-index: 1001;
-  right: 0;
-  top: 0;
-  left: inherit;
-  height: 100vh;
-  width: 30.4rem;
-  overflow-y: auto;
-  -ms-overflow-style: none; /* Internet Explorer 10+ */
-  scrollbar-width: none; /* Firefox */
-  box-shadow: -10px 0 30px rgba(176, 38, 255, 0.2);
+  border: none;
+  padding: 2rem;
+  width: 32rem;
 }
 .App-header-drawer::-webkit-scrollbar {
   display: none; /* Safari and Chrome */
@@ -64,17 +50,11 @@
 
 .App-header-drawer .App-header-link-container .a,
 .App-header-drawer .App-header-link-container a {
-  font-size: var(--font-size-body-large);
-  line-height: var(--line-height-body-large);
-  font-weight: 500;
-  letter-spacing: 0.1px;
-  color: var(--color-cyber-200);
-  padding: 1.5rem 1.6rem;
-  text-decoration: none;
-  display: block;
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 1.6rem;
+  padding: 1.2rem 1.6rem;
+  border-radius: 0.8rem;
   transition: all 0.3s ease;
-  border-radius: 8px;
-  margin: 0.5rem 1rem;
 }
 
 .App-header-drawer .App-header-link-container .a:hover,
@@ -83,9 +63,8 @@
 .App-header-drawer .App-header-link-container a:hover,
 .App-header-drawer .App-header-link-container a:focus,
 .App-header-drawer .App-header-link-container a.active {
-  background: linear-gradient(135deg, rgba(176, 38, 255, 0.2) 0%, rgba(176, 38, 255, 0.1) 100%);
-  color: var(--color-white);
-  box-shadow: 0 4px 15px rgba(176, 38, 255, 0.2);
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
   transform: translateX(5px);
 }
 
@@ -103,7 +82,15 @@
 .App-header-container-left {
   display: flex;
   align-items: center;
-  min-width: 0;
+  height: 100%;
+  gap: 3rem;
+}
+
+.App-header-container-right {
+  display: flex;
+  align-items: center;
+  height: 100%;
+  gap: 2rem;
 }
 
 .App-header-top {
@@ -117,54 +104,41 @@
 .App-header-menu-icon-block {
   display: flex;
   align-items: center;
-  border: 1px solid rgba(176, 38, 255, 0.3);
-  border-radius: 12px;
-  height: 4.8rem;
-  background: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.05) 100%);
-  backdrop-filter: blur(10px);
+  justify-content: center;
+  width: 4rem;
+  height: 4rem;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.1);
   transition: all 0.3s ease;
+  cursor: pointer;
 }
 
 .App-header-menu-icon-block:hover {
-  border-color: rgba(176, 38, 255, 0.6);
-  box-shadow: 0 0 20px rgba(176, 38, 255, 0.3);
+  background: rgba(255, 255, 255, 0.2);
   transform: translateY(-2px);
 }
 
 .App-header-menu-icon {
-  color: var(--color-white);
-  font-size: 2rem;
-  cursor: pointer;
-  opacity: 0.8;
-  margin: 0.7rem;
-  transition: all 0.3s ease;
-}
-
-.App-header-menu-icon:hover {
-  opacity: 1;
-  color: var(--color-purple-300);
-  text-shadow: 0 0 10px rgba(176, 38, 255, 0.5);
+  color: #fff;
+  font-size: 2.4rem;
 }
 
 .App-header a.App-header-link-main,
 .App-header .App-header-link-main {
-  font-size: 1.7rem;
-  padding: 1.5rem;
-  margin-left: -1.5rem;
+  padding: 0;
+  margin: 0;
   display: flex;
-  margin-right: 1.2rem;
-  transition: all 0.3s ease;
+  align-items: center;
+  transition: transform 0.3s ease;
 }
 
 .App-header-link-main:hover {
   transform: scale(1.05);
-  filter: drop-shadow(0 0 10px rgba(176, 38, 255, 0.3));
 }
 
 .App-header-link-main img {
-  display: inline-block;
-  height: 2.15rem;
-  vertical-align: middle;
+  height: 3.2rem;
+  width: auto;
 }
 
 .App-header-link-main img.small {
@@ -174,25 +148,24 @@
 .App-header .a,
 .App-header a {
   text-decoration: none;
-  vertical-align: middle;
-  display: inline-block;
-  cursor: pointer;
+  color: rgba(255, 255, 255, 0.7);
+  font-weight: 500;
+  font-size: 1.5rem;
   transition: all 0.3s ease;
+  padding: 1rem 1.5rem;
+  border-radius: 0.8rem;
 }
 
 .App-header .a.active,
 .App-header a.active {
-  pointer-events: all;
-  opacity: 1;
-  color: var(--color-purple-300);
-  text-shadow: 0 0 10px rgba(176, 38, 255, 0.5);
+  color: #fff;
+  background: rgba(255, 255, 255, 0.1);
 }
 
 .App-header .a:hover,
 .App-header a:hover {
-  opacity: 1;
-  color: var(--color-purple-300);
-  text-shadow: 0 0 10px rgba(176, 38, 255, 0.5);
+  color: #fff;
+  background: rgba(255, 255, 255, 0.1);
   transform: translateY(-2px);
 }
 
@@ -226,11 +199,6 @@
   box-shadow: 0 4px 15px rgba(176, 38, 255, 0.3);
 }
 
-.App-header-container-right {
-  display: flex;
-  align-items: center;
-}
-
 .App-header-user {
   display: flex;
   align-items: center;
@@ -250,7 +218,23 @@
   position: relative;
 }
 
+.App-header-user-link {
+  margin-right: 2.4rem;
+}
+
 @media (max-width: 1335px) {
+  .App-header.large {
+    padding: 0 2rem;
+  }
+
+  .App-header-container-left {
+    gap: 2rem;
+  }
+
+  .App-header-link-main img {
+    height: 2.8rem;
+  }
+
   .App-header-user-address {
     padding: 0 0px;
   }
@@ -312,37 +296,32 @@
 }
 
 @media (max-width: 600px) {
+  .App-header.small {
+    padding: 0 1.6rem;
+  }
+
   .App-header-link-main img.big {
     display: none;
   }
 
   .App-header-link-main img.small {
-    display: inline-block;
+    display: block;
+    height: 2.4rem;
   }
 }
 
 @media (max-width: 450px) {
-  .App-header-user-link {
-    margin-right: 0.6rem;
+  .App-header.small {
+    padding: 0 1.2rem;
   }
 
   .App-header-menu-icon-block {
-    margin-left: 0;
-    margin-right: 0.4rem;
+    width: 3.6rem;
+    height: 3.6rem;
   }
 
   .App-header-menu-icon {
-    margin: 0.4rem 0.5rem;
-  }
-
-  .App-header.small {
-    padding-left: 0.6rem;
-    padding-right: 0.6rem;
-  }
-
-  .App-header .App-header-link-main {
-    padding: 0.155rem !important;
-    margin-left: 0rem !important;
+    font-size: 2rem;
   }
 }
 

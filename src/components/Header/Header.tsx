@@ -8,9 +8,6 @@ import { useMedia } from "react-use";
 
 import { isHomeSite } from "lib/legacy";
 
-import { HeaderPromoBanner } from "components/HeaderPromoBanner/HeaderPromoBanner";
-import { OneClickPromoBanner } from "components/OneClickPromoBanner/OneClickPromoBanner";
-
 import { AppHeaderLinks } from "./AppHeaderLinks";
 import { AppHeaderUser } from "./AppHeaderUser";
 import { HeaderLink } from "./HeaderLink";
@@ -18,7 +15,6 @@ import { HomeHeaderLinks } from "./HomeHeaderLinks";
 
 import "./Header.scss";
 
-// Fix framer-motion old React FC type (solved in react 18)
 const AnimatePresence = (props: React.ComponentProps<typeof FramerAnimatePresence> & { children: ReactNode }) => (
   <FramerAnimatePresence {...props} />
 );
@@ -43,17 +39,8 @@ type Props = {
 
 const Header = ({ disconnectAccountAndCloseSettings, openSettings, showRedirectModal }: Props) => {
   const isMobile = useMedia("(max-width: 1335px)");
-
-  const shouldHide1CTBanner = useMedia("(max-width: 1100px)");
-  const shouldShorten1CTBanner = useMedia("(max-width: 1590px)");
-
   const [isDrawerVisible, setIsDrawerVisible] = useState(false);
   const [isNativeSelectorModalVisible, setIsNativeSelectorModalVisible] = useState(false);
-  const isTradingIncentivesActive = false;
-
-  const toggleDrawer = useCallback(() => {
-    setIsDrawerVisible(!isDrawerVisible);
-  }, [isDrawerVisible]);
 
   useEffect(() => {
     if (isDrawerVisible) {
@@ -79,7 +66,7 @@ const Header = ({ disconnectAccountAndCloseSettings, openSettings, showRedirectM
               exit="hidden"
               variants={FADE_VARIANTS}
               transition={TRANSITION}
-              onClick={toggleDrawer}
+              onClick={() => setIsDrawerVisible(false)}
             ></motion.div>
           )}
         </AnimatePresence>
@@ -114,10 +101,6 @@ const Header = ({ disconnectAccountAndCloseSettings, openSettings, showRedirectM
               )}
             </div>
             <div className="App-header-container-right">
-              <div className="mr-22">
-                <OneClickPromoBanner isShort={shouldShorten1CTBanner} openSettings={openSettings} />
-              </div>
-
               <AppHeaderUser
                 disconnectAccountAndCloseSettings={disconnectAccountAndCloseSettings}
                 openSettings={openSettings}
@@ -134,44 +117,26 @@ const Header = ({ disconnectAccountAndCloseSettings, openSettings, showRedirectM
               })}
             >
               <div className="App-header-container-left">
-                <div className="App-header-link-main clickable" onClick={toggleDrawer}>
+                <div className="App-header-link-main clickable" onClick={() => setIsDrawerVisible(!isDrawerVisible)}>
                   <img src="/intelogo.png" className="big" alt="IntelMarket" />
                   <img src="/intelogo.png" className="small" alt="IntelMarket" />
                 </div>
               </div>
               <div className="App-header-container-right">
-                {!shouldHide1CTBanner && <OneClickPromoBanner openSettings={openSettings} />}
-                <div>
-                  <AppHeaderUser
-                    disconnectAccountAndCloseSettings={disconnectAccountAndCloseSettings}
-                    openSettings={openSettings}
-                    small
-                    showRedirectModal={showRedirectModal}
-                    menuToggle={
-                      <div className="App-header-menu-icon-block" onClick={toggleDrawer}>
-                        <RiMenuLine className="App-header-menu-icon" />
-                      </div>
-                    }
-                  />
-                </div>
+                <AppHeaderUser
+                  disconnectAccountAndCloseSettings={disconnectAccountAndCloseSettings}
+                  openSettings={openSettings}
+                  small
+                  showRedirectModal={showRedirectModal}
+                  menuToggle={
+                    <div className="App-header-menu-icon-block" onClick={() => setIsDrawerVisible(!isDrawerVisible)}>
+                      <RiMenuLine className="App-header-menu-icon" />
+                    </div>
+                  }
+                />
               </div>
             </div>
           </div>
-        )}
-        {isTradingIncentivesActive && (
-          <HeaderPromoBanner>
-            <Trans>
-              Trade&nbsp;on GMX&nbsp;V2 in&nbsp;Arbitrum and win&nbsp;280,000&nbsp;ARB ({">"} $500k) in prizes in{" "}
-              <HeaderLink
-                to="/competitions/"
-                showRedirectModal={showRedirectModal}
-                className="clickable inline-block underline"
-              >
-                two&nbsp;weekly
-              </HeaderLink>{" "}
-              competitions. Live&nbsp;from&nbsp;March 13th to 27th.
-            </Trans>
-          </HeaderPromoBanner>
         )}
       </header>
       <AnimatePresence>
@@ -204,6 +169,6 @@ const Header = ({ disconnectAccountAndCloseSettings, openSettings, showRedirectM
       </AnimatePresence>
     </>
   );
-}
+};
 
 export { Header };
