@@ -11,9 +11,6 @@ import { isHomeSite } from "lib/legacy";
 import { HeaderPromoBanner } from "components/HeaderPromoBanner/HeaderPromoBanner";
 import { OneClickPromoBanner } from "components/OneClickPromoBanner/OneClickPromoBanner";
 
-import logoImg from "img/logo_INTEL.svg";
-import logoSmallImg from "img/logo_INTEL_small.svg";
-
 import { AppHeaderLinks } from "./AppHeaderLinks";
 import { AppHeaderUser } from "./AppHeaderUser";
 import { HeaderLink } from "./HeaderLink";
@@ -44,7 +41,7 @@ type Props = {
   showRedirectModal: (to: string) => void;
 };
 
-export function Header({ disconnectAccountAndCloseSettings, openSettings, showRedirectModal }: Props) {
+const Header = ({ disconnectAccountAndCloseSettings, openSettings, showRedirectModal }: Props) => {
   const isMobile = useMedia("(max-width: 1335px)");
 
   const shouldHide1CTBanner = useMedia("(max-width: 1100px)");
@@ -107,8 +104,8 @@ export function Header({ disconnectAccountAndCloseSettings, openSettings, showRe
           <div className="App-header large">
             <div className="App-header-container-left">
               <Link className="App-header-link-main" to="/">
-                <img src={logoImg} className="big" alt="IntelMarket" />
-                <img src={logoSmallImg} className="small" alt="IntelMarket" />
+                <img src="/intelogo.png" className="big" alt="IntelMarket" />
+                <img src="/intelogo.png" className="small" alt="IntelMarket" />
               </Link>
               {isHomeSite() ? (
                 <HomeHeaderLinks showRedirectModal={showRedirectModal} />
@@ -138,8 +135,8 @@ export function Header({ disconnectAccountAndCloseSettings, openSettings, showRe
             >
               <div className="App-header-container-left">
                 <div className="App-header-link-main clickable" onClick={toggleDrawer}>
-                  <img src={logoImg} className="big" alt="IntelMarket" />
-                  <img src={logoSmallImg} className="small" alt="IntelMarket" />
+                  <img src="/intelogo.png" className="big" alt="IntelMarket" />
+                  <img src="/intelogo.png" className="small" alt="IntelMarket" />
                 </div>
               </div>
               <div className="App-header-container-right">
@@ -208,3 +205,5 @@ export function Header({ disconnectAccountAndCloseSettings, openSettings, showRe
     </>
   );
 }
+
+export { Header };
