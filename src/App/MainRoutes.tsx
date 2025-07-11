@@ -18,7 +18,6 @@ import { buildAccountDashboardUrl } from "pages/AccountDashboard/buildAccountDas
 import { VERSION_QUERY_PARAM } from "pages/AccountDashboard/constants";
 import { AccountsRouter } from "pages/Actions/ActionsRouter";
 import BeginAccountTransfer from "pages/BeginAccountTransfer/BeginAccountTransfer";
-import Buy from "pages/Buy/Buy";
 import BuyGlp from "pages/BuyGlp/BuyGlp";
 import BuyGMX from "pages/BuyGMX/BuyGMX";
 import ClaimEsGmx from "pages/ClaimEsGmx/ClaimEsGmx";
@@ -122,11 +121,6 @@ export function MainRoutes({ openSettings }: { openSettings: () => void }) {
       </Route>
       {/* redirect from previous stake(earn) url */}
       <Redirect exact from="/earn" to="/stake" />
-      <Route exact path="/buy">
-        <SyntheticsStateContextProvider skipLocalReferralCode={false} pageType="buy">
-          <Buy />
-        </SyntheticsStateContextProvider>
-      </Route>
       <Route exact path="/pools">
         <SyntheticsStateContextProvider skipLocalReferralCode={false} pageType="pools">
           <Pools />
