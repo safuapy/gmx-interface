@@ -5268,7 +5268,7 @@ msgid "Min residual collateral: 10 USD"
 msgstr ""
 
 #: src/pages/Stake/GmxAndVotingPowerCard.tsx
-msgid "GMX & Voting Power"
+msgid "IM & Voting Power"
 msgstr ""
 
 #: src/components/Exchange/SwapBox.jsx

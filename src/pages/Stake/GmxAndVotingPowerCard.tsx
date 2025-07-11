@@ -113,7 +113,7 @@ export function GmxAndVotingPowerCard({
       <div className="App-card-title">
         <div className="inline-flex items-center">
           <img className="mr-5 h-20" alt="GMX" src={icons?.gmx} height={20} />
-          {t`GMX & Voting Power`}
+          {t`IM & Voting Power`}
         </div>
       </div>
       <div className="App-card-divider"></div>
