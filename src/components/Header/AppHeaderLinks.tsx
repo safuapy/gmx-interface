@@ -1,35 +1,26 @@
 import { Trans } from "@lingui/macro";
-import { useCallback } from "react";
+import React from "react";
 import { FiX } from "react-icons/fi";
 import { Link } from "react-router-dom";
 
 import { isHomeSite } from "lib/legacy";
-import { useNotifyModalState } from "lib/useNotifyModalState";
-import { userAnalytics } from "lib/userAnalytics";
-import { ReferralTopMenuClickEvent } from "lib/userAnalytics/types";
-
-import ExternalLink from "components/ExternalLink/ExternalLink";
-
-import logoImg from "img/logo_INTEL.svg";
 
 import { HeaderLink } from "./HeaderLink";
+import ExternalLink from "../ExternalLink/ExternalLink";
+
+import logoImg from "img/logo_INTEL.svg";
 
 import "./Header.scss";
 
 type Props = {
   small?: boolean;
-  clickCloseIcon?: () => void;
   openSettings?: () => void;
+  clickCloseIcon?: () => void;
+  openNotifyModal?: () => void;
   showRedirectModal: (to: string) => void;
 };
 
-export function AppHeaderLinks({ small, openSettings, clickCloseIcon, showRedirectModal }: Props) {
-  const { openNotifyModal } = useNotifyModalState();
-  const isLeaderboardActive = useCallback(
-    (match, location) => Boolean(match) || location.pathname.startsWith("/competitions"),
-    []
-  );
-
+export function AppHeaderLinks({ small, openSettings, clickCloseIcon, openNotifyModal, showRedirectModal }: Props) {
   return (
     <div className="App-header-links">
       {small && (
@@ -37,26 +28,23 @@ export function AppHeaderLinks({ small, openSettings, clickCloseIcon, showRedire
           <Link className="App-header-link-main" to="/">
             <img src={logoImg} alt="GMX Logo" />
           </Link>
-          <div
-            className="App-header-menu-icon-block max-w-[450px]:mr-12 mr-8 !border-0"
-            onClick={() => clickCloseIcon && clickCloseIcon()}
-          >
-            <FiX className="App-header-menu-icon" />
+          <div className="App-header-menu-icon-block">
+            <FiX className="App-header-menu-icon" onClick={clickCloseIcon} />
           </div>
         </div>
       )}
       <div className="App-header-link-container">
-        <HeaderLink qa="trade" to="/trade" showRedirectModal={showRedirectModal}>
+        <HeaderLink to="/trade" qa="trade" showRedirectModal={showRedirectModal}>
           <Trans>Trade</Trans>
         </HeaderLink>
       </div>
       <div className="App-header-link-container">
-        <HeaderLink qa="dashboard" to="/dashboard" showRedirectModal={showRedirectModal}>
+        <HeaderLink to="/dashboard" qa="dashboard" showRedirectModal={showRedirectModal}>
           <Trans>Dashboard</Trans>
         </HeaderLink>
       </div>
       <div className="App-header-link-container">
-        <HeaderLink qa="earn" to="/earn" showRedirectModal={showRedirectModal}>
+        <HeaderLink to="/earn" qa="earn" showRedirectModal={showRedirectModal}>
           <Trans>Earn</Trans>
         </HeaderLink>
       </div>
