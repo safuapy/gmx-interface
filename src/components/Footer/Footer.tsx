@@ -36,23 +36,28 @@ export default function Footer({ showRedirectModal, redirectPopupTimestamp, isMo
   return (
     <>
       <footer className={cx(
-        "relative mt-auto w-full border-t border-t-[#ffffff1a] bg-[#07071c]/90 backdrop-blur-[20px]",
-        isMobileTradePage ? "pb-92" : "pb-8",
+        "relative w-full border-t border-t-[#ffffff1a] bg-[#07071c]/90 backdrop-blur-[20px]",
+        isMobileTradePage ? "pb-[92px]" : "pb-8",
+        "mt-auto"
       )}>
         <div className={cx(
-          "mx-auto max-w-[1440px] px-6 pt-16",
-          "grid gap-12",
-          isMobile ? "grid-cols-1" : "grid-cols-4"
+          "mx-auto w-full max-w-[1440px] px-4 md:px-6 pt-12 md:pt-16",
+          "grid gap-8 md:gap-12",
+          isMobile ? "grid-cols-2 sm:grid-cols-2" : "grid-cols-4",
+          isVerySmall && "grid-cols-1"
         )}>
           {/* Brand Section */}
-          <div className="flex flex-col gap-6">
+          <div className={cx(
+            "flex flex-col gap-6",
+            isVerySmall ? "col-span-1" : isMobile ? "col-span-2" : "col-span-1"
+          )}>
             <div className="flex items-start">
-              <img src="/intelogo.png" alt="IntelMarket" className="h-10" />
+              <img src="/intelogo.png" alt="IntelMarket" className="h-8 md:h-10" />
             </div>
             <p className="text-sm text-slate-400 max-w-[280px]">
               Trade with confidence on the world's most advanced decentralized trading platform.
             </p>
-            <div className="flex gap-4">
+            <div className="flex gap-3 md:gap-4">
               {SOCIAL_LINKS.map((platform) => (
                 <TrackingLink
                   key={platform.name}
@@ -71,9 +76,9 @@ export default function Footer({ showRedirectModal, redirectPopupTimestamp, isMo
                 >
                   <ExternalLink 
                     href={platform.link} 
-                    className="flex h-10 w-10 items-center justify-center rounded-full bg-[#ffffff0d] transition-colors duration-200 hover:bg-[#ffffff1a]"
+                    className="flex h-8 w-8 md:h-10 md:w-10 items-center justify-center rounded-full bg-[#ffffff0d] transition-colors duration-200 hover:bg-[#ffffff1a]"
                   >
-                    <img src={platform.icon} alt={platform.name} className="h-5 w-5" />
+                    <img src={platform.icon} alt={platform.name} className="h-4 w-4 md:h-5 md:w-5" />
                   </ExternalLink>
                 </TrackingLink>
               ))}
@@ -83,7 +88,7 @@ export default function Footer({ showRedirectModal, redirectPopupTimestamp, isMo
           {/* Products Section */}
           <div className="flex flex-col">
             <h3 className={sectionTitleClassName}>Products</h3>
-            <div className="flex flex-col gap-4">
+            <div className="flex flex-col gap-3 md:gap-4">
               <NavLink to="/trade" className={linkClassName}>Trade</NavLink>
               <NavLink to="/dashboard" className={linkClassName}>Dashboard</NavLink>
               <NavLink to="/earn" className={linkClassName}>Earn</NavLink>
@@ -94,7 +99,7 @@ export default function Footer({ showRedirectModal, redirectPopupTimestamp, isMo
           {/* Resources Section */}
           <div className="flex flex-col">
             <h3 className={sectionTitleClassName}>Resources</h3>
-            <div className="flex flex-col gap-4">
+            <div className="flex flex-col gap-3 md:gap-4">
               {getFooterLinks(isHome).map(({ external, label, link, isAppLink }) => {
                 if (external) {
                   return (
@@ -141,7 +146,7 @@ export default function Footer({ showRedirectModal, redirectPopupTimestamp, isMo
           {/* Support Section */}
           <div className="flex flex-col">
             <h3 className={sectionTitleClassName}>Support</h3>
-            <div className="flex flex-col gap-4">
+            <div className="flex flex-col gap-3 md:gap-4">
               <ExternalLink href="https://docs.intelmarkets.trade" className={linkClassName}>
                 Documentation
               </ExternalLink>
@@ -156,7 +161,7 @@ export default function Footer({ showRedirectModal, redirectPopupTimestamp, isMo
         </div>
 
         {/* Copyright Section */}
-        <div className="mx-auto max-w-[1440px] px-6 pt-12">
+        <div className="mx-auto w-full max-w-[1440px] px-4 md:px-6 py-8 mt-8 md:mt-12">
           <div className="border-t border-t-[#ffffff1a] pt-8">
             <p className="text-sm text-slate-400">
               © {new Date().getFullYear()} IntelMarkets. All rights reserved.
