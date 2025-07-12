@@ -1,7 +1,5 @@
 import { t } from "@lingui/macro";
 
-import discordIcon from "img/ic_discord.svg";
-import githubIcon from "img/ic_github.svg";
 import substackIcon from "img/ic_substack.svg";
 import telegramIcon from "img/ic_telegram.svg";
 import xIcon from "img/ic_x.svg";
@@ -37,8 +35,6 @@ export function getFooterLinks(isHome) {
 }
 
 export const SOCIAL_LINKS = [
-  { link: "https://github.com/intelmarkets", name: "GitHub", icon: githubIcon },
-  { link: "https://t.me/intelmarkets", name: "Telegram", icon: telegramIcon },
-  { link: "https://discord.gg/intelmarkets", name: "Discord", icon: discordIcon },
-  { link: "https://twitter.com/intelmarkets", name: "Twitter", icon: xIcon },
+  { link: "https://t.me/IntelMarketsOfficial", name: "Telegram", icon: telegramIcon },
+  { link: "https://twitter.com/intel_markets", name: "Twitter", icon: xIcon },
 ];
