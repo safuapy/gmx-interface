@@ -39,16 +39,6 @@ export function AppHeaderLinks({ small, openSettings, clickCloseIcon, openNotify
         </HeaderLink>
       </div>
       <div className="App-header-link-container">
-        <HeaderLink to="/dashboard" qa="dashboard" showRedirectModal={showRedirectModal}>
-          <Trans>Dashboard</Trans>
-        </HeaderLink>
-      </div>
-      <div className="App-header-link-container">
-        <HeaderLink to="/earn" qa="earn" showRedirectModal={showRedirectModal}>
-          <Trans>Earn</Trans>
-        </HeaderLink>
-      </div>
-      <div className="App-header-link-container">
         <ExternalLink href="https://intelmarkets.trade/">
           <Trans>Buy</Trans>
         </ExternalLink>
