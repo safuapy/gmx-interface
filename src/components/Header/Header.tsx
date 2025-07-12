@@ -123,20 +123,20 @@ const Header = ({ disconnectAccountAndCloseSettings, openSettings, showRedirectM
                 </div>
               </div>
               <div className="App-header-container-right">
-                <AppHeaderUser
-                  disconnectAccountAndCloseSettings={disconnectAccountAndCloseSettings}
-                  openSettings={openSettings}
-                  small
-                  showRedirectModal={showRedirectModal}
-                  menuToggle={
+                  <AppHeaderUser
+                    disconnectAccountAndCloseSettings={disconnectAccountAndCloseSettings}
+                    openSettings={openSettings}
+                    small
+                    showRedirectModal={showRedirectModal}
+                    menuToggle={
                     <div className="App-header-menu-icon-block" onClick={() => setIsDrawerVisible(!isDrawerVisible)}>
-                      <RiMenuLine className="App-header-menu-icon" />
-                    </div>
-                  }
-                />
+                        <RiMenuLine className="App-header-menu-icon" />
+                      </div>
+                    }
+                  />
+                </div>
               </div>
             </div>
-          </div>
         )}
       </header>
       <AnimatePresence>
