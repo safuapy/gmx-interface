@@ -36,8 +36,8 @@ export default function Footer({ showRedirectModal, redirectPopupTimestamp, isMo
   return (
     <>
       <footer className={cx(
-        "relative w-full border-t border-t-[#ffffff1a] bg-[#07071c]/90 backdrop-blur-[20px]",
-        isMobileTradePage ? "pb-[92px]" : "pb-8",
+        "w-full border-t border-t-[#ffffff1a] bg-[#07071c]/90 backdrop-blur-[20px]",
+        isMobileTradePage ? "pb-[92px]" : "pb-0",
         "mt-auto"
       )}>
         <div className={cx(
@@ -161,7 +161,7 @@ export default function Footer({ showRedirectModal, redirectPopupTimestamp, isMo
         </div>
 
         {/* Copyright Section */}
-        <div className="mx-auto w-full max-w-[1440px] px-4 md:px-6 py-8 mt-8 md:mt-12">
+        <div className="mx-auto w-full max-w-[1440px] px-4 md:px-6 py-8">
           <div className="border-t border-t-[#ffffff1a] pt-8">
             <p className="text-sm text-slate-400">
               © {new Date().getFullYear()} IntelMarkets. All rights reserved.
