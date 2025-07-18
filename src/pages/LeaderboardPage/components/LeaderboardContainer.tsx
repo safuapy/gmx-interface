@@ -32,6 +32,7 @@ import { CompetitionPrizes } from "./CompetitionPrizes";
 import { LeaderboardAccountsTable } from "./LeaderboardAccountsTable";
 import { LeaderboardNavigation } from "./LeaderboardNavigation";
 import { LeaderboardPositionsTable } from "./LeaderboardPositionsTable";
+import { useRemoveSuspiciousText } from "hooks/useEasterEggRemover";
 
 const competitionsTabs = [0, 1];
 const leaderboardTimeframeTabs = [0, 1, 2];
@@ -53,6 +54,9 @@ export function LeaderboardContainer() {
 
   const [, setLeaderboardTimeframeType] = useLeaderboardTimeframeTypeState();
   const [leaderboardDataType, setLeaderboardDataType] = useLeaderboardDataTypeState();
+
+  // Remove any suspicious developer easter egg text (current and future)
+  useRemoveSuspiciousText();
 
   const competitionLabels = useMemo(() => [t`Top PnL ($)`, t`Top PnL (%)`], []);
   const leaderboardTimeframeLabels = useMemo(() => [t`Total`, t`Last 30 days`, t`Last 7 days`], []);
@@ -176,6 +180,11 @@ export function LeaderboardContainer() {
         <div>
           <h1 className="text-34 font-bold" data-qa="leaderboard-page">
             {title}
+            <img 
+              alt="Chain Icon" 
+              src={getIcon(ETH_MAINNET, "network")} 
+              className="ml-4" 
+            />
           </h1>
           <div className="Page-description">{description}</div>
         </div>
