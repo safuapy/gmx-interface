@@ -43,6 +43,11 @@ export function AppHeaderLinks({ small, openSettings, clickCloseIcon, openNotify
           <Trans>Buy</Trans>
         </ExternalLink>
       </div>
+      <div className="App-header-link-container">
+        <HeaderLink to="/leaderboard" qa="leaderboard" showRedirectModal={showRedirectModal}>
+          <Trans>Leaderboard</Trans>
+        </HeaderLink>
+      </div>
 
       {small && (
         <div className="App-header-link-container">

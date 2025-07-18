@@ -355,7 +355,7 @@ const TableRow = memo(
         </TableTd>
 
         <TableTd>
-          <AddressView big={big} size={20} address={account.account} breakpoint="XL" />
+          <AddressView big={big} size={20} address={account.account} breakpoint="XL" noLink={true} />
         </TableTd>
         <TableTd>
           <TooltipWithPortal

@@ -3,7 +3,7 @@ import cx from "classnames";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { useMedia } from "react-use";
 
-import { getChainName } from "config/chains";
+import { ARBITRUM, ETH_MAINNET, getChainName } from "config/chains";
 import { getIcon } from "config/icons";
 import {
   useLeaderboardChainId,
@@ -109,12 +109,6 @@ export function LeaderboardContainer() {
       case "leaderboard":
         return t`Global Leaderboard`;
 
-      case "march_13-20_2024":
-        return t`EIP-4844 Competition`;
-
-      case "march_20-27_2024":
-        return t`EIP-4844 Competition`;
-
       default:
         throw mustNeverExist(leaderboardPageKey);
     }
@@ -149,27 +143,10 @@ export function LeaderboardContainer() {
       case "leaderboard":
         return t`Leaderboard for traders on IntelMarkets.`;
 
-      case "march_13-20_2024":
-      case "march_20-27_2024":
-        return (
-          <>
-            Powered by the Arbitrum DAO STIP.&nbsp;
-            <ExternalLink href="https://open.substack.com/pub/gmxio/p/the-gmx-eip4844-trading-competition">
-              <Trans>Read the rules</Trans>
-            </ExternalLink>
-            .{wrongNetworkSwitcher}{" "}
-            {isMobile && (
-              <>
-                <CompetitionCountdown size="mobile" />
-              </>
-            )}
-          </>
-        );
-
       default:
         throw mustNeverExist(leaderboardPageKey);
     }
-  }, [isMobile, leaderboardPageKey, wrongNetworkSwitcher]);
+  }, [leaderboardPageKey]);
 
   const leaderboardDataTypeTabsOptions = useMemo(() => {
     return leaderboardDataTypeTabs.map((value) => ({
@@ -198,7 +175,7 @@ export function LeaderboardContainer() {
       <div className="Leaderboard-Title default-container">
         <div>
           <h1 className="text-34 font-bold" data-qa="leaderboard-page">
-            {title} <img alt={t`Chain Icon`} src={getIcon(page.isCompetition ? page.chainId : chainId, "network")} />
+            {title} <img alt={t`Chain Icon`} src={getIcon(ETH_MAINNET, "network")} />
           </h1>
           <div className="Page-description">{description}</div>
         </div>

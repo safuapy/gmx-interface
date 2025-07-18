@@ -38,7 +38,7 @@ function getChip(pageKey: LeaderboardPageKey): LeaderboardNavigationItem["chip"]
 
   if (isStartInFuture) return "soon";
   if (isEndInFuture) return "live";
-  return "over";
+  return "none"; // Changed from "over" to "none" to hide concluded competitions
 }
 
 function getLabel(pageKey: LeaderboardPageKey) {
@@ -138,11 +138,6 @@ function NavigationItem({ item }: { item: LeaderboardNavigationItem }) {
       })}
     >
       {chip} {item.label}
-      {item.chainId ? (
-        <>
-          <img className="LeaderboardHeader__network-icon" alt={t`Chain Icon`} src={getIcon(item.chainId, "network")} />
-        </>
-      ) : undefined}
     </Link>
   );
 }
