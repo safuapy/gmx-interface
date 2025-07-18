@@ -441,16 +441,14 @@ export function getIsMaxLeverageExceeded(
   const minCollateralFactorMultiplier = isLong
     ? marketInfo.minCollateralFactorForOpenInterestLong
     : marketInfo.minCollateralFactorForOpenInterestShort;
-  let minCollateralFactor = bigMath.mulDiv(openInterest + sizeDeltaUsd, minCollateralFactorMultiplier, PRECISION);
   
-  // Use the lower of market's real minCollateralFactor and 1000x-based minCollateralFactor
-  const minCollateralFactorForMarket = marketInfo.minCollateralFactor;
-  const effectiveMinCollateralFactor = minCollateralFactorForMarket < real1000xMinCollateralFactor 
-    ? minCollateralFactorForMarket 
-    : real1000xMinCollateralFactor;
-
-  if (effectiveMinCollateralFactor > minCollateralFactor) {
-    minCollateralFactor = effectiveMinCollateralFactor;
+  // Use 1000x-based minCollateralFactor for position size calculations
+  let minCollateralFactor = real1000xMinCollateralFactor;
+  
+  // Only apply market-specific constraints if they're more restrictive than 1000x
+  const marketMinCollateralFactor = bigMath.mulDiv(openInterest + sizeDeltaUsd, minCollateralFactorMultiplier, PRECISION);
+  if (marketMinCollateralFactor > real1000xMinCollateralFactor) {
+    minCollateralFactor = marketMinCollateralFactor;
   }
 
   const maxLeverage = bigMath.mulDiv(PRECISION, BASIS_POINTS_DIVISOR_BIGINT, minCollateralFactor);
