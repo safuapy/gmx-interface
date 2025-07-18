@@ -176,7 +176,6 @@ export function LeaderboardContainer() {
         <div>
           <h1 className="text-34 font-bold" data-qa="leaderboard-page">
             {title}
-            <img alt={t`Chain Icon`} src={getIcon(ETH_MAINNET, "network")} className="ml-4" />
           </h1>
           <div className="Page-description">{description}</div>
         </div>
