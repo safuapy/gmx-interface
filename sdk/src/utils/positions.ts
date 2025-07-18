@@ -175,6 +175,15 @@ export function getLiquidationPrice(p: {
     liquidationCollateralUsd = minCollateralUsd;
   }
 
+  // Real 1000x leverage: use 1000x-based minCollateralFactor instead of market's real limit
+  const real1000xMinCollateralFactor = BASIS_POINTS_DIVISOR_BIGINT / 1000n; // 1/1000 = 0.1%
+  const real1000xLiquidationCollateralUsd = applyFactor(sizeInUsd, real1000xMinCollateralFactor);
+  
+  // Use the lower of the two to ensure we don't exceed market limits while allowing 1000x
+  liquidationCollateralUsd = liquidationCollateralUsd < real1000xLiquidationCollateralUsd 
+    ? liquidationCollateralUsd 
+    : real1000xLiquidationCollateralUsd;
+
   let liquidationPrice: bigint;
 
   if (getIsEquivalentTokens(collateralToken, indexToken)) {

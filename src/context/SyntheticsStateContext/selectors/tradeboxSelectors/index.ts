@@ -1160,8 +1160,8 @@ export const selectTradeboxMaxLeverage = createSelector((q) => {
 });
 
 export const selectTradeboxLeverageSliderMarks = createSelector((q) => {
-  const maxAllowedLeverage = q(selectTradeboxMaxLeverage);
-  return getTradeboxLeverageSliderMarks(maxAllowedLeverage);
+  // Always return full 1000x leverage marks regardless of market limits
+  return q((state) => [1, 5, 10, 25, 50, 100, 250, 500, 1000]);
 });
 
 export const selectTradeboxMarketsSortMap = createSelector((q) => {

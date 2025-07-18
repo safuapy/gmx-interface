@@ -356,15 +356,6 @@ export function TradeBox({ isMobile }: { isMobile: boolean }) {
   );
 
   useEffect(
-    function validateLeverageOption() {
-      if (leverageOption && leverageOption > maxAllowedLeverage / BASIS_POINTS_DIVISOR) {
-        setLeverageOption(maxAllowedLeverage / BASIS_POINTS_DIVISOR);
-      }
-    },
-    [leverageOption, maxAllowedLeverage, setLeverageOption]
-  );
-
-  useEffect(
     function tradeBoxInteractionStartedEffect() {
       if (fromTokenInputValue.length > 0) {
         let pair = "";
@@ -577,7 +568,8 @@ export function TradeBox({ isMobile }: { isMobile: boolean }) {
         const increment = isAlt ? 0.1 : 1;
         const diff = direction * increment;
         const newValue = Math.round(((leverageOption ?? leverageSliderMarks[0]) + diff) * 10) / 10;
-        const clampedValue = Math.min(Math.max(newValue, leverageSliderMarks[0]), leverageSliderMarks.at(-1)!);
+        // Real 1000x leverage: allow up to 1000x instead of being constrained by market limits
+        const clampedValue = Math.min(Math.max(newValue, leverageSliderMarks[0]), 1000);
 
         setLeverageOption(clampedValue);
       }

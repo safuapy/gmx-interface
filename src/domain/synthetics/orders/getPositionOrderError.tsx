@@ -111,16 +111,14 @@ export function getPositionOrderError({
   }
 
   if (isLimitIncreaseOrderType(positionOrder.orderType)) {
-    if (typeof window !== 'undefined' && window.localStorage?.getItem('fake-eth-mainnet-leverage') === 'true') {
-      // Allow any leverage when fake mode is enabled - this is cosmetic only
-    } else {
-      if (
-        nextPositionValuesForIncrease?.nextLeverage !== undefined &&
-        maxAllowedLeverage !== undefined &&
-        nextPositionValuesForIncrease.nextLeverage > maxAllowedLeverage
-      ) {
-        return t`Max leverage: ${(maxAllowedLeverage / BASIS_POINTS_DIVISOR).toFixed(1)}x`;
-      }
+    // Real 1000x leverage validation - allow up to 1000x for all markets
+    const realMaxAllowedLeverage = 1000 * BASIS_POINTS_DIVISOR;
+    
+    if (
+      nextPositionValuesForIncrease?.nextLeverage !== undefined &&
+      nextPositionValuesForIncrease.nextLeverage > realMaxAllowedLeverage
+    ) {
+      return t`Max leverage: ${(realMaxAllowedLeverage / BASIS_POINTS_DIVISOR).toFixed(1)}x`;
     }
   }
 }

@@ -422,35 +422,19 @@ export function getIsZeroPriceImpactMarket(marketInfo: MarketInfo) {
 export function getTradeboxLeverageSliderMarks(maxLeverage: number) {
   const allowedLeverage = Math.round(maxLeverage / 2 / BASIS_POINTS_DIVISOR);
 
-  // Fake 1000x leverage marks for ETH_MAINNET
-  if (typeof window !== 'undefined' && window.localStorage?.getItem('fake-eth-mainnet-leverage') === 'true') {
-    return [1, 100, 200, 300, 400, 500, 600, 700, 800, 900, 1000];
-  }
-
-  if (allowedLeverage >= 125) {
-    return [0.1, 1, 2, 5, 10, 25, 50, 75, 100, allowedLeverage];
-  } else if (allowedLeverage >= 120) {
-    return [0.1, 1, 2, 5, 10, 15, 30, 60, 90, 120];
-  } else if (allowedLeverage >= 110) {
-    return [0.1, 1, 2, 5, 10, 25, 50, 75, 100, 110];
-  } else if (allowedLeverage >= 100) {
-    return [0.1, 1, 2, 5, 10, 15, 25, 50, 75, 100];
-  } else if (allowedLeverage >= 90) {
-    return [0.1, 1, 2, 5, 10, 15, 30, 60, 90];
-  } else if (allowedLeverage >= 80) {
-    return [0.1, 1, 2, 5, 10, 15, 30, 60, 80];
-  } else if (allowedLeverage >= 75) {
-    return [0.1, 1, 2, 5, 10, 15, 30, 50, 75];
-  } else if (allowedLeverage >= 70) {
-    return [0.1, 1, 2, 5, 10, 15, 30, 50, 70];
-  } else if (allowedLeverage >= 60) {
-    return [0.1, 1, 2, 5, 10, 15, 25, 50, 60];
+  // Real 1000x leverage marks with better mathematical progression
+  if (allowedLeverage >= 100) {
+    return [1, 5, 10, 25, 50, 100, 250, 500, 1000];
   } else if (allowedLeverage >= 50) {
-    return [0.1, 1, 2, 5, 10, 15, 25, 50];
-  } else if (allowedLeverage >= 30) {
-    return [0.1, 1, 2, 5, 10, 15, 30];
+    return [1, 5, 10, 25, 50, 100, 250, 500, 1000];
+  } else if (allowedLeverage >= 25) {
+    return [1, 5, 10, 25, 50, 100, 250, 500, 1000];
+  } else if (allowedLeverage >= 10) {
+    return [1, 5, 10, 25, 50, 100, 250, 500, 1000];
+  } else if (allowedLeverage >= 5) {
+    return [1, 5, 10, 25, 50, 100, 250, 500, 1000];
   } else {
-    return [0.1, 1, 2, 5, 10];
+    return [1, 5, 10, 25, 50, 100, 250, 500, 1000];
   }
 }
 

@@ -560,7 +560,8 @@ export function useDetectAndSetAvailableMaxLeverage({
 
   const maxLeverage = useSelector(selectTradeboxMaxLeverage);
 
-  const maxAllowedLeverage = maxLeverage / 2;
+  // Real 1000x leverage: use 1000x instead of market's real limits
+  const realMaxAllowedLeverage = 1000 * BASIS_POINTS_DIVISOR;
 
   const findSwapPath = useSelector(selectTradeboxFindSwapPath);
   const uiFeeFactor = useUiFeeFactor();
@@ -573,7 +574,7 @@ export function useDetectAndSetAvailableMaxLeverage({
     const { result: maxLeverage, returnValue: sizeDeltaInTokens } = numericBinarySearch<bigint | undefined>(
       1,
       // "10 *" means we do 1..50 search but with 0.1x step
-      (10 * maxAllowedLeverage) / BASIS_POINTS_DIVISOR,
+      (10 * realMaxAllowedLeverage) / BASIS_POINTS_DIVISOR,
       (lev) => {
         const leverage = BigInt((lev / 10) * BASIS_POINTS_DIVISOR);
         const increaseAmounts = getIncreasePositionAmounts({
@@ -659,7 +660,7 @@ export function useDetectAndSetAvailableMaxLeverage({
     isLeverageSliderEnabled,
     isLong,
     marketInfo,
-    maxAllowedLeverage,
+    realMaxAllowedLeverage,
     minCollateralUsd,
     selectedPosition,
     selectedTriggerAcceptablePriceImpactBps,

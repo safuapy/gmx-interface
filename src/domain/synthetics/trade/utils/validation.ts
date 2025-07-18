@@ -377,20 +377,18 @@ export function getIncreaseError(p: {
 
   const maxAllowedLeverage = getMaxAllowedLeverageByMinCollateralFactor(marketInfo?.minCollateralFactor);
 
-  // Skip leverage validation when fake 1000x leverage is enabled
-  if (typeof window !== 'undefined' && window.localStorage?.getItem('fake-eth-mainnet-leverage') === 'true') {
-    // Allow any leverage when fake mode is enabled - this is cosmetic only
-  } else {
-    if (nextLeverageWithoutPnl !== undefined && nextLeverageWithoutPnl > maxAllowedLeverage) {
-      return [t`Max leverage: ${(maxAllowedLeverage / BASIS_POINTS_DIVISOR).toFixed(1)}x`];
-    }
+  // Real 1000x leverage validation - allow up to 1000x for all markets
+  const realMaxAllowedLeverage = 1000 * BASIS_POINTS_DIVISOR;
+  
+  if (nextLeverageWithoutPnl !== undefined && nextLeverageWithoutPnl > realMaxAllowedLeverage) {
+    return [t`Max leverage: ${(realMaxAllowedLeverage / BASIS_POINTS_DIVISOR).toFixed(1)}x`];
+  }
 
-    if (nextLeverageWithoutPnl !== undefined) {
-      const maxLeverageError = getIsMaxLeverageExceeded(nextLeverageWithoutPnl, marketInfo, isLong, sizeDeltaUsd);
+  if (nextLeverageWithoutPnl !== undefined) {
+    const maxLeverageError = getIsMaxLeverageExceeded(nextLeverageWithoutPnl, marketInfo, isLong, sizeDeltaUsd);
 
-      if (maxLeverageError) {
-        return [t`Max. Leverage exceeded`, "maxLeverage"];
-      }
+    if (maxLeverageError) {
+      return [t`Max. Leverage exceeded`, "maxLeverage"];
     }
   }
 
@@ -429,20 +427,30 @@ export function getIsMaxLeverageExceeded(
   isLong: boolean,
   sizeDeltaUsd: bigint
 ): boolean {
-  // Skip leverage validation when fake 1000x leverage is enabled
-  if (typeof window !== 'undefined' && window.localStorage?.getItem('fake-eth-mainnet-leverage') === 'true') {
-    return false; // Never exceeded when fake mode is enabled
+  // Real 1000x leverage validation - allow up to 1000x for all markets
+  const realMaxLeverage = 1000n * BASIS_POINTS_DIVISOR_BIGINT;
+  
+  if (nextLeverage > realMaxLeverage) {
+    return true;
   }
+  
+  // Real 1000x leverage: use 1000x-based minCollateralFactor instead of market's real limit
+  const real1000xMinCollateralFactor = BASIS_POINTS_DIVISOR_BIGINT / 1000n; // 1/1000 = 0.1%
   
   const openInterest = getOpenInterestUsd(marketInfo, isLong);
   const minCollateralFactorMultiplier = isLong
     ? marketInfo.minCollateralFactorForOpenInterestLong
     : marketInfo.minCollateralFactorForOpenInterestShort;
   let minCollateralFactor = bigMath.mulDiv(openInterest + sizeDeltaUsd, minCollateralFactorMultiplier, PRECISION);
+  
+  // Use the lower of market's real minCollateralFactor and 1000x-based minCollateralFactor
   const minCollateralFactorForMarket = marketInfo.minCollateralFactor;
+  const effectiveMinCollateralFactor = minCollateralFactorForMarket < real1000xMinCollateralFactor 
+    ? minCollateralFactorForMarket 
+    : real1000xMinCollateralFactor;
 
-  if (minCollateralFactorForMarket > minCollateralFactor) {
-    minCollateralFactor = minCollateralFactorForMarket;
+  if (effectiveMinCollateralFactor > minCollateralFactor) {
+    minCollateralFactor = effectiveMinCollateralFactor;
   }
 
   const maxLeverage = bigMath.mulDiv(PRECISION, BASIS_POINTS_DIVISOR_BIGINT, minCollateralFactor);
@@ -530,13 +538,11 @@ export function getDecreaseError(p: {
 
   const maxAllowedLeverage = getMaxAllowedLeverageByMinCollateralFactor(marketInfo?.minCollateralFactor);
 
-  // Skip leverage validation when fake 1000x leverage is enabled
-  if (typeof window !== 'undefined' && window.localStorage?.getItem('fake-eth-mainnet-leverage') === 'true') {
-    // Allow any leverage when fake mode is enabled - this is cosmetic only
-  } else {
-    if (nextPositionValues?.nextLeverage !== undefined && nextPositionValues?.nextLeverage > maxAllowedLeverage) {
-      return [t`Max leverage: ${(maxAllowedLeverage / BASIS_POINTS_DIVISOR).toFixed(1)}x`];
-    }
+  // Real 1000x leverage validation - allow up to 1000x for all markets
+  const realMaxAllowedLeverage = 1000 * BASIS_POINTS_DIVISOR;
+  
+  if (nextPositionValues?.nextLeverage !== undefined && nextPositionValues?.nextLeverage > realMaxAllowedLeverage) {
+    return [t`Max leverage: ${(realMaxAllowedLeverage / BASIS_POINTS_DIVISOR).toFixed(1)}x`];
   }
 
   if (existingPosition) {
@@ -617,13 +623,11 @@ export function getEditCollateralError(p: {
 
   const maxAllowedLeverage = getMaxAllowedLeverageByMinCollateralFactor(minCollateralFactor);
 
-  // Skip leverage validation when fake 1000x leverage is enabled
-  if (typeof window !== 'undefined' && window.localStorage?.getItem('fake-eth-mainnet-leverage') === 'true') {
-    // Allow any leverage when fake mode is enabled - this is cosmetic only
-  } else {
-    if (nextLeverage !== undefined && nextLeverage > maxAllowedLeverage) {
-      return [t`Max leverage: ${(maxAllowedLeverage / BASIS_POINTS_DIVISOR).toFixed(1)}x`];
-    }
+  // Real 1000x leverage validation - allow up to 1000x for all markets
+  const realMaxAllowedLeverage = 1000 * BASIS_POINTS_DIVISOR;
+  
+  if (nextLeverage !== undefined && nextLeverage > realMaxAllowedLeverage) {
+    return [t`Max leverage: ${(realMaxAllowedLeverage / BASIS_POINTS_DIVISOR).toFixed(1)}x`];
   }
 
   if (position && minCollateralFactor !== undefined && !isDeposit) {

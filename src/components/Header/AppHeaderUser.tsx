@@ -2,7 +2,7 @@ import { Trans } from "@lingui/macro";
 import { useConnectModal } from "@rainbow-me/rainbowkit";
 import { useCallback } from "react";
 
-import { ARBITRUM, getChainName } from "config/chains";
+import { ARBITRUM, ETH_MAINNET, getChainName } from "config/chains";
 import { getIcon } from "config/icons";
 import { useChainId } from "lib/chains";
 import { getAccountUrl, isHomeSite, shouldShowRedirectModal } from "lib/legacy";
@@ -32,8 +32,8 @@ type Props = {
 const NETWORK_OPTIONS = [
   {
     label: "Ethereum",
-    value: ARBITRUM,
-    icon: getIcon(ARBITRUM, "network"),
+    value: ETH_MAINNET,
+    icon: getIcon(ETH_MAINNET, "network"),
     color: "#627EEA",
   },
 ];
