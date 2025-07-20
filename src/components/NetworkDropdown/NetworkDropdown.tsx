@@ -6,6 +6,7 @@ import noop from "lodash/noop";
 import { useCallback, useState } from "react";
 import { BiChevronDown } from "react-icons/bi";
 
+import { ETH_MAINNET } from "config/chains";
 import { getIcon } from "config/icons";
 import { useChainId } from "lib/chains";
 import { switchNetwork } from "lib/wallets";
@@ -87,10 +88,8 @@ export default function NetworkDropdown(props) {
   );
 }
 function NavIcons({ selectorLabel }) {
-  const { chainId, walletChainId } = useChainId();
-  // For UI display, use walletChainId to show Ethereum logo when connected to ETH_MAINNET
-  const displayChainId = walletChainId || chainId;
-  const icon = getIcon(displayChainId, "network");
+  // Always show Ethereum icon for the network dropdown, regardless of current chain
+  const icon = getIcon(ETH_MAINNET, "network");
 
   return (
     <>
