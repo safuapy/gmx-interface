@@ -9,8 +9,6 @@ import { useRedirectPopupTimestamp } from "lib/useRedirectPopupTimestamp";
 
 import ExternalLink from "components/ExternalLink/ExternalLink";
 
-import logoImg from "img/logo_INTEL.svg";
-
 import { HeaderLink } from "./HeaderLink";
 
 import "./Header.scss";
@@ -51,7 +49,7 @@ export function HomeHeaderLinks({ small, clickCloseIcon, showRedirectModal }: Pr
       {small && (
         <div className="App-header-links-header">
           <Link className="App-header-link-main" to="/">
-            <img src={logoImg} alt="GMX Logo" />
+            <img src="/intelogo.png" alt="IntelMarket" />
           </Link>
           <div
             className="App-header-menu-icon-block mobile-cross-menu"

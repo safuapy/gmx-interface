@@ -8,8 +8,6 @@ import { isHomeSite } from "lib/legacy";
 import { HeaderLink } from "./HeaderLink";
 import ExternalLink from "../ExternalLink/ExternalLink";
 
-import logoImg from "img/logo_INTEL.svg";
-
 import "./Header.scss";
 
 type Props = {
@@ -26,7 +24,7 @@ export function AppHeaderLinks({ small, openSettings, clickCloseIcon, openNotify
       {small && (
         <div className="App-header-links-header">
           <Link className="App-header-link-main" to="/">
-            <img src={logoImg} alt="GMX Logo" />
+            <img src="/intelogo.png" alt="IntelMarket" />
           </Link>
           <div className="App-header-menu-icon-block" onClick={clickCloseIcon}>
             <FiX className="App-header-menu-icon" />
