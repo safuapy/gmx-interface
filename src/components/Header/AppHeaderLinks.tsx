@@ -28,8 +28,8 @@ export function AppHeaderLinks({ small, openSettings, clickCloseIcon, openNotify
           <Link className="App-header-link-main" to="/">
             <img src={logoImg} alt="GMX Logo" />
           </Link>
-          <div className="App-header-menu-icon-block">
-            <FiX className="App-header-menu-icon" onClick={clickCloseIcon} />
+          <div className="App-header-menu-icon-block" onClick={clickCloseIcon}>
+            <FiX className="App-header-menu-icon" />
           </div>
         </div>
       )}

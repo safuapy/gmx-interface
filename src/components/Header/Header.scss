@@ -7,6 +7,8 @@
   bottom: 0;
   left: 0;
   right: 0;
+  width: 100vw;
+  height: 100vh;
 }
 
 .App-header.large {
@@ -43,6 +45,21 @@
   border: none;
   padding: 2rem;
   width: 32rem;
+  position: fixed;
+  top: 0;
+  right: 0;
+  height: 100vh;
+  z-index: 1001;
+  overflow-y: auto;
+}
+
+.App-header-links-container {
+  position: fixed;
+  top: 0;
+  right: 0;
+  height: 100vh;
+  z-index: 1001;
+  overflow-y: auto;
 }
 .App-header-drawer::-webkit-scrollbar {
   display: none; /* Safari and Chrome */
@@ -55,6 +72,8 @@
   padding: 1.2rem 1.6rem;
   border-radius: 0.8rem;
   transition: all 0.3s ease;
+  display: block;
+  margin-bottom: 0.8rem;
 }
 
 .App-header-drawer .App-header-link-container .a:hover,
@@ -66,6 +85,16 @@
   background: rgba(255, 255, 255, 0.1);
   color: #fff;
   transform: translateX(5px);
+}
+
+.App-header-drawer .App-header-links {
+  padding-top: 2rem;
+}
+
+.App-header-drawer .App-header-links-header {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  margin-bottom: 2rem;
+  padding-bottom: 1.6rem;
 }
 
 .App-header.large .App-header-link-container {
@@ -308,6 +337,11 @@
     display: block;
     height: 2.4rem;
   }
+
+  .App-header-drawer {
+    width: 100%;
+    max-width: 32rem;
+  }
 }
 
 @media (max-width: 450px) {
@@ -323,10 +357,43 @@
   .App-header-menu-icon {
     font-size: 2rem;
   }
+
+  .App-header-drawer {
+    width: 100%;
+    padding: 1.6rem;
+  }
+
+  .App-header-drawer .App-header-link-container .a,
+  .App-header-drawer .App-header-link-container a {
+    font-size: 1.4rem;
+    padding: 1rem 1.2rem;
+  }
+}
+
+@media (max-width: 350px) {
+  .App-header.small {
+    padding: 0 1rem;
+  }
+
+  .App-header-drawer {
+    padding: 1.2rem;
+  }
+
+  .App-header-drawer .App-header-link-container .a,
+  .App-header-drawer .App-header-link-container a {
+    font-size: 1.3rem;
+    padding: 0.8rem 1rem;
+  }
 }
 
 @supports not ((-webkit-backdrop-filter: none) or (backdrop-filter: none)) {
   .App-header-drawer {
     background: var(--color-slate-950);
   }
+}
+
+body.mobile-menu-open {
+  overflow: hidden;
+  position: fixed;
+  width: 100%;
 }
