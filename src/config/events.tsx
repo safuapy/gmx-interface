@@ -774,12 +774,12 @@ export const appEventsData: EventData[] = [
         <TokenSymbolWithIcon symbol={getNormalizedTokenSymbol("LTC")} />,{" "}
         <TokenSymbolWithIcon symbol={getNormalizedTokenSymbol("LINK")} />
         {" and "}
-        <TokenSymbolWithIcon symbol={getNormalizedTokenSymbol("XRP")} /> with up to 100x leverage,
+        <TokenSymbolWithIcon symbol={getNormalizedTokenSymbol("XRP")} /> with up to 1000x leverage,
         <TokenSymbolWithIcon symbol={getNormalizedTokenSymbol("ARB")} /> with up to 75x leverage and{" "}
         <TokenSymbolWithIcon symbol={getNormalizedTokenSymbol("ATOM")} />,{" "}
         <TokenSymbolWithIcon symbol={getNormalizedTokenSymbol("AVAX")} />
         {" and "}
-        <TokenSymbolWithIcon symbol={getNormalizedTokenSymbol("UNI")} /> with up to 60x on Arbitrum.
+        <TokenSymbolWithIcon symbol={getNormalizedTokenSymbol("UNI")} /> with up to 60x on Ethereum.
       </>
     ),
   },
